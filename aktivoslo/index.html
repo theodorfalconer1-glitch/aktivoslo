@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AktivOslo — Finn det beste stedet ute nå</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f7f8fa;color:#1a1a2e;-webkit-font-smoothing:antialiased}
+:root{
+  --primary:#2d6a4f;--primary-light:#52b788;--primary-pale:#d8f3dc;
+  --accent:#e76f51;--accent-light:#f4a261;
+  --blue:#457b9d;--blue-pale:#a8dadc;
+  --yellow:#f4d03f;--yellow-pale:#fef9c3;
+  --gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;
+  --gray-500:#64748b;--gray-700:#334155;--gray-900:#0f172a;
+  --radius:12px;--radius-lg:20px;--shadow:0 2px 16px rgba(0,0,0,0.07);--shadow-lg:0 8px 32px rgba(0,0,0,0.12)
+}
+/* Layout */
+#root{min-height:100vh}
+.app{max-width:430px;margin:0 auto;min-height:100vh;background:#fff;position:relative;box-shadow:0 0 40px rgba(0,0,0,0.08)}
+
+/* Nav */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:#fff;border-top:1px solid var(--gray-200);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,8px)}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px 6px;cursor:pointer;color:var(--gray-500);transition:.2s;border:none;background:none;font-family:inherit}
+.nav-item.active{color:var(--primary)}
+.nav-item span{font-size:10px;font-weight:500;margin-top:3px}
+.nav-icon{font-size:22px;line-height:1}
+
+/* Header */
+.header{background:#fff;padding:16px 20px 12px;border-bottom:1px solid var(--gray-100);position:sticky;top:0;z-index:50}
+.header-top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;color:var(--primary);letter-spacing:-0.5px}
+.logo span{color:var(--accent)}
+.weather-pill{display:flex;align-items:center;gap:6px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:20px;padding:6px 12px;font-size:13px;color:var(--gray-700);font-weight:500}
+
+/* Page content */
+.page{padding:0 0 90px}
+.section{padding:20px}
+.section-title{font-size:13px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px}
+
+/* Hero suggestion */
+.hero-card{margin:16px 20px;border-radius:var(--radius-lg);background:linear-gradient(135deg,var(--primary) 0%,#1b4332 100%);color:#fff;padding:20px;position:relative;overflow:hidden;cursor:pointer}
+.hero-card::before{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;background:rgba(255,255,255,0.07);border-radius:50%}
+.hero-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary-light);margin-bottom:6px}
+.hero-name{font-size:22px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.75);margin-bottom:14px}
+.hero-meta{display:flex;align-items:center;gap:12px;font-size:13px}
+.hero-score{display:flex;align-items:center;gap:4px;font-weight:700;font-size:16px}
+.hero-badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.free{background:rgba(82,183,136,0.25);color:#b7e4c7}
+.badge.paid{background:rgba(69,123,157,0.25);color:#a8dadc}
+.badge.booking{background:rgba(244,162,97,0.25);color:#f4d03f}
+.badge.seasonal{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
+
+/* Categories */
+.categories-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 20px;scrollbar-width:none}
+.categories-scroll::-webkit-scrollbar{display:none}
+.cat-chip{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px;background:var(--gray-50);border:1.5px solid var(--gray-200);border-radius:var(--radius);cursor:pointer;transition:.2s;white-space:nowrap;flex-shrink:0;min-width:62px}
+.cat-chip.active{background:var(--primary-pale);border-color:var(--primary);color:var(--primary)}
+.cat-chip:hover{border-color:var(--primary-light)}
+.cat-emoji{font-size:22px}
+.cat-label{font-size:10px;font-weight:600;color:inherit}
+
+/* Place cards */
+.place-card{background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;cursor:pointer;transition:.2s;border:1px solid var(--gray-100)}
+.place-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.place-card-img{width:100%;height:140px;object-fit:cover;background:var(--gray-200)}
+.place-card-img-placeholder{width:100%;height:140px;background:linear-gradient(135deg,var(--primary-pale),var(--blue-pale));display:flex;align-items:center;justify-content:center;font-size:40px}
+.place-card-body{padding:14px}
+.place-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.place-card-name{font-size:16px;font-weight:700;color:var(--gray-900);line-height:1.2}
+.place-card-score{display:flex;align-items:center;gap:3px;font-size:15px;font-weight:800;color:var(--primary)}
+.place-card-score .star{color:var(--accent-light);font-size:13px}
+.place-card-sub{font-size:12px;color:var(--gray-500);margin-bottom:8px}
+.place-card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{padding:3px 8px;border-radius:20px;font-size:11px;font-weight:500;background:var(--gray-100);color:var(--gray-700)}
+.tag.green{background:var(--primary-pale);color:var(--primary)}
+.tag.blue{background:var(--blue-pale);color:var(--blue)}
+.tag.yellow{background:var(--yellow-pale);color:#92400e}
+.tag.red{background:#fee2e2;color:#991b1b}
+
+/* Horizontal place cards */
+.places-row{display:flex;gap:12px;overflow-x:auto;padding:0 20px;scrollbar-width:none}
+.places-row::-webkit-scrollbar{display:none}
+.place-mini{width:170px;flex-shrink:0;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;overflow:hidden;border:1px solid var(--gray-100)}
+.place-mini-img{width:100%;height:100px;object-fit:cover;background:linear-gradient(135deg,var(--primary-pale),var(--blue-pale));display:flex;align-items:center;justify-content:center;font-size:30px}
+.place-mini-body{padding:10px}
+.place-mini-name{font-size:13px;font-weight:700;margin-bottom:3px;color:var(--gray-900)}
+.place-mini-score{font-size:13px;font-weight:700;color:var(--primary);display:flex;align-items:center;gap:3px}
+
+/* Filters */
+.filter-bar{display:flex;gap:8px;overflow-x:auto;padding:12px 20px;scrollbar-width:none;border-bottom:1px solid var(--gray-100)}
+.filter-bar::-webkit-scrollbar{display:none}
+.filter-btn{padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1.5px solid var(--gray-200);background:#fff;cursor:pointer;white-space:nowrap;color:var(--gray-700);transition:.2s;font-family:inherit}
+.filter-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.filter-btn.filter-icon{padding:7px 10px;font-size:15px}
+
+/* Detail page */
+.detail-header{position:relative}
+.detail-img{width:100%;height:220px;object-fit:cover;background:linear-gradient(135deg,var(--primary-pale),var(--blue-pale));display:flex;align-items:center;justify-content:center;font-size:60px}
+.back-btn{position:absolute;top:16px;left:16px;background:rgba(255,255,255,0.95);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.fav-btn{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.95);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;box-shadow:var(--shadow)}
+.detail-content{padding:20px}
+.detail-name{font-size:26px;font-weight:800;color:var(--gray-900);margin-bottom:4px;line-height:1.2}
+.detail-meta{font-size:13px;color:var(--gray-500);margin-bottom:12px}
+.detail-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+
+/* Score section */
+.score-box{background:var(--gray-50);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.score-total{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.score-big{font-size:48px;font-weight:900;color:var(--primary);line-height:1}
+.score-label{font-size:13px;color:var(--gray-500);font-weight:500}
+.score-stars{color:var(--accent-light);font-size:18px;letter-spacing:2px}
+.score-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.score-row-label{font-size:12px;color:var(--gray-700);width:110px;flex-shrink:0;font-weight:500}
+.score-bar{flex:1;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden}
+.score-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary-light),var(--primary));border-radius:3px;transition:.5s ease}
+.score-num{font-size:12px;font-weight:700;color:var(--gray-700);width:28px;text-align:right}
+
+/* Facilities */
+.facilities-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.facility-item{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--gray-50);border-radius:var(--radius);font-size:12px;font-weight:500;color:var(--gray-700)}
+.facility-item.yes{color:var(--primary);background:var(--primary-pale)}
+.facility-item.no{color:var(--gray-400);background:var(--gray-100)}
+
+/* Best for tags */
+.best-for-wrap{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.best-for-tag{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--primary-pale);color:var(--primary)}
+
+/* Reviews */
+.review-card{background:var(--gray-50);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.review-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.review-author{font-size:13px;font-weight:700;color:var(--gray-900)}
+.review-score{font-size:14px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:3px}
+.review-text{font-size:13px;color:var(--gray-700);line-height:1.6}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 20px;color:var(--gray-500)}
+.empty-emoji{font-size:48px;margin-bottom:16px}
+.empty-title{font-size:18px;font-weight:700;color:var(--gray-700);margin-bottom:8px}
+
+/* Report form, review form */
+.form-field{margin-bottom:14px}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:6px}
+.form-input{width:100%;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius);font-size:14px;font-family:inherit;color:var(--gray-900);outline:none;transition:.2s}
+.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-pale)}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.form-textarea{resize:vertical;min-height:90px}
+.btn{padding:13px 24px;border-radius:var(--radius);font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:.2s;width:100%}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:#1b4332}
+.btn-secondary{background:var(--gray-100);color:var(--gray-700)}
+
+/* Stars rating input */
+.stars-input{display:flex;gap:6px;font-size:28px;cursor:pointer;margin-bottom:4px}
+.star-input{color:var(--gray-200);transition:.1s}
+.star-input.active{color:var(--accent-light)}
+
+/* Favorites page */
+.page-title{font-size:24px;font-weight:800;color:var(--gray-900);margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--gray-500)}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal-overlay.center{align-items:center}
+.modal{background:#fff;border-radius:var(--radius-lg) var(--radius-lg) 0 0;max-width:430px;width:100%;padding:24px 20px 32px;max-height:85vh;overflow-y:auto}
+.modal.center-modal{border-radius:var(--radius-lg);margin:20px;max-height:90vh}
+.modal-title{font-size:18px;font-weight:800;color:var(--gray-900);margin-bottom:16px}
+.modal-close{float:right;background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray-400);margin-top:-4px}
+
+/* Status chips */
+.status-open{color:var(--primary);background:var(--primary-pale);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.status-seasonal{color:#92400e;background:var(--yellow-pale);padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.status-closed{color:#991b1b;background:#fee2e2;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+
+.divider{height:1px;background:var(--gray-100);margin:16px 0}
+
+.search-bar{display:flex;align-items:center;gap:10px;background:var(--gray-100);border-radius:var(--radius);padding:11px 14px;margin:12px 20px 0}
+.search-bar input{background:none;border:none;outline:none;font-size:14px;font-family:inherit;flex:1;color:var(--gray-900)}
+.search-bar input::placeholder{color:var(--gray-400)}
+
+.info-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray-700);padding:8px 0;border-bottom:1px solid var(--gray-100)}
+.info-row:last-child{border-bottom:none}
+.info-icon{font-size:16px;width:20px;text-align:center}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+const PLACES = [
+  {id:'sognsvann',name:'Sognsvann',area:'Nordmarka',municipality:'Oslo',activities:['badested','løperute','park'],is_free:true,booking_required:false,score:9.1,reviews:142,cover:'🏞️',status:'open',evening_lighting:false,family_friendly:true,dog_friendly:true,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:false,seasons:['vår','sommer','høst','vinter'],best_for:['familie','hund','morgenbad','trening'],description:'Naturskjønn innsjø i Nordmarka med bademuligheter, løperute rundt vannet og flotte turveier.',opening_hours:'Alltid åpent',transport_details:'T-bane linje 5, Sognsvann stasjon',scores:{quality:9.2,location:9.5,accessibility:8.8,maintenance:8.5,capacity:7.4,facilities:9.0,atmosphere:9.5,value:10.0}},
+  {id:'frognerbadet',name:'Frognerbadet',area:'Frogner',municipality:'Oslo',activities:['badested','badstue'],is_free:false,price_range:'under 100kr',booking_required:false,score:9.3,reviews:218,cover:'🏊',status:'seasonal',seasonal_note:'Åpen kun sommer (mai–aug)',evening_lighting:false,family_friendly:true,dog_friendly:false,toilet:true,parking:false,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['sommer'],best_for:['familie','vennegjeng','date','morgenbad'],description:'Oslos vakreste utendørsbad med svømmebassenger, badstue og et fantastisk Art Deco-bygg.',opening_hours:'Man-søn 07:00–19:30 (sommer)',transport_details:'Trikk 12/19 – Frogner plass',scores:{quality:9.5,location:9.0,accessibility:8.8,maintenance:9.2,capacity:7.8,facilities:9.5,atmosphere:9.8,value:9.5}},
+  {id:'frognerparken',name:'Frognerparken',area:'Frogner',municipality:'Oslo',activities:['park','volleyballbane','fotballbane','løperute'],is_free:true,booking_required:false,score:8.9,reviews:187,cover:'🌳',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:true,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:false,seasons:['vår','sommer','høst','vinter'],best_for:['familie','date','vennegjeng','solnedgang'],description:'Oslos største park med Vigelandsanlegget, volleyballbaner, fotballbaner og nydelige grøntarealer.',opening_hours:'Alltid åpent',transport_details:'Trikk 12/19 – Vigelandsparken',scores:{quality:9.0,location:9.2,accessibility:9.0,maintenance:8.8,capacity:8.5,facilities:8.5,atmosphere:9.2,value:10.0}},
+  {id:'holmenkollen',name:'Holmenkollen',area:'Holmenkollen',municipality:'Oslo',activities:['skiløype','løperute','utsikt'],is_free:true,booking_required:false,score:9.0,reviews:156,cover:'⛷️',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:true,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:false,seasons:['vår','sommer','høst','vinter'],best_for:['familie','trening','solnedgang','utsikt'],description:'Ikonisk bydel med skihopp, preparerte skiløyper, fantastisk utsikt over Oslo og turmuligheter hele året.',opening_hours:'Alltid åpent',transport_details:'T-bane linje 1, Holmenkollen stasjon',scores:{quality:9.2,location:9.8,accessibility:8.5,maintenance:8.8,capacity:8.0,facilities:8.5,atmosphere:9.5,value:9.8}},
+  {id:'ekebergsletta',name:'Ekebergsletta Skatepark',area:'Ekeberg',municipality:'Oslo',activities:['skatepark'],is_free:true,booking_required:false,score:8.2,reviews:67,cover:'🛹',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:true,toilet:false,parking:true,public_transport:true,kiosk_cafe:false,changing_room:false,seasons:['vår','sommer','høst'],best_for:['nybegynnere','vennegjeng','ungdom'],description:'Oslos beste utendørs skatepark med varierende elementer for alle nivåer.',opening_hours:'Alltid åpent',transport_details:'Buss 34 – Ekebergveien',scores:{quality:8.5,location:8.8,accessibility:7.5,maintenance:7.8,capacity:8.5,facilities:6.0,atmosphere:9.0,value:10.0}},
+  {id:'slottsparken',name:'Slottsparken',area:'Sentrum',municipality:'Oslo',activities:['park','løperute','utsikt'],is_free:true,booking_required:false,score:8.6,reviews:94,cover:'🏰',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:false,toilet:true,parking:false,public_transport:true,kiosk_cafe:false,changing_room:false,seasons:['vår','sommer','høst','vinter'],best_for:['date','rolig tur','solnedgang'],description:'Rolig og vakker park i hjertet av Oslo med nydelige alleer og utsikt mot Slottet.',opening_hours:'Alltid åpent',transport_details:'T-bane/buss Nationaltheatret',scores:{quality:8.5,location:9.5,accessibility:9.5,maintenance:8.5,capacity:8.0,facilities:7.0,atmosphere:9.0,value:10.0}},
+  {id:'hvervenbukta',name:'Hvervenbukta',area:'Søndre Nordstrand',municipality:'Oslo',activities:['badested','kajakkutleie'],is_free:true,booking_required:false,score:8.8,reviews:113,cover:'🏖️',status:'open',evening_lighting:false,family_friendly:true,dog_friendly:true,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['sommer'],best_for:['familie','morgenbad','date','vennegjeng'],description:'Populær badestrand ved Oslofjorden med flott bademiljø og SUP-utleie.',opening_hours:'Alltid åpent',transport_details:'Buss 83 – Hvervenbukta',scores:{quality:9.0,location:9.2,accessibility:8.0,maintenance:8.5,capacity:7.5,facilities:8.8,atmosphere:9.5,value:9.5}},
+  {id:'kolsastoppen',name:'Kolsåstoppen',area:'Kolsås',municipality:'Bærum',activities:['utsikt','tur','klatring'],is_free:true,booking_required:false,score:9.0,reviews:98,cover:'🏔️',status:'open',evening_lighting:false,family_friendly:true,dog_friendly:true,toilet:false,parking:true,public_transport:true,kiosk_cafe:false,changing_room:false,seasons:['vår','sommer','høst'],best_for:['date','familie','solnedgang','klatring'],description:'Spektakulær utsiktstopp i Bærum med klatremuligheter og fantastisk panoramautsikt.',opening_hours:'Alltid åpent',transport_details:'T-bane linje 2, Kolsås stasjon',scores:{quality:9.2,location:9.8,accessibility:8.2,maintenance:8.8,capacity:8.5,facilities:5.0,atmosphere:9.8,value:10.0}},
+  {id:'lysaker-padel',name:'Lysaker Padelklubb',area:'Lysaker',municipality:'Bærum',activities:['padelbane'],is_free:false,price_range:'100-300kr',booking_required:true,score:8.7,reviews:76,cover:'🎾',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:false,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['vår','sommer','høst','vinter'],best_for:['trening','vennegjeng'],description:'Moderne padelklubb med innendørs og utendørs baner, godt utstyr og hyggelig miljø.',opening_hours:'Man-fre 07:00–23:00, lør-søn 08:00–22:00',transport_details:'Tog/buss Lysaker stasjon',scores:{quality:9.0,location:8.5,accessibility:8.8,maintenance:9.0,capacity:8.0,facilities:9.0,atmosphere:8.5,value:7.5}},
+  {id:'hauktjern',name:'Hauktjern Discgolf',area:'Nordmarka',municipality:'Oslo',activities:['discgolf','tur'],is_free:true,booking_required:false,score:7.9,reviews:45,cover:'🥏',status:'open',evening_lighting:false,family_friendly:true,dog_friendly:true,toilet:false,parking:true,public_transport:false,kiosk_cafe:false,changing_room:false,seasons:['vår','sommer','høst'],best_for:['vennegjeng','familie','hund','nybegynnere'],description:'18-hulls discgolfbane i vakker Marka-natur ved Hauktjern.',opening_hours:'Alltid åpent',transport_details:'Bil anbefalt',scores:{quality:8.0,location:9.0,accessibility:6.5,maintenance:7.5,capacity:9.0,facilities:4.0,atmosphere:9.0,value:10.0}},
+  {id:'frogner-stadion',name:'Frogner Stadion Skøytebane',area:'Frogner',municipality:'Oslo',activities:['skøytebane'],is_free:false,price_range:'under 100kr',booking_required:false,score:8.5,reviews:89,cover:'⛸️',status:'seasonal',seasonal_note:'Åpen kun vinter (des–feb)',evening_lighting:true,family_friendly:true,dog_friendly:false,toilet:true,parking:false,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['vinter'],best_for:['familie','date','nybegynnere'],description:'Historisk skøytebane i hjertet av Oslo med flott vinteratmosfære.',opening_hours:'Man-søn 10:00–21:00 (vinter)',transport_details:'Trikk 12/19 – Frogner plass',scores:{quality:8.8,location:9.0,accessibility:8.8,maintenance:8.5,capacity:7.5,facilities:8.0,atmosphere:9.2,value:8.5}},
+  {id:'tryvann',name:'Tryvann Vinterpark',area:'Nordmarka',municipality:'Oslo',activities:['akebakke','skøytebane','skiløype'],is_free:false,price_range:'100-300kr',booking_required:false,score:8.7,reviews:134,cover:'🏔️',status:'seasonal',seasonal_note:'Åpen kun vinter (des–mars)',evening_lighting:true,family_friendly:true,dog_friendly:false,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['vinter'],best_for:['familie','barn','nybegynnere'],description:'Oslos største alpinanlegg med akebakker, skøytebane og preparerte løyper.',opening_hours:'Man-søn 10:00–20:00 (vinter)',transport_details:'T-bane linje 1, Voksenkollen + gange',scores:{quality:9.0,location:8.5,accessibility:7.5,maintenance:9.0,capacity:7.5,facilities:9.0,atmosphere:9.0,value:7.5}},
+  {id:'grefsenkollen',name:'Grefsenkollen',area:'Grefsen',municipality:'Oslo',activities:['utsikt','tur','løperute','akebakke'],is_free:true,booking_required:false,score:8.8,reviews:108,cover:'🌅',status:'open',evening_lighting:false,family_friendly:true,dog_friendly:true,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:false,seasons:['vår','sommer','høst','vinter'],best_for:['date','familie','solnedgang','rolig tur'],description:'Naturlig utsiktspunkt nord i Oslo med panoramautsikt over hele byen og hyggelig restaurant på toppen.',opening_hours:'Alltid åpent',transport_details:'Buss 54 – Grefsenkollen',scores:{quality:8.8,location:9.8,accessibility:7.8,maintenance:8.5,capacity:8.8,facilities:7.5,atmosphere:9.5,value:9.5}},
+  {id:'asker-tennis',name:'Asker Tennisklubb',area:'Asker sentrum',municipality:'Asker',activities:['tennisbane'],is_free:false,price_range:'100-300kr',booking_required:true,score:8.0,reviews:52,cover:'🎾',status:'open',evening_lighting:true,family_friendly:true,dog_friendly:false,toilet:true,parking:true,public_transport:true,kiosk_cafe:false,changing_room:true,seasons:['vår','sommer','høst','vinter'],best_for:['trening','vennegjeng'],description:'Moderne tennisanlegg i Asker sentrum med utendørs og innendørs baner.',opening_hours:'Man-søn 07:00–23:00',transport_details:'Tog Asker stasjon (10 min gange)',scores:{quality:8.5,location:7.8,accessibility:7.8,maintenance:8.8,capacity:7.5,facilities:8.5,atmosphere:7.5,value:7.0}},
+  {id:'bekkestua-padel',name:'Bekkestua Padel',area:'Bekkestua',municipality:'Bærum',activities:['padelbane'],is_free:false,price_range:'100-300kr',booking_required:true,score:8.4,reviews:63,cover:'🏓',status:'open',evening_lighting:true,family_friendly:false,dog_friendly:false,toilet:true,parking:true,public_transport:true,kiosk_cafe:true,changing_room:true,seasons:['vår','sommer','høst','vinter'],best_for:['trening','vennegjeng'],description:'Populær padelklubb i Bærum med moderne baner og aktivt miljø.',opening_hours:'Man-søn 07:00–23:00',transport_details:'Buss 151/153 – Bekkestua',scores:{quality:8.8,location:8.0,accessibility:8.2,maintenance:8.8,capacity:7.8,facilities:8.5,atmosphere:8.5,value:7.5}}
+];
+
+const SAMPLE_REVIEWS = {
+  'sognsvann':[{author:'Marie L.',score:9.5,text:'Sognsvann er rett og slett magisk! T-banen stopper rett ved inngangen, vannet er klart og fint, og løypa rundt er perfekt for en 3,3 km runde.',tags:['familie','morgenbad']},{author:'Per A.',score:9.0,text:'Perfekt for morgenbad! Vannet er friskt og rent, og det er alltid en god stemning her. Tar T-banen og er fremme på 20 min fra sentrum.',tags:['morgenbad','trening']}],
+  'frognerbadet':[{author:'Kristian B.',score:9.8,text:'Beste sommeropplevelsen i Oslo! Art Deco-bygget er spektakulært, bassenget er rent og fint, og badstuen er helt nydelig.',tags:['date','morgenbad']}],
+  'kolsastoppen':[{author:'Anders T.',score:9.2,text:'Utsikten fra toppen er bare utrolig — hele fjorden og Oslo ligger fremfor deg. Perfekt solnedgangstur!',tags:['date','solnedgang']}],
+  'frognerparken':[{author:'Sofia H.',score:9.0,text:'Den absolutt beste parken i Oslo. Alltid noe skjer her — volleyball, piknik, løping, eller bare ligge i gresset.',tags:['familie','rolig tur']}]
+};
+
+const CATEGORIES = [
+  {id:'alle',label:'Alle',emoji:'🗺️'},
+  {id:'badested',label:'Bade',emoji:'🏊'},
+  {id:'park',label:'Park',emoji:'🌳'},
+  {id:'løperute',label:'Løping',emoji:'🏃'},
+  {id:'padelbane',label:'Padel',emoji:'🏓'},
+  {id:'tennisbane',label:'Tennis',emoji:'🎾'},
+  {id:'skatepark',label:'Skate',emoji:'🛹'},
+  {id:'discgolf',label:'Discgolf',emoji:'🥏'},
+  {id:'utsikt',label:'Utsikt',emoji:'👁️'},
+  {id:'skiløype',label:'Ski',emoji:'⛷️'},
+  {id:'skøytebane',label:'Skøyte',emoji:'⛸️'},
+  {id:'akebakke',label:'Aking',emoji:'🛷'},
+  {id:'klatring',label:'Klatring',emoji:'🧗'},
+  {id:'kajakkutleie',label:'Kajakkutleie',emoji:'🚣'},
+  {id:'badstue',label:'Badstue',emoji:'🧖'},
+  {id:'volleyballbane',label:'Volleyball',emoji:'🏐'},
+  {id:'fotballbane',label:'Fotball',emoji:'⚽'},
+];
+
+const SCORE_LABELS = [
+  {key:'quality',label:'Kvalitet'},
+  {key:'location',label:'Beliggenhet'},
+  {key:'accessibility',label:'Tilgjengelighet'},
+  {key:'maintenance',label:'Vedlikehold'},
+  {key:'capacity',label:'Kapasitet/Kø'},
+  {key:'facilities',label:'Fasiliteter'},
+  {key:'atmosphere',label:'Stemning'},
+  {key:'value',label:'Pris/Verdi'},
+];
+
+// ──────────────────────────────────────────────
+// HELPERS
+// ──────────────────────────────────────────────
+function getAccessBadge(place) {
+  if (place.booking_required) return {label:'Booking', cls:'booking'};
+  if (!place.is_free) return {label:'Betalt', cls:'paid'};
+  return {label:'Gratis', cls:'free'};
+}
+function getStatusEl(place) {
+  if (place.status === 'seasonal') return <span className="status-seasonal">Sesong</span>;
+  if (place.status === 'closed') return <span className="status-closed">Stengt</span>;
+  return <span className="status-open">Åpent</span>;
+}
+function Stars({n=5,score=0}) {
+  return <span>{Array.from({length:n},(_,i)=>i+1).map(i=><span key={i} style={{color:i<=Math.round(score/2)?'#f4a261':'#e2e8f0'}}>★</span>)}</span>;
+}
+function ActivityIcon({a}) {
+  const cat = CATEGORIES.find(c=>c.id===a);
+  return cat ? cat.emoji : '📍';
+}
+
+// ──────────────────────────────────────────────
+// COMPONENTS
+// ──────────────────────────────────────────────
+function PlaceMini({place, onClick}) {
+  const badge = getAccessBadge(place);
+  return (
+    <div className="place-mini" onClick={()=>onClick(place)}>
+      <div className="place-mini-img">{place.cover}</div>
+      <div className="place-mini-body">
+        <div className="place-mini-name">{place.name}</div>
+        <div className="place-mini-score"><span className="star">⭐</span>{place.score}</div>
+        <div style={{marginTop:4}}><span className={`tag ${badge.cls==='free'?'green':badge.cls==='paid'?'blue':'yellow'}`} style={{fontSize:10}}>{badge.label}</span></div>
+      </div>
+    </div>
+  );
+}
+
+function PlaceCard({place, onClick, onFav, isFav}) {
+  const badge = getAccessBadge(place);
+  const acts = place.activities.slice(0,3);
+  return (
+    <div className="place-card" onClick={()=>onClick(place)}>
+      <div className="place-card-img-placeholder">{place.cover}</div>
+      <div className="place-card-body">
+        <div className="place-card-top">
+          <div className="place-card-name">{place.name}</div>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <button style={{background:'none',border:'none',cursor:'pointer',fontSize:20}} onClick={e=>{e.stopPropagation();onFav(place.id);}}>{isFav?'❤️':'🤍'}</button>
+            <div className="place-card-score"><span className="star">⭐</span>{place.score}</div>
+          </div>
+        </div>
+        <div className="place-card-sub">{place.area} · {place.municipality} · {place.reviews} anmeldelser</div>
+        <div className="place-card-tags">
+          <span className={`tag ${badge.cls==='free'?'green':badge.cls==='paid'?'blue':'yellow'}`}>{badge.label}</span>
+          {place.evening_lighting && <span className="tag">💡 Lys</span>}
+          {place.dog_friendly && <span className="tag">🐕</span>}
+          {place.family_friendly && <span className="tag">👨‍👩‍👧</span>}
+          {getStatusEl(place)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScoreBar({score}) {
+  return (
+    <div className="score-bar">
+      <div className="score-bar-fill" style={{width:`${score*10}%`}}></div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────
+// PAGES
+// ──────────────────────────────────────────────
+function HomePage({onPlace, favorites, onFav}) {
+  const featured = PLACES.filter(p=>p.score>=8.8).slice(0,4);
+  const topFree = PLACES.filter(p=>p.is_free).sort((a,b)=>b.score-a.score).slice(0,4);
+  const [activeAct, setActiveAct] = useState('alle');
+
+  const suggested = PLACES.find(p=>p.score===Math.max(...PLACES.map(x=>x.score)));
+
+  return (
+    <div className="page">
+      {/* Hero */}
+      <div className="hero-card" onClick={()=>onPlace(suggested)}>
+        <div className="hero-tag">🎯 Anbefalt til deg nå</div>
+        <div className="hero-name">{suggested.name}</div>
+        <div className="hero-sub">{suggested.area} · {suggested.municipality}</div>
+        <div className="hero-meta">
+          <div className="hero-score">⭐ {suggested.score}</div>
+          <div className="hero-badges">
+            <span className="badge free">Gratis</span>
+            {suggested.dog_friendly && <span className="badge free">🐕 Hund OK</span>}
+            {suggested.public_transport && <span className="badge free">🚌 Koll.transport</span>}
+          </div>
+        </div>
+      </div>
+
+      {/* Categories */}
+      <div style={{padding:'16px 0 4px'}}>
+        <div style={{padding:'0 20px 10px',fontSize:13,fontWeight:700,color:'var(--gray-500)',textTransform:'uppercase',letterSpacing:'0.8px'}}>Kategorier</div>
+        <div className="categories-scroll">
+          {CATEGORIES.map(c=>(
+            <div key={c.id} className={`cat-chip ${activeAct===c.id?'active':''}`} onClick={()=>setActiveAct(c.id)}>
+              <span className="cat-emoji">{c.emoji}</span>
+              <span className="cat-label">{c.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Trending */}
+      <div style={{padding:'20px 0 4px'}}>
+        <div className="section-title" style={{padding:'0 20px'}}>🔥 Mest populære</div>
+        <div className="places-row">
+          {featured.map(p=><PlaceMini key={p.id} place={p} onClick={onPlace}/>)}
+        </div>
+      </div>
+
+      {/* Free */}
+      <div style={{padding:'20px 0 4px'}}>
+        <div className="section-title" style={{padding:'0 20px'}}>🟢 Gratis steder</div>
+        <div className="places-row">
+          {topFree.map(p=><PlaceMini key={p.id} place={p} onClick={onPlace}/>)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ListPage({onPlace, favorites, onFav}) {
+  const [search, setSearch] = useState('');
+  const [activeAct, setActiveAct] = useState('alle');
+  const [filterFree, setFilterFree] = useState(false);
+  const [filterLys, setFilterLys] = useState(false);
+  const [filterHund, setFilterHund] = useState(false);
+  const [filterFamilie, setFilterFamilie] = useState(false);
+  const [sortBy, setSortBy] = useState('score');
+
+  let results = PLACES;
+  if (activeAct !== 'alle') results = results.filter(p=>p.activities.includes(activeAct));
+  if (filterFree) results = results.filter(p=>p.is_free);
+  if (filterLys) results = results.filter(p=>p.evening_lighting);
+  if (filterHund) results = results.filter(p=>p.dog_friendly);
+  if (filterFamilie) results = results.filter(p=>p.family_friendly);
+  if (search) results = results.filter(p=>p.name.toLowerCase().includes(search.toLowerCase())||p.area.toLowerCase().includes(search.toLowerCase()));
+  if (sortBy==='score') results = [...results].sort((a,b)=>b.score-a.score);
+  if (sortBy==='reviews') results = [...results].sort((a,b)=>b.reviews-a.reviews);
+
+  return (
+    <div className="page">
+      <div className="search-bar">
+        <span>🔍</span>
+        <input placeholder="Søk etter sted eller område..." value={search} onChange={e=>setSearch(e.target.value)}/>
+        {search && <button style={{background:'none',border:'none',cursor:'pointer',color:'var(--gray-400)'}} onClick={()=>setSearch('')}>✕</button>}
+      </div>
+      <div className="filter-bar">
+        <button className={`filter-btn ${activeAct==='alle'?'active':''}`} onClick={()=>setActiveAct('alle')}>Alle</button>
+        {CATEGORIES.filter(c=>c.id!=='alle').map(c=>(
+          <button key={c.id} className={`filter-btn ${activeAct===c.id?'active':''}`} onClick={()=>setActiveAct(c.id)}>{c.emoji} {c.label}</button>
+        ))}
+      </div>
+      <div className="filter-bar" style={{borderBottom:'none',paddingBottom:0}}>
+        <button className={`filter-btn ${filterFree?'active':''}`} onClick={()=>setFilterFree(!filterFree)}>🟢 Gratis</button>
+        <button className={`filter-btn ${filterLys?'active':''}`} onClick={()=>setFilterLys(!filterLys)}>💡 Kveldsbelysning</button>
+        <button className={`filter-btn ${filterHund?'active':''}`} onClick={()=>setFilterHund(!filterHund)}>🐕 Hundevennlig</button>
+        <button className={`filter-btn ${filterFamilie?'active':''}`} onClick={()=>setFilterFamilie(!filterFamilie)}>👨‍👩‍👧 Familie</button>
+        <button className={`filter-btn ${sortBy==='reviews'?'active':''}`} onClick={()=>setSortBy(s=>s==='score'?'reviews':'score')}>↕ {sortBy==='score'?'Rating':'Anmeldelser'}</button>
+      </div>
+      <div style={{padding:'8px 20px 4px',fontSize:12,color:'var(--gray-500)',fontWeight:500}}>{results.length} steder</div>
+      <div style={{padding:'0 20px'}}>
+        {results.length===0 ? (
+          <div className="empty">
+            <div className="empty-emoji">🤷</div>
+            <div className="empty-title">Ingen treff</div>
+            <div>Prøv å justere filtrene</div>
+          </div>
+        ) : results.map(p=>(
+          <PlaceCard key={p.id} place={p} onClick={onPlace} onFav={onFav} isFav={favorites.includes(p.id)}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FavoritesPage({onPlace, favorites, onFav}) {
+  const favPlaces = PLACES.filter(p=>favorites.includes(p.id));
+  return (
+    <div className="page">
+      <div style={{padding:'24px 20px 12px'}}>
+        <div className="page-title">❤️ Favoritter</div>
+        <div className="page-sub">{favPlaces.length} lagrede steder</div>
+      </div>
+      <div style={{padding:'0 20px'}}>
+        {favPlaces.length===0 ? (
+          <div className="empty">
+            <div className="empty-emoji">🤍</div>
+            <div className="empty-title">Ingen favoritter ennå</div>
+            <div>Trykk ❤️ på et sted for å lagre det her</div>
+          </div>
+        ) : favPlaces.map(p=>(
+          <PlaceCard key={p.id} place={p} onClick={onPlace} onFav={onFav} isFav={true}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DetailPage({place, onBack, isFav, onFav}) {
+  const [showReport, setShowReport] = useState(false);
+  const [showReview, setShowReview] = useState(false);
+  const [reportSent, setReportSent] = useState(false);
+  const [reviewSent, setReviewSent] = useState(false);
+  const [reportForm, setReportForm] = useState({type:'stengt',desc:'',name:''});
+  const [reviewForm, setReviewForm] = useState({name:'',text:'',score:8});
+  const [hoverStar, setHoverStar] = useState(0);
+  const reviews = SAMPLE_REVIEWS[place.id] || [];
+  const badge = getAccessBadge(place);
+
+  return (
+    <div className="page" style={{paddingBottom:90}}>
+      <div className="detail-header">
+        <div className="detail-img">{place.cover}</div>
+        <button className="back-btn" onClick={onBack}>←</button>
+        <button className="fav-btn" onClick={()=>onFav(place.id)}>{isFav?'❤️':'🤍'}</button>
+      </div>
+
+      <div className="detail-content">
+        <div className="detail-name">{place.name}</div>
+        <div className="detail-meta">{place.area} · {place.municipality} · {place.reviews} anmeldelser</div>
+        <div className="detail-badges">
+          <span className={`badge ${badge.cls}`} style={{fontSize:12,padding:'4px 10px',borderRadius:20,fontWeight:600,background:badge.cls==='free'?'var(--primary-pale)':badge.cls==='paid'?'var(--blue-pale)':'var(--yellow-pale)',color:badge.cls==='free'?'var(--primary)':badge.cls==='paid'?'var(--blue)':'#92400e'}}>{badge.label}</span>
+          {getStatusEl(place)}
+          {place.evening_lighting && <span className="badge" style={{background:'var(--yellow-pale)',color:'#92400e',fontSize:12,padding:'4px 10px',borderRadius:20,fontWeight:600}}>💡 Kveldsbelysning</span>}
+        </div>
+
+        <p style={{fontSize:14,color:'var(--gray-700)',lineHeight:1.7,marginBottom:20}}>{place.description}</p>
+
+        {/* Score */}
+        <div className="score-box">
+          <div className="score-total">
+            <div className="score-big">{place.score}</div>
+            <div>
+              <div className="score-stars">{Array.from({length:5},(_,i)=><span key={i}>{i<Math.round(place.score/2)?'★':'☆'}</span>)}</div>
+              <div className="score-label">Totalpoeng · {place.reviews} anmeldelser</div>
+            </div>
+          </div>
+          {SCORE_LABELS.map(({key,label})=>(
+            <div key={key} className="score-row">
+              <div className="score-row-label">{label}</div>
+              <ScoreBar score={place.scores[key]}/>
+              <div className="score-num">{place.scores[key]}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Best for */}
+        <div className="section-title">Passer best for</div>
+        <div className="best-for-wrap">
+          {place.best_for.map(t=><span key={t} className="best-for-tag">{t}</span>)}
+        </div>
+
+        <div className="divider"/>
+
+        {/* Practical info */}
+        <div className="section-title">Praktisk info</div>
+        <div className="info-row"><span className="info-icon">🕐</span><span>{place.opening_hours}</span></div>
+        <div className="info-row"><span className="info-icon">🚌</span><span>{place.public_transport ? place.transport_details : 'Ingen kollektivtransport'}</span></div>
+        {place.booking_required && <div className="info-row"><span className="info-icon">📅</span><span>Booking nødvendig</span></div>}
+
+        <div className="divider"/>
+
+        <div className="section-title">Fasiliteter</div>
+        <div className="facilities-grid">
+          <div className={`facility-item ${place.toilet?'yes':'no'}`}>{place.toilet?'✓':'✗'} Toalett</div>
+          <div className={`facility-item ${place.parking?'yes':'no'}`}>{place.parking?'✓':'✗'} Parkering</div>
+          <div className={`facility-item ${place.kiosk_cafe?'yes':'no'}`}>{place.kiosk_cafe?'✓':'✗'} Kiosk/Kafé</div>
+          <div className={`facility-item ${place.changing_room?'yes':'no'}`}>{place.changing_room?'✓':'✗'} Garderobe</div>
+          <div className={`facility-item ${place.evening_lighting?'yes':'no'}`}>{place.evening_lighting?'✓':'✗'} Kveldsbelysning</div>
+          <div className={`facility-item ${place.family_friendly?'yes':'no'}`}>{place.family_friendly?'✓':'✗'} Familievennlig</div>
+          <div className={`facility-item ${place.dog_friendly?'yes':'no'}`}>{place.dog_friendly?'✓':'✗'} Hundevennlig</div>
+          <div className={`facility-item ${place.wheelchair_accessible??false?'yes':'no'}`}>{place.wheelchair_accessible??false?'✓':'✗'} Rullestol</div>
+        </div>
+
+        <div className="divider"/>
+
+        {/* Reviews */}
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}}>
+          <div className="section-title" style={{marginBottom:0}}>Anmeldelser ({place.reviews})</div>
+          <button className="btn btn-secondary" style={{width:'auto',padding:'7px 14px',fontSize:12}} onClick={()=>setShowReview(true)}>+ Skriv anmeldelse</button>
+        </div>
+        {reviewSent && <div style={{padding:'10px 14px',background:'var(--primary-pale)',borderRadius:'var(--radius)',marginBottom:12,fontSize:13,color:'var(--primary)',fontWeight:600}}>✓ Takk for anmeldelsen!</div>}
+        {reviews.map((r,i)=>(
+          <div key={i} className="review-card">
+            <div className="review-top">
+              <div className="review-author">{r.author}</div>
+              <div className="review-score">⭐ {r.score}</div>
+            </div>
+            <div className="review-text">{r.text}</div>
+            {r.tags && <div style={{marginTop:8,display:'flex',gap:6}}>{r.tags.map(t=><span key={t} className="best-for-tag" style={{fontSize:11,padding:'3px 8px'}}>{t}</span>)}</div>}
+          </div>
+        ))}
+        {reviews.length===0 && <div style={{padding:'20px 0',color:'var(--gray-400)',fontSize:13}}>Ingen anmeldelser ennå. Vær den første!</div>}
+
+        <div className="divider"/>
+
+        <button className="btn btn-secondary" style={{color:'#dc2626',fontSize:13}} onClick={()=>setShowReport(true)}>⚠️ Rapporter problem med dette stedet</button>
+      </div>
+
+      {/* Report modal */}
+      {showReport && (
+        <div className="modal-overlay" onClick={()=>setShowReport(false)}>
+          <div className="modal" onClick={e=>e.stopPropagation()}>
+            <button className="modal-close" onClick={()=>setShowReport(false)}>✕</button>
+            <div className="modal-title">Rapporter problem</div>
+            {reportSent ? (
+              <div style={{textAlign:'center',padding:'20px 0'}}>
+                <div style={{fontSize:40,marginBottom:12}}>✅</div>
+                <div style={{fontWeight:700,marginBottom:6}}>Takk!</div>
+                <div style={{fontSize:13,color:'var(--gray-500)'}}>Vi ser på det snarest.</div>
+                <button className="btn btn-primary" style={{marginTop:20}} onClick={()=>{setShowReport(false);setReportSent(false);}}>Lukk</button>
+              </div>
+            ) : (
+              <>
+                <div className="form-field">
+                  <label className="form-label">Type problem</label>
+                  <select className="form-input form-select" value={reportForm.type} onChange={e=>setReportForm({...reportForm,type:e.target.value})}>
+                    <option value="stengt">Stedet er stengt</option>
+                    <option value="dårlig vedlikehold">Dårlig vedlikehold</option>
+                    <option value="feil informasjon">Feil informasjon</option>
+                    <option value="annet">Annet</option>
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label className="form-label">Beskriv problemet</label>
+                  <textarea className="form-input form-textarea" placeholder="Hva er galt?" value={reportForm.desc} onChange={e=>setReportForm({...reportForm,desc:e.target.value})}/>
+                </div>
+                <div className="form-field">
+                  <label className="form-label">Navn (valgfritt)</label>
+                  <input className="form-input" placeholder="Ditt navn" value={reportForm.name} onChange={e=>setReportForm({...reportForm,name:e.target.value})}/>
+                </div>
+                <button className="btn btn-primary" onClick={()=>setReportSent(true)}>Send rapport</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Review modal */}
+      {showReview && (
+        <div className="modal-overlay" onClick={()=>setShowReview(false)}>
+          <div className="modal" onClick={e=>e.stopPropagation()}>
+            <button className="modal-close" onClick={()=>setShowReview(false)}>✕</button>
+            <div className="modal-title">Skriv anmeldelse</div>
+            {reviewSent ? (
+              <div style={{textAlign:'center',padding:'20px 0'}}>
+                <div style={{fontSize:40,marginBottom:12}}>🌟</div>
+                <div style={{fontWeight:700,marginBottom:6}}>Takk for anmeldelsen!</div>
+                <button className="btn btn-primary" style={{marginTop:20}} onClick={()=>{setShowReview(false);setReviewSent(false);}}>Lukk</button>
+              </div>
+            ) : (
+              <>
+                <div className="form-field">
+                  <label className="form-label">Din totalvurdering</label>
+                  <div className="stars-input">
+                    {[1,2,3,4,5].map(s=>(
+                      <span key={s} className={`star-input ${(hoverStar||Math.round(reviewForm.score/2))>=s?'active':''}`}
+                        onMouseEnter={()=>setHoverStar(s)} onMouseLeave={()=>setHoverStar(0)}
+                        onClick={()=>setReviewForm({...reviewForm,score:s*2})}>★</span>
+                    ))}
+                  </div>
+                  <div style={{fontSize:12,color:'var(--gray-500)'}}>{reviewForm.score}/10 poeng</div>
+                </div>
+                <div className="form-field">
+                  <label className="form-label">Din anmeldelse</label>
+                  <textarea className="form-input form-textarea" placeholder="Hva synes du om stedet?" value={reviewForm.text} onChange={e=>setReviewForm({...reviewForm,text:e.target.value})}/>
+                </div>
+                <div className="form-field">
+                  <label className="form-label">Navn</label>
+                  <input className="form-input" placeholder="Ditt navn" value={reviewForm.name} onChange={e=>setReviewForm({...reviewForm,name:e.target.value})}/>
+                </div>
+                <button className="btn btn-primary" onClick={()=>setReviewSent(true)}>Publiser anmeldelse</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────
+// APP SHELL
+// ──────────────────────────────────────────────
+function App() {
+  const [tab, setTab] = useState('home');
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  const now = new Date();
+  const hour = now.getHours();
+  const weatherEmoji = hour < 6 ? '🌙' : hour < 10 ? '🌤️' : hour < 18 ? '☀️' : '🌆';
+  const timeLabel = hour < 6 ? 'God natt' : hour < 10 ? 'God morgen' : hour < 14 ? 'God dag' : hour < 18 ? 'God ettermiddag' : 'God kveld';
+
+  const handleFav = id => {
+    setFavorites(f => f.includes(id) ? f.filter(x=>x!==id) : [...f, id]);
+  };
+
+  const handlePlace = place => {
+    setSelectedPlace(place);
+    setTab('detail');
+  };
+
+  const tabs = [
+    {id:'home',label:'Hjem',icon:'🏠'},
+    {id:'list',label:'Utforsk',icon:'🔍'},
+    {id:'favorites',label:'Favoritter',icon:'❤️'},
+  ];
+
+  return (
+    <div className="app">
+      {/* Header */}
+      {tab !== 'detail' && (
+        <div className="header">
+          <div className="header-top">
+            <div className="logo">Aktiv<span>Oslo</span></div>
+            <div className="weather-pill">{weatherEmoji} {timeLabel}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Pages */}
+      {tab === 'home' && <HomePage onPlace={handlePlace} favorites={favorites} onFav={handleFav}/>}
+      {tab === 'list' && <ListPage onPlace={handlePlace} favorites={favorites} onFav={handleFav}/>}
+      {tab === 'favorites' && <FavoritesPage onPlace={handlePlace} favorites={favorites} onFav={handleFav}/>}
+      {tab === 'detail' && selectedPlace && (
+        <DetailPage
+          place={selectedPlace}
+          onBack={()=>setTab('home')}
+          isFav={favorites.includes(selectedPlace.id)}
+          onFav={handleFav}
+        />
+      )}
+
+      {/* Bottom nav */}
+      {tab !== 'detail' && (
+        <nav className="bottom-nav">
+          {tabs.map(t=>(
+            <button key={t.id} className={`nav-item ${tab===t.id?'active':''}`} onClick={()=>setTab(t.id)}>
+              <span className="nav-icon">{t.icon}</span>
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </nav>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

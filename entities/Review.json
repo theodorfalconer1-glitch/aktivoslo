@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "place_id": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "score_total": {
+      "type": "number"
+    },
+    "score_quality": {
+      "type": "number"
+    },
+    "score_location": {
+      "type": "number"
+    },
+    "score_accessibility": {
+      "type": "number"
+    },
+    "score_maintenance": {
+      "type": "number"
+    },
+    "score_capacity": {
+      "type": "number"
+    },
+    "score_facilities": {
+      "type": "number"
+    },
+    "score_atmosphere": {
+      "type": "number"
+    },
+    "score_value": {
+      "type": "number"
+    },
+    "text": {
+      "type": "string"
+    },
+    "best_for_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "helpful_count": {
+      "type": "number"
+    }
+  },
+  "required": [],
+  "name": "Review"
+}

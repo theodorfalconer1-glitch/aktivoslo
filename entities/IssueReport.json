@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "properties": {
+    "place_id": {
+      "type": "string"
+    },
+    "place_name": {
+      "type": "string"
+    },
+    "issue_type": {
+      "type": "string",
+      "enum": [
+        "stengt",
+        "d\u00e5rlig vedlikehold",
+        "feil informasjon",
+        "annet"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "reporter_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ny",
+        "under behandling",
+        "l\u00f8st"
+      ]
+    }
+  },
+  "required": [],
+  "name": "IssueReport"
+}

@@ -1,0 +1,176 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "address": {
+      "type": "string"
+    },
+    "neighborhood": {
+      "type": "string"
+    },
+    "municipality": {
+      "type": "string",
+      "enum": [
+        "Oslo",
+        "Asker",
+        "B\u00e6rum"
+      ]
+    },
+    "area": {
+      "type": "string"
+    },
+    "activity_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_free": {
+      "type": "boolean"
+    },
+    "price_range": {
+      "type": "string",
+      "enum": [
+        "gratis",
+        "under 100kr",
+        "100-300kr",
+        "over 300kr"
+      ]
+    },
+    "booking_required": {
+      "type": "boolean"
+    },
+    "booking_url": {
+      "type": "string"
+    },
+    "opening_hours": {
+      "type": "string"
+    },
+    "evening_lighting": {
+      "type": "boolean"
+    },
+    "always_open": {
+      "type": "boolean"
+    },
+    "toilet": {
+      "type": "boolean"
+    },
+    "changing_room": {
+      "type": "boolean"
+    },
+    "parking": {
+      "type": "boolean"
+    },
+    "public_transport": {
+      "type": "boolean"
+    },
+    "transport_details": {
+      "type": "string"
+    },
+    "kiosk_cafe": {
+      "type": "boolean"
+    },
+    "shower": {
+      "type": "boolean"
+    },
+    "equipment_rental": {
+      "type": "boolean"
+    },
+    "family_friendly": {
+      "type": "boolean"
+    },
+    "dog_friendly": {
+      "type": "boolean"
+    },
+    "beginner_friendly": {
+      "type": "boolean"
+    },
+    "wheelchair_accessible": {
+      "type": "boolean"
+    },
+    "seasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "best_for_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "score_total": {
+      "type": "number"
+    },
+    "score_quality": {
+      "type": "number"
+    },
+    "score_location": {
+      "type": "number"
+    },
+    "score_accessibility": {
+      "type": "number"
+    },
+    "score_maintenance": {
+      "type": "number"
+    },
+    "score_capacity": {
+      "type": "number"
+    },
+    "score_facilities": {
+      "type": "number"
+    },
+    "score_atmosphere": {
+      "type": "number"
+    },
+    "score_value": {
+      "type": "number"
+    },
+    "review_count": {
+      "type": "number"
+    },
+    "cover_image": {
+      "type": "string"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "closed",
+        "seasonal"
+      ]
+    },
+    "seasonal_closure_note": {
+      "type": "string"
+    },
+    "featured": {
+      "type": "boolean"
+    },
+    "verified": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "name": "Place"
+}
