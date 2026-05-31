@@ -206,9 +206,160 @@ header{background:linear-gradient(135deg,#12122a 0%,#1c1c3a 100%);color:#fff;pad
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
 #listView,#exploreView{display:none}
 #listView.visible,#exploreView.visible{display:flex;flex-direction:column}
+
+/* ═══ AUTH SCREEN ═══════════════════════════════════ */
+.auth-overlay{position:fixed;inset:0;background:linear-gradient(160deg,#12122a 0%,#1c2460 60%,#0f172a 100%);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+.auth-logo{font-size:2.8rem;font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:4px}
+.auth-logo span{color:#60a5fa}
+.auth-sub{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:40px;text-align:center}
+.auth-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:28px 24px;width:100%;max-width:380px}
+.auth-tabs{display:flex;background:rgba(255,255,255,.07);border-radius:10px;padding:3px;margin-bottom:24px}
+.auth-tab{flex:1;padding:8px;text-align:center;border-radius:8px;font-size:.82rem;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;transition:all .2s}
+.auth-tab.on{background:rgba(255,255,255,.15);color:#fff}
+.auth-field{margin-bottom:14px}
+.auth-field label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.auth-field input{width:100%;padding:12px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;color:#fff;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .15s}
+.auth-field input::placeholder{color:rgba(255,255,255,.3)}
+.auth-field input:focus{border-color:rgba(96,165,250,.6)}
+.auth-avatar-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.auth-av{font-size:1.5rem;cursor:pointer;padding:6px;border-radius:8px;border:2px solid transparent;transition:all .15s}
+.auth-av.sel{border-color:#60a5fa;background:rgba(96,165,250,.15)}
+.auth-btn{width:100%;padding:13px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border:none;border-radius:11px;font-size:.9rem;font-weight:800;cursor:pointer;margin-top:6px;font-family:inherit;transition:opacity .15s}
+.auth-btn:active{opacity:.85}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:16px 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.auth-divider span{font-size:.75rem;color:rgba(255,255,255,.3)}
+.auth-guest{width:100%;padding:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);border-radius:11px;font-size:.86rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.auth-guest:active{background:rgba(255,255,255,.12)}
+.auth-err{color:#f87171;font-size:.8rem;text-align:center;margin-top:8px;min-height:20px}
+
+/* ═══ SOSIAL-TAB ═════════════════════════════════════ */
+#socialView{flex:1;overflow-y:auto;display:none;background:var(--sand)}
+#socialView.visible{display:block}
+.soc-section{padding:14px 14px 0}
+.soc-head{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.soc-head button{font-size:.72rem;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit;padding:2px 8px;border-radius:8px;background:#e8f0fe}
+.friend-item{display:flex;align-items:center;gap:11px;background:var(--card);border-radius:12px;padding:11px 13px;margin-bottom:8px;cursor:pointer;border:1px solid var(--border)}
+.friend-item:active{opacity:.8}
+.friend-av{width:38px;height:38px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;border:2px solid var(--border)}
+.friend-info{flex:1;min-width:0}
+.friend-name{font-size:.88rem;font-weight:700}
+.friend-sub{font-size:.72rem;color:var(--muted);margin-top:1px}
+.friend-action{font-size:.75rem;font-weight:700;color:var(--accent);background:#e8f0fe;padding:5px 10px;border-radius:20px;cursor:pointer;border:none;font-family:inherit}
+.req-item{display:flex;align-items:center;gap:10px;background:#fef9f0;border-radius:12px;padding:11px 13px;margin-bottom:8px;border:1px solid #fed7aa}
+.req-btns{display:flex;gap:6px}
+.req-ok{padding:5px 11px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+.req-no{padding:5px 11px;background:#fee2e2;color:#dc2626;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+.group-card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid var(--border);cursor:pointer}
+.group-card:active{opacity:.85}
+.group-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.group-emoji{font-size:1.6rem}
+.group-name{font-size:.95rem;font-weight:800}
+.group-code{font-size:.7rem;color:var(--muted);margin-top:1px}
+.group-members{display:flex;gap:-6px;margin-bottom:8px}
+.gm-av{width:28px;height:28px;border-radius:50%;background:var(--sand);display:flex;align-items:center;justify-content:center;font-size:.9rem;border:2px solid #fff;margin-right:-8px}
+.plan-item{background:var(--sand);border-radius:10px;padding:11px 12px;margin-bottom:8px;border:1px solid var(--border)}
+.plan-place{font-size:.88rem;font-weight:700}
+.plan-by{font-size:.72rem;color:var(--muted);margin-top:2px}
+.plan-date{font-size:.75rem;color:var(--accent);font-weight:600;margin-top:3px}
+.plan-votes{display:flex;gap:8px;margin-top:8px}
+.vote-btn{flex:1;padding:7px;border-radius:9px;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .12s}
+.vote-btn.yes{background:#f0fdf4;border-color:#86efac;color:var(--green)}
+.vote-btn.no{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.invite-box{background:#f0f4ff;border-radius:12px;padding:13px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;border:1px solid #c7d7fc}
+.invite-code{font-size:1.2rem;font-weight:900;letter-spacing:.1em;color:var(--accent);flex:1}
+.invite-copy{padding:7px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.78rem;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* ═══ SØKEPANEL (brukersøk + ny gruppe) ═════════════ */
+.panel-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:5000;display:none;align-items:flex-end}
+.panel-overlay.open{display:flex}
+.panel-box{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:540px;margin:0 auto;padding:20px;max-height:80dvh;overflow-y:auto}
+.panel-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:-8px auto 16px}
+.panel-title{font-size:1rem;font-weight:800;margin-bottom:14px}
+.panel-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:.9rem;font-family:inherit;outline:none;background:var(--sand)}
+.panel-input:focus{border-color:var(--accent);background:#fff}
+.panel-results{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.panel-user{display:flex;align-items:center;gap:11px;padding:10px 12px;background:var(--sand);border-radius:10px;cursor:pointer}
+.pu-av{font-size:1.4rem;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:50%;border:1px solid var(--border)}
+.pu-name{font-size:.88rem;font-weight:700;flex:1}
+.pu-add{padding:6px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+.emoji-pick{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.ep-btn{font-size:1.5rem;padding:7px;border-radius:8px;cursor:pointer;border:2px solid transparent;background:var(--sand);transition:all .12s}
+.ep-btn.sel{border-color:var(--accent);background:#e8f0fe}
+.panel-submit{width:100%;padding:12px;background:var(--navy);color:#fff;border:none;border-radius:11px;font-size:.9rem;font-weight:800;cursor:pointer;margin-top:10px;font-family:inherit}
 </style>
 </head>
 <body>
+
+<!-- AUTH OVERLAY -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-logo">🏃 Aktiv<span>Oslo</span></div>
+  <div class="auth-sub">Finn det beste stedet ute nå</div>
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <div class="auth-tab on" id="atLogin" onclick="authTab('login')">Logg inn</div>
+      <div class="auth-tab" id="atReg" onclick="authTab('reg')">Registrer</div>
+    </div>
+    <!-- LOGIN -->
+    <div id="authLogin">
+      <div class="auth-field"><label>E-post</label><input type="email" id="liEmail" placeholder="din@epost.no"></div>
+      <div class="auth-field"><label>Passord</label><input type="password" id="liPw" placeholder="••••••"></div>
+      <button class="auth-btn" id="liBtn" onclick="doLogin()">Logg inn</button>
+    </div>
+    <!-- REGISTER (hidden) -->
+    <div id="authReg" style="display:none">
+      <div class="auth-field"><label>Navn</label><input type="text" id="reName" placeholder="Ditt navn"></div>
+      <div class="auth-field"><label>E-post</label><input type="email" id="reEmail" placeholder="din@epost.no"></div>
+      <div class="auth-field"><label>Passord</label><input type="password" id="rePw" placeholder="Minst 6 tegn"></div>
+      <div class="auth-field">
+        <label>Velg avatar</label>
+        <div class="auth-avatar-row" id="avRow">
+
+        </div>
+      </div>
+      <button class="auth-btn" id="reBtn" onclick="doRegister()">Opprett konto</button>
+    </div>
+    <div class="auth-err" id="authErr"></div>
+    <div class="auth-divider"><span>eller</span></div>
+    <button class="auth-guest" onclick="continueAsGuest()">👤 Fortsett som gjest</button>
+  </div>
+</div>
+
+<!-- ADD FRIEND PANEL -->
+<div class="panel-overlay" id="addFriendPanel" onclick="if(event.target.id==='addFriendPanel')closePanels()">
+  <div class="panel-box">
+    <div class="panel-handle"></div>
+    <div class="panel-title">🔍 Finn venner</div>
+    <input class="panel-input" id="friendSearch" placeholder="Søk på navn..." oninput="searchUsers(this.value)">
+    <div class="panel-results" id="friendResults"></div>
+  </div>
+</div>
+
+<!-- CREATE GROUP PANEL -->
+<div class="panel-overlay" id="createGroupPanel" onclick="if(event.target.id==='createGroupPanel')closePanels()">
+  <div class="panel-box">
+    <div class="panel-handle"></div>
+    <div class="panel-title">👥 Ny gruppe</div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:.78rem;font-weight:700;color:var(--muted);margin-bottom:8px">VELG IKON</div>
+      <div class="emoji-pick" id="groupEmojiPick"></div>
+    </div>
+    <input class="panel-input" id="groupNameInput" placeholder="Gruppenavn (f.eks. Badstugjengen)">
+    <button class="panel-submit" onclick="doCreateGroup()">Lag gruppe</button>
+  </div>
+</div>
+
+<!-- JOIN GROUP PANEL -->
+<div class="panel-overlay" id="joinGroupPanel" onclick="if(event.target.id==='joinGroupPanel')closePanels()">
+  <div class="panel-box">
+    <div class="panel-handle"></div>
+    <div class="panel-title">🔑 Bli med i gruppe</div>
+    <input class="panel-input" id="joinCodeInput" placeholder="Skriv inn invitasjonskode" style="letter-spacing:.1em;font-weight:700;font-size:1rem;text-transform:uppercase">
+    <button class="panel-submit" onclick="doJoinGroup()" style="background:var(--green)">Bli med</button>
+  </div>
+</div>
+
 <div id="app">
 
   <!-- HEADER -->
@@ -219,7 +370,7 @@ header{background:linear-gradient(135deg,#12122a 0%,#1c1c3a 100%);color:#fff;pad
         <div class="logo-sub">177 steder · Oslo, Asker, Bærum</div>
       </div>
     </div>
-    <div class="streak-badge" onclick="openStreak()">
+    <div class="streak-badge" id="streakBadge" onclick="openStreak()">
       <span class="streak-fire">🔥</span>
       <div>
         <div class="streak-num" id="streakNum">0</div>
@@ -249,9 +400,10 @@ header{background:linear-gradient(135deg,#12122a 0%,#1c1c3a 100%);color:#fff;pad
   </div>
 
   <!-- TABS -->
-  <div class="tabs">
-    <div class="tab active" id="tabListe" onclick="switchTab('liste')">📋 Alle steder</div>
+  <div class="tabs" style="overflow-x:auto;scrollbar-width:none">
+    <div class="tab active" id="tabListe" onclick="switchTab('liste')">📋 Alle</div>
     <div class="tab" id="tabUtforsk" onclick="switchTab('utforsk')">🗂️ Utforsk</div>
+    <div class="tab" id="tabSocial" onclick="switchTab('social')">👥 Venner</div>
     <div class="tab" id="tabKart" onclick="switchTab('kart')">🗺️ Kart</div>
   </div>
 
@@ -298,6 +450,11 @@ header{background:linear-gradient(135deg,#12122a 0%,#1c1c3a 100%);color:#fff;pad
       </div>
     </div>
 
+
+    <!-- SOCIAL VIEW -->
+    <div id="socialView">
+      <div id="socialContent"></div>
+    </div>
     <!-- MAP VIEW -->
     <div id="mapView">
       <div id="map"></div>
@@ -892,6 +1049,482 @@ function switchTab(tab){
   // Sett default sort chip
   document.querySelector('[data-sort="score"]').classList.add('on');
 })();
+
+// ═══════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════
+const API = 'https://superagent-86a77547.base44.app/functions/aktivosloApi';
+const AVATARS = ['🏃','🧗','🏊','🚴','🥏','🎾','🛹','🏋️','⛷️','🧖','🐕','🌿','🏄','⛺','🎯'];
+let AU = null; // current user object
+let selectedAvatar = '🏃';
+let selectedGroupEmoji = '👥';
+
+// ── API helper ──────────────────────────────────────────
+async function api(action, data, showErr=true) {
+  try {
+    const body = { action, data };
+    if (AU?.id) body.token = AU.id;
+    const r = await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const j = await r.json();
+    if (!r.ok && showErr) showToast('⚠️ ' + (j.error || 'Noe gikk galt'));
+    return j;
+  } catch(e) { if(showErr) showToast('⚠️ Ingen nettverkstilkobling'); return {error: e.message}; }
+}
+
+// ═══════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════
+function authTab(t) {
+  document.getElementById('atLogin').classList.toggle('on', t==='login');
+  document.getElementById('atReg').classList.toggle('on', t==='reg');
+  document.getElementById('authLogin').style.display = t==='login' ? 'block' : 'none';
+  document.getElementById('authReg').style.display = t==='reg' ? 'block' : 'none';
+  document.getElementById('authErr').textContent = '';
+}
+
+function buildAvatarRow() {
+  const row = document.getElementById('avRow');
+  if (!row) return;
+  row.innerHTML = AVATARS.map(a => `<span class="auth-av ${a===selectedAvatar?'sel':''}" onclick="pickAv(this,'${a}')">${a}</span>`).join('');
+}
+
+function pickAv(el, av) {
+  selectedAvatar = av;
+  document.querySelectorAll('.auth-av').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+async function doLogin() {
+  const email = document.getElementById('liEmail').value.trim();
+  const pw = document.getElementById('liPw').value;
+  if (!email || !pw) { document.getElementById('authErr').textContent = 'Fyll inn e-post og passord'; return; }
+  const btn = document.getElementById('liBtn');
+  btn.disabled = true; btn.textContent = 'Laster...';
+  const res = await api('login', {email, password: pw}, false);
+  btn.disabled = false; btn.textContent = 'Logg inn';
+  if (res.error) { document.getElementById('authErr').textContent = res.error; return; }
+  loginSuccess(res.user);
+}
+
+async function doRegister() {
+  const name = document.getElementById('reName').value.trim();
+  const email = document.getElementById('reEmail').value.trim();
+  const pw = document.getElementById('rePw').value;
+  if (!name || !email || !pw) { document.getElementById('authErr').textContent = 'Fyll inn alle felt'; return; }
+  if (pw.length < 6) { document.getElementById('authErr').textContent = 'Passord må ha minst 6 tegn'; return; }
+  const btn = document.getElementById('reBtn');
+  btn.disabled = true; btn.textContent = 'Oppretter...';
+  const res = await api('register', {email, password: pw, display_name: name, avatar_emoji: selectedAvatar}, false);
+  btn.disabled = false; btn.textContent = 'Opprett konto';
+  if (res.error) { document.getElementById('authErr').textContent = res.error; return; }
+  loginSuccess(res.user);
+}
+
+function continueAsGuest() {
+  AU = { id: null, display_name: 'Gjest', avatar_emoji: '👤', isGuest: true };
+  LS.set('user', AU);
+  document.getElementById('authOverlay').style.display = 'none';
+  showToast('👤 Du er inne som gjest');
+  updateHeaderUser();
+}
+
+function loginSuccess(user) {
+  AU = user;
+  LS.set('user', user);
+  document.getElementById('authOverlay').style.display = 'none';
+  showToast('✅ Velkommen, ' + user.display_name + '!');
+  updateHeaderUser();
+  // Sync localStorage-data til server
+  const v = LS.get('visited') || [];
+  const s = LS.get('favs') || [];
+  const streak = getStreak();
+  if (v.length || s.length) {
+    api('sync_progress', {visited_places: v, saved_places: s, streak_count: streak.count, streak_last_date: streak.last});
+  }
+}
+
+function updateHeaderUser() {
+  const badge = document.getElementById('streakBadge');
+  if (badge && AU) {
+    badge.innerHTML = `<span class="streak-fire">${AU.isGuest?'👤':'🔥'}</span><div><div class="streak-num" id="streakNum">${AU.isGuest?'':getStreak().count}</div><div class="streak-label">${AU.isGuest?'Gjest':'dager'}</div></div>`;
+  }
+}
+
+function checkAuth() {
+  const saved = LS.get('user');
+  if (saved) {
+    AU = saved;
+    document.getElementById('authOverlay').style.display = 'none';
+    updateHeaderUser();
+  } else {
+    buildAvatarRow();
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// TABS — extend switchTab
+// ═══════════════════════════════════════════════════════
+const _origSwitchTab = switchTab;
+function switchTab(tab) {
+  // Hide social
+  document.getElementById('socialView').classList.toggle('visible', tab==='social');
+  document.getElementById('tabSocial')?.classList.toggle('active', tab==='social');
+  document.getElementById('navSocial')?.classList.toggle('on', tab==='social');
+  if (tab === 'social') {
+    // hide others
+    document.getElementById('listView').classList.remove('visible');
+    document.getElementById('exploreView').classList.remove('visible');
+    document.getElementById('mapView').classList.remove('visible');
+    document.getElementById('tabListe').classList.remove('active');
+    document.getElementById('tabUtforsk').classList.remove('active');
+    document.getElementById('btnList')?.classList.remove('active');
+    document.getElementById('btnMap')?.classList.remove('active');
+    if (!AU?.isGuest && AU?.id) renderSocial();
+    else renderSocialGuest();
+  } else {
+    document.getElementById('socialView').classList.remove('visible');
+    _origSwitchTab(tab);
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SOSIAL — RENDER
+// ═══════════════════════════════════════════════════════
+async function renderSocial() {
+  const el = document.getElementById('socialContent');
+  el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted)">⏳ Laster...</div>';
+
+  const [friendsRes, reqsRes, groupsRes] = await Promise.all([
+    api('get_friends', {}),
+    api('get_friend_requests', {}),
+    api('get_my_groups', {}),
+  ]);
+
+  const friends = friendsRes.friends || [];
+  const reqs = reqsRes.requests || [];
+  const groups = groupsRes.groups || [];
+
+  let html = `
+    <div style="padding:14px 14px 4px;display:flex;align-items:center;gap:10px">
+      <div style="width:46px;height:46px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">${AU.avatar_emoji}</div>
+      <div style="flex:1">
+        <div style="font-size:1rem;font-weight:800">${AU.display_name}</div>
+        <div style="font-size:.72rem;color:var(--muted)">${(LS.get('visited')||[]).length} steder besøkt · ${friends.length} venner</div>
+      </div>
+    </div>`;
+
+  // Venneforespørsler
+  if (reqs.length) {
+    html += `<div class="soc-section"><div class="soc-head">🔔 Venneforespørsler <span></span></div>`;
+    reqs.forEach(r => {
+      html += `<div class="req-item">
+        <div class="friend-av">👤</div>
+        <div class="friend-info"><div class="friend-name">${r.from_display_name}</div></div>
+        <div class="req-btns">
+          <button class="req-ok" onclick="respondReq('${r.id}',true)">✓ Aksepter</button>
+          <button class="req-no" onclick="respondReq('${r.id}',false)">✕</button>
+        </div></div>`;
+    });
+    html += '</div>';
+  }
+
+  // Venner
+  html += `<div class="soc-section"><div class="soc-head">👯 Venner (${friends.length}) <button onclick="openPanel('addFriendPanel')">+ Legg til</button></div>`;
+  if (!friends.length) {
+    html += '<div style="text-align:center;padding:20px;color:var(--muted);font-size:.82rem;background:var(--card);border-radius:12px;border:1px solid var(--border)">Ingen venner ennå.<br>Legg til noen for å planlegge sammen!</div>';
+  } else {
+    friends.forEach(f => {
+      html += `<div class="friend-item">
+        <div class="friend-av">${f.avatar_emoji||'👤'}</div>
+        <div class="friend-info">
+          <div class="friend-name">${f.display_name}</div>
+          <div class="friend-sub">🗺️ ${f.visited_count} steder besøkt</div>
+        </div></div>`;
+    });
+  }
+  html += '</div>';
+
+  // Grupper
+  html += `<div class="soc-section" style="padding-bottom:20px"><div class="soc-head">👥 Mine grupper <button onclick="openPanel('createGroupPanel')">+ Ny</button></div>`;
+  if (!groups.length) {
+    html += `<div style="text-align:center;padding:20px;color:var(--muted);font-size:.82rem;background:var(--card);border-radius:12px;border:1px solid var(--border);margin-bottom:10px">Ingen grupper ennå.</div>`;
+  } else {
+    groups.forEach(g => {
+      const memberAvatars = (g.member_ids||[]).slice(0,4).map(()=>'👤').join('');
+      const plans = g.plans||[];
+      html += `<div class="group-card" onclick="openGroup('${g.id}')">
+        <div class="group-head">
+          <div class="group-emoji">${g.emoji}</div>
+          <div><div class="group-name">${g.name}</div><div class="group-code">👥 ${g.member_ids?.length||1} personer · Kode: <strong>${g.invite_code}</strong></div></div>
+        </div>
+        <div style="font-size:.78rem;color:var(--muted)">${plans.length} plan${plans.length!==1?'er':''}</div>
+      </div>`;
+    });
+  }
+  html += `<button onclick="openPanel('joinGroupPanel')" style="width:100%;padding:11px;border:2px dashed var(--border);background:transparent;border-radius:12px;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;margin-top:2px">🔑 Bli med med invitasjonskode</button>`;
+  html += '</div>';
+
+  el.innerHTML = html;
+}
+
+function renderSocialGuest() {
+  document.getElementById('socialContent').innerHTML = `
+    <div style="text-align:center;padding:60px 24px">
+      <div style="font-size:3rem;margin-bottom:12px">👥</div>
+      <div style="font-size:1rem;font-weight:800;margin-bottom:8px">Logg inn for å bruke sosiale funksjoner</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-bottom:24px;line-height:1.6">Legg til venner, lag grupper og planlegg aktiviteter sammen.</div>
+      <button onclick="document.getElementById('authOverlay').style.display='flex';AU=null;LS.set('user',null)" style="padding:12px 24px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit">Logg inn / Registrer</button>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// VENNER
+// ═══════════════════════════════════════════════════════
+let _searchTimeout = null;
+async function searchUsers(q) {
+  clearTimeout(_searchTimeout);
+  _searchTimeout = setTimeout(async () => {
+    if (q.length < 2) { document.getElementById('friendResults').innerHTML = ''; return; }
+    const res = await api('search_users', {query: q});
+    const users = res.users || [];
+    document.getElementById('friendResults').innerHTML = users.length
+      ? users.map(u => `<div class="panel-user">
+          <div class="pu-av">${u.avatar_emoji||'👤'}</div>
+          <div class="pu-name">${u.display_name}</div>
+          <button class="pu-add" onclick="sendReq('${u.id}','${u.display_name}',this)">Legg til</button>
+        </div>`).join('')
+      : '<div style="text-align:center;padding:20px;color:var(--muted);font-size:.82rem">Ingen funnet</div>';
+  }, 350);
+}
+
+async function sendReq(uid, name, btn) {
+  btn.disabled = true; btn.textContent = '⏳';
+  const res = await api('send_friend_request', {to_user_id: uid});
+  if (res.ok) { btn.textContent = '✓ Sendt'; showToast(`Venneforespørsel sendt til ${name}!`); }
+  else { btn.disabled = false; btn.textContent = 'Legg til'; }
+}
+
+async function respondReq(reqId, accept) {
+  await api('respond_friend_request', {request_id: reqId, accept});
+  showToast(accept ? '✅ Venn lagt til!' : 'Avvist');
+  renderSocial();
+}
+
+// ═══════════════════════════════════════════════════════
+// GRUPPER
+// ═══════════════════════════════════════════════════════
+function buildGroupEmojiPick() {
+  const emojis = ['👥','🏃','🏊','🧗','🥏','🏄','⛺','🎯','🧖','🏋️','🚴','🎾','⛷️','🏕️','🌿'];
+  document.getElementById('groupEmojiPick').innerHTML = emojis.map(e =>
+    `<span class="ep-btn ${e===selectedGroupEmoji?'sel':''}" onclick="pickGE(this,'${e}')">${e}</span>`).join('');
+}
+function pickGE(el, e) {
+  selectedGroupEmoji = e;
+  document.querySelectorAll('.ep-btn').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+async function doCreateGroup() {
+  const name = document.getElementById('groupNameInput').value.trim();
+  if (!name) { showToast('Skriv inn et gruppenavn'); return; }
+  const res = await api('create_group', {name, emoji: selectedGroupEmoji});
+  if (res.ok) {
+    closePanels();
+    document.getElementById('groupNameInput').value = '';
+    showToast('✅ Gruppe «' + name + '» opprettet!');
+    renderSocial();
+  }
+}
+
+async function doJoinGroup() {
+  const code = document.getElementById('joinCodeInput').value.trim().toUpperCase();
+  if (!code) { showToast('Skriv inn koden'); return; }
+  const res = await api('join_group', {invite_code: code});
+  if (res.ok) {
+    closePanels();
+    document.getElementById('joinCodeInput').value = '';
+    showToast('✅ Du er med i «' + res.group.name + '»!');
+    renderSocial();
+  }
+}
+
+async function openGroup(groupId) {
+  const res = await api('get_group', {group_id: groupId});
+  if (!res.group) return;
+  const g = res.group;
+  const plans = g.plans || [];
+
+  const el = document.getElementById('socialContent');
+  el.innerHTML = `
+    <div style="padding:14px;display:flex;align-items:center;gap:10px">
+      <button onclick="renderSocial()" style="background:var(--sand);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;font-family:inherit">←</button>
+      <div style="font-size:1.5rem">${g.emoji}</div>
+      <div><div style="font-size:1rem;font-weight:800">${g.name}</div><div style="font-size:.7rem;color:var(--muted)">${g.members?.length||1} medlemmer</div></div>
+    </div>
+    <div class="invite-box" style="margin:0 14px 14px">
+      <div>
+        <div style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Invitasjonskode</div>
+        <div class="invite-code">${g.invite_code}</div>
+      </div>
+      <button class="invite-copy" onclick="navigator.clipboard?.writeText('${g.invite_code}');showToast('📋 Kode kopiert!')">Kopier</button>
+    </div>
+    <div style="padding:0 14px;margin-bottom:10px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">MEDLEMMER</div>
+      <div style="display:flex;gap:10px;overflow-x:auto">
+        ${(g.members||[]).map(m=>`<div style="text-align:center;flex-shrink:0"><div style="width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:3px">${m.avatar_emoji||'👤'}</div><div style="font-size:.65rem;color:var(--muted);max-width:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.display_name.split(' ')[0]}</div></div>`).join('')}
+      </div>
+    </div>
+    <div style="padding:0 14px;margin-bottom:8px">
+      <div style="font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">PLANER (${plans.length})</div>
+      <div id="plansContainer">
+        ${plans.length ? plans.map(p => renderPlanItem(p, g.id, g.members?.length||1)).join('') : '<div style="text-align:center;padding:20px;background:var(--sand);border-radius:12px;color:var(--muted);font-size:.82rem">Ingen planer ennå. Foreslå et sted!</div>'}
+      </div>
+    </div>
+    <div style="padding:0 14px 24px">
+      <button onclick="openPlanSuggest('${g.id}')" style="width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:.88rem;font-weight:800;cursor:pointer;font-family:inherit">✨ Foreslå et sted</button>
+    </div>`;
+}
+
+function renderPlanItem(p, groupId, totalMembers) {
+  const yes = p.votes_yes?.length || 0, no = p.votes_no?.length || 0;
+  const myVoteYes = (p.votes_yes||[]).includes(AU?.id);
+  const myVoteNo = (p.votes_no||[]).includes(AU?.id);
+  const dateStr = p.suggested_date ? new Date(p.suggested_date).toLocaleDateString('nb-NO',{weekday:'long',day:'numeric',month:'long'}) : 'Dato ikke satt';
+  return `<div class="plan-item">
+    <div class="plan-place">${p.place_emoji||'📍'} ${p.place_name}</div>
+    <div class="plan-by">Foreslått av ${p.suggested_by_name}</div>
+    ${p.note ? `<div style="font-size:.75rem;color:#555;margin-top:3px;font-style:italic">"${p.note}"</div>` : ''}
+    <div class="plan-date">📅 ${dateStr}</div>
+    <div style="display:flex;gap:6px;margin-top:8px;align-items:center">
+      <button class="vote-btn ${myVoteYes?'yes':''}" onclick="vote('${groupId}','${p.id}','yes')">✅ ${yes}</button>
+      <button class="vote-btn ${myVoteNo?'no':''}" onclick="vote('${groupId}','${p.id}','no')">❌ ${no}</button>
+      <span style="font-size:.7rem;color:var(--muted);margin-left:auto">${yes}/${totalMembers} vil</span>
+    </div>
+  </div>`;
+}
+
+let _currentGroupId = null;
+function openPlanSuggest(groupId) {
+  _currentGroupId = groupId;
+  // Bygg et enkelt suggest-panel på toppen av group-visning
+  const container = document.getElementById('plansContainer');
+  if (!container) return;
+  container.insertAdjacentHTML('beforebegin', `
+    <div id="planSuggestBox" style="background:#f0f4ff;border-radius:14px;padding:14px;margin-bottom:12px;border:1.5px solid #c7d7fc">
+      <div style="font-size:.88rem;font-weight:800;margin-bottom:10px">✨ Foreslå et sted</div>
+      <input id="planPlaceName" class="panel-input" placeholder="Stedsnavn (f.eks. Sørenga sjøbad)" style="margin-bottom:8px">
+      <input id="planDate" type="date" class="panel-input" style="margin-bottom:8px">
+      <input id="planNote" class="panel-input" placeholder="Melding til gruppen (valgfritt)" style="margin-bottom:10px">
+      <div style="display:flex;gap:8px">
+        <button onclick="document.getElementById('planSuggestBox').remove()" style="flex:1;padding:10px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600">Avbryt</button>
+        <button onclick="doSuggestPlan()" style="flex:1;padding:10px;background:var(--accent);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:800">Send forslag</button>
+      </div>
+    </div>`);
+  document.getElementById('planPlaceName').focus();
+}
+
+// Suggest plan from place detail (called from modal)
+function suggestPlanFromPlace(placeId, placeName, placeEmoji) {
+  if (!AU?.id) { showToast('Logg inn for å planlegge'); return; }
+  // Switch to social and ask which group
+  switchTab('social');
+  setTimeout(async () => {
+    const res = await api('get_my_groups', {});
+    const groups = res.groups || [];
+    if (!groups.length) { showToast('Lag en gruppe først!'); return; }
+    const el = document.getElementById('socialContent');
+    el.insertAdjacentHTML('afterbegin', `
+      <div style="background:var(--navy);color:#fff;padding:14px;margin:0 0 2px;border-radius:0 0 14px 14px">
+        <div style="font-size:.88rem;font-weight:800;margin-bottom:10px">📍 Send "${placeName}" til gruppe</div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          ${groups.map(g=>`<button onclick="quickSuggest('${g.id}','${placeId}','${placeName}','${placeEmoji}')" style="padding:10px 14px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:#fff;font-weight:700;cursor:pointer;font-family:inherit;text-align:left">${g.emoji} ${g.name}</button>`).join('')}
+          <button onclick="this.closest('div').parentElement.remove()" style="padding:8px;background:rgba(255,255,255,.05);border:none;color:rgba(255,255,255,.5);cursor:pointer;font-family:inherit;border-radius:8px">Avbryt</button>
+        </div>
+      </div>`);
+  }, 100);
+}
+
+async function quickSuggest(groupId, placeId, placeName, placeEmoji) {
+  await api('suggest_plan', {group_id: groupId, place_id: placeId, place_name: placeName, place_emoji: placeEmoji});
+  showToast('✅ Forslag sendt til gruppen!');
+  openGroup(groupId);
+}
+
+async function doSuggestPlan() {
+  const name = document.getElementById('planPlaceName')?.value.trim();
+  const date = document.getElementById('planDate')?.value;
+  const note = document.getElementById('planNote')?.value.trim();
+  if (!name) { showToast('Skriv inn et stedsnavn'); return; }
+  const res = await api('suggest_plan', {
+    group_id: _currentGroupId, place_name: name, place_emoji: '📍',
+    suggested_date: date || null, note: note || ''
+  });
+  if (res.ok) {
+    document.getElementById('planSuggestBox')?.remove();
+    showToast('✅ Forslag sendt!');
+    openGroup(_currentGroupId);
+  }
+}
+
+async function vote(groupId, planId, v) {
+  await api('vote_plan', {group_id: groupId, plan_id: planId, vote: v});
+  openGroup(groupId);
+}
+
+// ═══════════════════════════════════════════════════════
+// PANELS
+// ═══════════════════════════════════════════════════════
+function openPanel(id) {
+  document.getElementById(id).classList.add('open');
+  if (id === 'createGroupPanel') buildGroupEmojiPick();
+  if (id === 'addFriendPanel') { document.getElementById('friendSearch').value=''; document.getElementById('friendResults').innerHTML=''; setTimeout(()=>document.getElementById('friendSearch').focus(),100); }
+}
+function closePanels() {
+  document.querySelectorAll('.panel-overlay').forEach(p=>p.classList.remove('open'));
+}
+
+// ═══════════════════════════════════════════════════════
+// PATCH MODAL — legg til "Del med gruppe"-knapp
+// ═══════════════════════════════════════════════════════
+const _origOpenModal = openModal;
+function openModal(id) {
+  _origOpenModal(id);
+  if (!AU?.id || AU.isGuest) return;
+  const p = PLACES.find(x=>x.id===id);
+  if (!p) return;
+  setTimeout(() => {
+    const box = document.getElementById('modalBox');
+    if (!box) return;
+    const favBtn = box.querySelector('.fav-btn');
+    if (favBtn && !box.querySelector('.share-group-btn')) {
+      const shareBtn = document.createElement('button');
+      shareBtn.className = 'share-group-btn';
+      shareBtn.style.cssText = 'width:100%;padding:11px;border:1.5px solid #c7d7fc;background:#f0f4ff;border-radius:var(--r-sm);font-size:.86rem;font-weight:700;cursor:pointer;margin-top:6px;color:var(--accent);font-family:inherit';
+      shareBtn.textContent = '👥 Foreslå for gruppe';
+      shareBtn.onclick = () => { closeModal(); suggestPlanFromPlace(p.id, p.name, pEmoji(p)); };
+      favBtn.after(shareBtn);
+    }
+  }, 50);
+}
+
+// ═══════════════════════════════════════════════════════
+// BOTTOM NAV — legg til Venner
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.getElementById('bottomNav');
+  if (nav && !document.getElementById('navSocial')) {
+    nav.insertAdjacentHTML('beforeend', `
+      <button class="nav-btn" id="navSocial" onclick="switchTab('social')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        <span>Venner</span>
+      </button>`);
+  }
+});
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', checkAuth);
 </script>
 </body>
 </html>
