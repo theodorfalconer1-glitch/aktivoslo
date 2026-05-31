@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "from_user_id": {
+      "type": "string"
+    },
+    "from_display_name": {
+      "type": "string"
+    },
+    "to_user_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "declined"
+      ]
+    }
+  },
+  "required": [],
+  "name": "FriendRequest"
+}

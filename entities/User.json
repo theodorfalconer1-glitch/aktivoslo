@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ]
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "avatar_emoji": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "string"
+    },
+    "favorite_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "visited_places": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "saved_places": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "streak_count": {
+      "type": "number"
+    },
+    "streak_last_date": {
+      "type": "string"
+    },
+    "friend_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "friend_requests_in": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "friend_requests_out": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "role"
+  ]
+}
