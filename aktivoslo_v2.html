@@ -44,7 +44,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .sort-chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .cards{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start;min-height:300px}
 @media(min-width:500px){.cards{grid-template-columns:repeat(3,1fr)}}
-.card{background:#fff;border-radius:var(--radius);padding:12px;border:1px solid var(--border);cursor:pointer;transition:transform .12s;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.card{background:#fff;border-radius:var(--radius);padding:14px 12px;border:1px solid var(--border);cursor:pointer;transition:background .1s,transform .1s;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
 .card:active{transform:scale(.97)}
 .card-emoji{font-size:1.7rem;margin-bottom:4px}
 .card-name{font-size:.85rem;font-weight:800;line-height:1.2;margin-bottom:3px}
@@ -83,7 +83,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:flex-end;justify-content:center}.modal-overlay.open{display:flex}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:18px 18px 0 0;padding:20px 16px 36px;width:100%;max-width:520px;position:relative;max-height:85vh;overflow-y:auto}
+.modal{background:#fff;border-radius:18px 18px 0 0;padding:20px 16px 36px;width:100%;max-width:520px;position:relative;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .modal-close{position:absolute;top:14px;right:14px;background:var(--light);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
 .modal-title{font-size:1.1rem;font-weight:900;margin-bottom:4px}
 .modal-sub{font-size:.77rem;color:var(--muted);margin-bottom:8px}
@@ -172,8 +172,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   </div>
 
   <!-- LIVE KART — fullt interaktivt -->
-  <div class="intro-map-wrap">
-    <div id="introMap" style="width:100%;height:100%"></div>
+  <div class="intro-map-wrap" style="pointer-events:none">
+    <div id="introMap" style="width:100%;height:100%;pointer-events:none"></div>
     <!-- Pill som viser antall -->
     <div style="position:absolute;top:10px;right:10px;background:#fff;border-radius:20px;padding:5px 12px;font-size:.75rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:400;pointer-events:none">
       📍 Oslo · 224 steder
@@ -11391,14 +11391,15 @@ function renderList() {
 function renderCard(p) {
   const isFav = favs.includes(p.id);
   const catLabel = t => { const c=CATS.find(x=>x.id===t); return c?c.l:t; };
-  const tags = (p.activity_types||[]).slice(0,2).map(t=>`<span class="ctag">${catLabel(t)}</span>`).join('');
-  return `<div class="card" onclick="openModal('${p.id}')">
+  const primaryCat = (p.activity_types||[])[0];
+  const tag = primaryCat ? `<span class="ctag">${catLabel(primaryCat)}</span>` : '';
+  return `<div class="card" data-id="${p.id}">
     ${isFav ? '<div class="fav-dot">❤️</div>' : ''}
     <div class="card-emoji">${pEmoji(p)}</div>
     <div class="card-name">${p.name}</div>
     <div class="card-sub">📍 ${p.neighborhood||p.municipality}</div>
     <div class="card-tags">
-      ${tags}
+      ${tag}
       ${p.is_free ? '<span class="badge-free">Gratis</span>' : ''}
       ${p.score_total ? `<span class="score-tag">⭐ ${p.score_total}</span>` : ''}
       ${p._dist && p._dist < 99999 ? `<span class="dist-tag">${p._dist < 1000 ? Math.round(p._dist)+'m' : (p._dist/1000).toFixed(1)+'km'}</span>` : ''}
@@ -12002,6 +12003,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initIntroMap();
   heroGreeting();
   checkAuth();
+
+  // Event delegation for kortene — robust mot re-render
+  document.getElementById('cards').addEventListener('click', e => {
+    const card = e.target.closest('[data-id]');
+    if(card) openModal(card.dataset.id);
+  });
 
   // Bygg kategori-rader
   buildFilters();
