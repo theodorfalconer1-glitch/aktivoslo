@@ -545,6 +545,16 @@ function onbDoGuest(){
   var el=document.getElementById('onb');
   if(el) el.style.display='none';
   localStorage.setItem('ao_guest','1');
+  // Tving kartoppdatering etter at overlay forsvinner
+  setTimeout(function(){
+    if(typeof apMap!=='undefined' && apMap){
+      apMap.invalidateSize({animate:false});
+    } else if(typeof initMap==='function'){
+      initMap();
+      setTimeout(function(){if(apMap)apMap.invalidateSize({animate:false});},200);
+    }
+  },50);
+  setTimeout(function(){if(typeof apMap!=='undefined'&&apMap)apMap.invalidateSize({animate:false});},400);
   if(!localStorage.getItem('ao_geo_state')){
     setTimeout(function(){if(typeof showGeoConsent==='function')showGeoConsent(null);},800);
   }
