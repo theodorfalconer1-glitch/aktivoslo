@@ -266,7 +266,7 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
 </head>
 <body>
 
-<div id="map"></div>
+<div id="map" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1"></div>
 <div id="fbar"></div>
 
 <!-- HEADER -->
@@ -2164,10 +2164,11 @@ function initMap(){
   mLayer=L.layerGroup().addTo(apMap);
   buildFbar(); renderMarkers();
   apMap.on('click',hideSheet);
-  setTimeout(()=>{
-    apMap.invalidateSize({animate:false});
-    setTimeout(()=>apMap.invalidateSize({animate:false}),300);
-  },200);
+  // Tving Leaflet til å re-beregne dimensjoner etter render
+  window.dispatchEvent(new Event('resize'));
+  setTimeout(()=>{ apMap.invalidateSize({animate:false}); }, 50);
+  setTimeout(()=>{ apMap.invalidateSize({animate:false}); }, 300);
+  setTimeout(()=>{ apMap.invalidateSize({animate:false}); }, 800);
 }
 function makeIcon(c,isV){
   const color=isV?'#16a34a':(CLR[c]||'#2563eb');
@@ -2642,6 +2643,9 @@ function closeOnb(){
   const onbEl=$('onb');
   if(onbEl) onbEl.style.display='none';
   localStorage.setItem('ao_guest','1');
+  // Sørg for at kartet alltid initialiseres og refreshes
+  if(!apMap) initMap();
+  else { setTimeout(()=>apMap.invalidateSize({animate:false}),100); }
   if(!localStorage.getItem('ao_geo_state')){
     setTimeout(()=>showGeoConsent(null),1200);
   }
@@ -2670,7 +2674,7 @@ if($('langToggle')){
 
 // ══ INIT ══
 applyLang();
-requestAnimationFrame(()=>requestAnimationFrame(()=>initMap()));
+initMap(); // Kjør synkront - #map har nå inline dimensjoner
 // Fjern splash
 const _sp=document.getElementById('splash');
 if(_sp){setTimeout(()=>{_sp.style.opacity='0';_sp.style.transition='opacity .3s';setTimeout(()=>_sp.remove(),300);},400);}
