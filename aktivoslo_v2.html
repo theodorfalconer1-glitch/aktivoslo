@@ -23,8 +23,6 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .tab.active{color:var(--navy);border-bottom-color:var(--navy)}
 #main{flex:1;position:relative;overflow:hidden}
 .view{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;}
-#mapView{display:none;}
-#mapView.visible{display:flex;}
 .view.visible{display:flex}
 /* ── LISTE ── */
 .filter-bar{background:#fff;border-bottom:1px solid var(--border);flex-shrink:0}
@@ -11184,6 +11182,8 @@ function trackV(id){
 // TABS
 function switchTab(tab) {
   S.tab = tab;
+
+  // Oppdater tab-knapper og nav
   ['Liste','Kart','Utforsk'].forEach(t => {
     const id = t.toLowerCase();
     const te = document.getElementById('tab'+t);
@@ -11191,33 +11191,34 @@ function switchTab(tab) {
     if(te) te.classList.toggle('active', id===tab);
     if(ne) ne.classList.toggle('on', id===tab);
   });
-  ['listView','mapView','exploreView'].forEach(vid => {
+
+  // Vis riktig view — bruk inline style for å unngå CSS-spesifisitetskonflikter
+  const views = {
+    'liste':   'listView',
+    'kart':    'mapView',
+    'utforsk': 'exploreView',
+  };
+  Object.entries(views).forEach(([t, vid]) => {
     const el = document.getElementById(vid);
-    if(!el) return;
-    const show = (vid==='listView'&&tab==='liste')
-              || (vid==='mapView'&&tab==='kart')
-              || (vid==='exploreView'&&tab==='utforsk');
-    el.classList.toggle('visible', show);
+    if(el) el.style.display = (t === tab) ? 'flex' : 'none';
   });
-  if(tab==='kart') {
-    // Sikre at map-container er synlig FØR vi initialiserer Leaflet
-    const mapEl = document.getElementById('map');
+
+  if(tab === 'kart') {
     if(!S.leafletMap) {
-      // Vent til DOM er oppdatert og mapView er display:flex
+      initMap();
       setTimeout(() => {
-        initMap();
-        setTimeout(() => {
-          if(S.leafletMap) { S.leafletMap.invalidateSize(true); renderMap(); }
-        }, 100);
-      }, 50);
+        if(S.leafletMap) {
+          S.leafletMap.invalidateSize(true);
+          renderMap();
+        }
+      }, 200);
     } else {
-      requestAnimationFrame(() => {
-        S.leafletMap.invalidateSize(true);
-        renderMap();
-      });
+      S.leafletMap.invalidateSize(true);
+      renderMap();
     }
   }
-  if(tab==='utforsk') buildExplore();
+
+  if(tab === 'utforsk') buildExplore();
 }
 
 function openSugg(){
@@ -11346,6 +11347,10 @@ function initDebug() {
 }
 document.addEventListener('DOMContentLoaded', () => {
   initDebug();
+  // Sett initial display på alle views
+  document.getElementById('mapView') && (document.getElementById('mapView').style.display = 'none');
+  document.getElementById('exploreView') && (document.getElementById('exploreView').style.display = 'none');
+  document.getElementById('listView') && (document.getElementById('listView').style.display = 'flex');
   checkAuth();
   updateStreakBadge();
   buildFilters();
