@@ -21,11 +21,13 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .tabs{display:flex}
 .tab{flex:1;text-align:center;padding:9px 4px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s}
 .tab.active{color:var(--navy);border-bottom-color:var(--navy)}
-#main{flex:1;position:relative;overflow:hidden}
+#main{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .view{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#listView{position:relative;flex:1;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#listView.visible{display:flex}
 .view.visible{display:flex}
 /* ── LISTE ── */
-.filter-bar{background:#fff;border-bottom:1px solid var(--border)}
+.filter-bar{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
 .search-wrap{display:flex;align-items:center;padding:10px 12px 6px}
 .search-wrap input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.88rem;font-family:inherit;outline:none;background:var(--light)}
 .search-wrap input:focus{border-color:var(--navy)}
@@ -42,7 +44,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .sort-row{display:flex;gap:5px}
 .sort-chip{padding:4px 10px;border-radius:16px;border:1.5px solid var(--border);background:#fff;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s}
 .sort-chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.cards{padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start;min-height:300px}
+.cards{padding:10px 10px 80px;display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start}
 @media(min-width:500px){.cards{grid-template-columns:repeat(3,1fr)}}
 .card{background:#fff;border-radius:var(--radius);padding:14px 12px;border:1px solid var(--border);cursor:pointer;transition:background .1s,transform .1s;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
 .card:active{transform:scale(.97)}
@@ -209,7 +211,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
   <div id="main">
     <!-- LISTE VIEW -->
-    <div id="listView" class="view visible">
+    <div id="listView" class="view">
 
       <!-- HERO — avhengighetsskapende forside -->
       <div class="hero-section" id="heroSection">
@@ -11724,7 +11726,13 @@ function switchTab(tab) {
   };
   Object.entries(views).forEach(([t, vid]) => {
     const el = document.getElementById(vid);
-    if(el) el.style.display = (t === tab) ? 'flex' : 'none';
+    if(!el) return;
+    if(t === tab) {
+      el.style.display = 'flex';
+      el.style.position = (vid === 'listView') ? 'relative' : 'absolute';
+    } else {
+      el.style.display = 'none';
+    }
   });
 
   if(tab === 'kart') {
@@ -12003,6 +12011,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initIntroMap();
   heroGreeting();
   checkAuth();
+
+  // Sett initial display på views
+  const lv = document.getElementById('listView');
+  if(lv) { lv.style.display = 'flex'; lv.style.position = 'relative'; }
 
   // Event delegation for kortene — robust mot re-render
   document.getElementById('cards').addEventListener('click', e => {
