@@ -22,7 +22,9 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .tab{flex:1;text-align:center;padding:9px 4px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s}
 .tab.active{color:var(--navy);border-bottom-color:var(--navy)}
 #main{flex:1;position:relative;overflow:hidden}
-.view{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.view{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden;}
+#mapView{display:none;}
+#mapView.visible{display:flex;}
 .view.visible{display:flex}
 /* ── LISTE ── */
 .filter-bar{background:#fff;border-bottom:1px solid var(--border);flex-shrink:0}
@@ -64,7 +66,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .map-cats::-webkit-scrollbar{display:none}
 .mcat{white-space:nowrap;padding:5px 11px;border-radius:18px;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;flex-shrink:0}
 .mcat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-#map{flex:1;z-index:1}
+#map{flex:1;z-index:1;min-height:0;width:100%;position:relative;}
 .map-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -4px 24px rgba(0,0,0,.12);transform:translateY(100%);transition:transform .3s;z-index:100;max-height:70%}
 .map-sheet.open{transform:translateY(0)}
 .sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0}
@@ -119,7 +121,21 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .avatar-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 .ava-btn{font-size:1.6rem;width:42px;height:42px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:var(--light);display:flex;align-items:center;justify-content:center;transition:all .15s}
 .ava-btn.sel{border-color:var(--navy);background:#e0e7ff}
-  </style>
+  
+/* ===== HERO ===== */
+.hero-section{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#0f172a 100%);padding:28px 18px 24px;color:#fff;position:relative;overflow:hidden}
+.hero-section::before{content:'';position:absolute;top:-40px;right:-30px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.hero-section::after{content:'';position:absolute;bottom:-30px;left:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.03);pointer-events:none}
+.hero-inner{position:relative;z-index:1}
+.hero-title{font-size:1.65rem;font-weight:900;line-height:1.18;margin:0 0 6px;letter-spacing:-.03em}
+.hero-title span{color:#60a5fa}
+.hero-sub{font-size:.78rem;color:rgba(255,255,255,.55);margin:0 0 16px;letter-spacing:.02em;text-transform:uppercase;font-weight:600}
+.hero-stats{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.hero-stat{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:7px 12px;display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}.hero-stat:active{background:rgba(255,255,255,.2)}
+.hs-num{font-size:1rem}
+.hs-lbl{color:rgba(255,255,255,.85)}
+.hero-cta{background:#3b82f6;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:.88rem;font-weight:800;cursor:pointer;letter-spacing:-.01em;width:100%;max-width:220px;display:block}
+</style>
 </head>
 <body>
 
@@ -155,6 +171,24 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   <div id="main">
     <!-- LISTE VIEW -->
     <div id="listView" class="view visible">
+
+      <!-- HERO -->
+      <div class="hero-section" id="heroSection">
+        <div class="hero-inner">
+          <h1 class="hero-title">Finn noe å gjøre<br><span>i Oslo-området.</span></h1>
+          <p class="hero-sub">224 aktivitetssteder · 21 kategorier · Oslo, Asker og Bærum</p>
+          <div class="hero-stats">
+            <div class="hero-stat" onclick="setCat('bading')"><span class="hs-num">🏊</span><span class="hs-lbl">Badeplasser</span></div>
+            <div class="hero-stat" onclick="setCat('badstue')"><span class="hs-num">🧖</span><span class="hs-lbl">Badstuer</span></div>
+            <div class="hero-stat" onclick="setCat('tuftpark')"><span class="hs-num">🏋️</span><span class="hs-lbl">Tufteparker</span></div>
+            <div class="hero-stat" onclick="setCat('park')"><span class="hs-num">🌳</span><span class="hs-lbl">Parker</span></div>
+            <div class="hero-stat" onclick="setCat('tennisbane')"><span class="hs-num">🎾</span><span class="hs-lbl">Tennis</span></div>
+            <div class="hero-stat" onclick="setCat('discgolf')"><span class="hs-num">🥏</span><span class="hs-lbl">Discgolf</span></div>
+          </div>
+          <button class="hero-cta" onclick="document.getElementById('heroSection').style.display='none';document.getElementById('searchQ').focus()">Utforsk steder →</button>
+        </div>
+      </div>
+
       <div class="filter-bar">
         <div class="search-wrap">
           <input type="text" id="searchQ" placeholder="🔍 Søk sted eller aktivitet…" oninput="renderList()" autocomplete="off">
@@ -10887,17 +10921,20 @@ function buildExplore(){
 
 // KART
 function initMap() {
-  if(S.leafletMap) return;
+  if(S.leafletMap) { S.leafletMap.invalidateSize(true); return; }
   
-  S.leafletMap = L.map('map', {
+  const mapEl = document.getElementById('map');
+  if(!mapEl) return;
+  S.leafletMap = L.map(mapEl, {
     zoomControl: false,
     maxZoom: 19,
-    preferCanvas: true,  // raskere rendering
+    preferCanvas: true,
+    tap: false,  // Fix iOS touch-bug
   }).setView([59.913, 10.752], 12);
   
   // Høyoppløselig OpenStreetMap-lag
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OSM</a> © <a href="https://carto.com">CARTO</a>',
     maxZoom: 19,
     maxNativeZoom: 19,
     tileSize: 256,
@@ -10967,7 +11004,7 @@ function buildMapCatRow(){
   const mcr = document.getElementById('mapCatRow');
   mcr.innerHTML='';
   [{id:'all',l:'🗺️ Alle'},...CATS.slice(1)].forEach(c=>{
-    const cnt = PLACES.filter(p=>c.id==='all'||(p.activity_types||[]).includes(c.id)).length;
+    const cnt = PLACES.filter(p=>c.id==='all'||(p.activity_types||[])[0]===c.id).length;
     if(cnt===0) return;
     const b=document.createElement('button');
     b.className='mcat'+(c.id===S.mapCat?' active':'');
@@ -11007,12 +11044,12 @@ function renderMap() {
     const col = CAT_COLORS[(p.activity_types||[])[0]] || '#64748b';
     const icon = L.divIcon({
       html: `<div style="
-        width:34px;height:34px;border-radius:50%;
-        background:${col};border:3px solid #fff;
-        box-shadow:0 2px 8px rgba(0,0,0,.35);
+        width:36px;height:36px;border-radius:50%;
+        background:${col};border:2.5px solid #fff;
+        box-shadow:0 2px 10px rgba(0,0,0,.4);
         display:flex;align-items:center;justify-content:center;
-        font-size:14px;cursor:pointer;
-        transition:transform .15s;
+        font-size:15px;cursor:pointer;
+        -webkit-tap-highlight-color:transparent;
       ">${pEmoji(p)}</div>`,
       className: '',
       iconSize: [34, 34],
@@ -11163,11 +11200,21 @@ function switchTab(tab) {
     el.classList.toggle('visible', show);
   });
   if(tab==='kart') {
+    // Sikre at map-container er synlig FØR vi initialiserer Leaflet
+    const mapEl = document.getElementById('map');
     if(!S.leafletMap) {
-      initMap();
-      setTimeout(()=>{ S.leafletMap.invalidateSize(); renderMap(); }, 300);
+      // Vent til DOM er oppdatert og mapView er display:flex
+      setTimeout(() => {
+        initMap();
+        setTimeout(() => {
+          if(S.leafletMap) { S.leafletMap.invalidateSize(true); renderMap(); }
+        }, 100);
+      }, 50);
     } else {
-      setTimeout(()=>{ S.leafletMap.invalidateSize(); renderMap(); }, 80);
+      requestAnimationFrame(() => {
+        S.leafletMap.invalidateSize(true);
+        renderMap();
+      });
     }
   }
   if(tab==='utforsk') buildExplore();
@@ -11244,7 +11291,15 @@ function checkAuth() {
 
 function activateDist(btn) {
   if(!navigator.geolocation) { showToast('GPS ikke tilgjengelig i denne nettleseren'); return; }
-  showToast('Finner posisjon…');
+  showToa
+function setCat(cat) {
+  const hero = document.getElementById('heroSection');
+  if(hero) hero.style.display = 'none';
+  S.activeCat = cat;
+  buildFilters();
+  renderList();
+}
+st('Finner posisjon…');
   navigator.geolocation.getCurrentPosition(
     pos => {
       S.userLat = pos.coords.latitude;
@@ -11257,6 +11312,12 @@ function activateDist(btn) {
   );
 }
 
+
+function handleListScroll(el) {
+  const hero = document.getElementById('heroSection');
+  if(!hero) return;
+  if(el.scrollTop > 20) hero.style.display = 'none';
+}
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   updateStreakBadge();
