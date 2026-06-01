@@ -2160,7 +2160,7 @@ function updateBshLang(){
 function initMap(){
   if(apMap) return;
   apMap=L.map('map',{zoomControl:true,attributionControl:false,preferCanvas:true,renderer:L.canvas({padding:.5})}).setView([59.913,10.740],12);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd',detectRetina:true}).addTo(apMap);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(apMap);
   mLayer=L.layerGroup().addTo(apMap);
   buildFbar(); renderMarkers();
   apMap.on('click',hideSheet);
