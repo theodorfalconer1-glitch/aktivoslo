@@ -204,6 +204,10 @@ html,body{height:100%;overflow:hidden;
       <div class="lang-item" data-lang="sv">🇸🇪 Svenska</div>
       <div class="lang-item" data-lang="da">🇩🇰 Dansk</div>
       <div class="lang-item" data-lang="zh">🇨🇳 中文</div>
+      <div class="lang-item" data-lang="pt">🇧🇷 Português</div>
+      <div class="lang-item" data-lang="he">🇮🇱 עברית</div>
+      <div class="lang-item" data-lang="fr">🇫🇷 Français</div>
+      <div class="lang-item" data-lang="af">🇿🇦 Afrikaans</div>
     </div>
   </div>
 </div>
@@ -419,11 +423,80 @@ function applyLang() {
   document.querySelectorAll('[data-t]').forEach(el => {
     const k = el.getAttribute('data-t');
     el.textContent = t(k);
-  });
+  },
+
+  pt: {
+    list:"Lista", map:"Mapa", surprise:"Surpreenda-me!", navigate:"Navegar", close:"Fechar",
+    heroTitle:"O que vamos fazer?", heroSub:"Oslo · Asker · Bærum",
+    search:"Pesquisar local...", allCats:"Tudo", free:"Grátis",
+    transport:"Transporte público", parking:"Estacionamento", toilet:"Banheiro",
+    dog:"Cães OK", family:"Família OK", booking:"Reserva necessária",
+    open:"Aberto", closed:"Fechado", seasonal:"Sazonal",
+    score:"Pontos", mapBtn:"Ver no mapa", noResults:"Sem resultados 🤷",
+    langTitle:"Escolher idioma",
+    cats:{
+      bading:"Natação",badstue:"Sauna",bordtennis:"Tênis de mesa",basketballbane:"Basquete",
+      volleyballbane:"Vôlei",discgolf:"Disc golf",tennisbane:"Tênis",skatepark:"Skatepark",
+      tuftpark:"Academia ao ar livre",park:"Parques",museum:"Museu",skiløype:"Esqui",
+      løperute:"Corrida",klatring:"Escalada",padelbane:"Padel",utsikt:"Mirante",
+      skøytebane:"Patinação no gelo",fotballbane:"Futebol",golf:"Golfe",kajakkutleie:"Caiaque"
+    }
+  },
+  he: {
+    list:"רשימה", map:"מפה", surprise:"הפתיע אותי!", navigate:"נווט", close:"סגור",
+    heroTitle:"מה נעשה היום?", heroSub:"אוסלו · אסקר · ברום",
+    search:"חפש מקום...", allCats:"הכול", free:"חינם",
+    transport:"תחבורה ציבורית", parking:"חניה", toilet:"שירותים",
+    dog:"כלבים OK", family:"ידידותי למשפחות", booking:"נדרשת הזמנה",
+    open:"פתוח", closed:"סגור", seasonal:"עונתי",
+    score:"ניקוד", mapBtn:"הצג במפה", noResults:"אין תוצאות 🤷",
+    langTitle:"בחר שפה",
+    cats:{
+      bading:"שחייה",badstue:"סאונה",bordtennis:"טניס שולחן",basketballbane:"כדורסל",
+      volleyballbane:"כדורעף",discgolf:"דיסק גולף",tennisbane:"טניס",skatepark:"סקייטפארק",
+      tuftpark:"חדר כושר חיצוני",park:"פארקים",museum:"מוזיאון",skiløype:"מסלולי סקי",
+      løperute:"ריצה",klatring:"טיפוס",padelbane:"פאדל",utsikt:"נקודת תצפית",
+      skøytebane:"החלקה על קרח",fotballbane:"כדורגל",golf:"גולף",kajakkutleie:"קיאק"
+    }
+  },
+  fr: {
+    list:"Liste", map:"Carte", surprise:"Surprends-moi!", navigate:"Naviguer", close:"Fermer",
+    heroTitle:"Qu'est-ce qu'on fait?", heroSub:"Oslo · Asker · Bærum",
+    search:"Rechercher un lieu...", allCats:"Tout", free:"Gratuit",
+    transport:"Transports en commun", parking:"Parking", toilet:"Toilettes",
+    dog:"Chiens OK", family:"Familial", booking:"Réservation requise",
+    open:"Ouvert", closed:"Fermé", seasonal:"Saisonnier",
+    score:"Points", mapBtn:"Voir sur la carte", noResults:"Aucun résultat 🤷",
+    langTitle:"Choisir la langue",
+    cats:{
+      bading:"Natation",badstue:"Sauna",bordtennis:"Tennis de table",basketballbane:"Basketball",
+      volleyballbane:"Volleyball",discgolf:"Disc golf",tennisbane:"Tennis",skatepark:"Skatepark",
+      tuftpark:"Gym en plein air",park:"Parcs",museum:"Musée",skiløype:"Pistes de ski",
+      løperute:"Course à pied",klatring:"Escalade",padelbane:"Padel",utsikt:"Point de vue",
+      skøytebane:"Patinage sur glace",fotballbane:"Football",golf:"Golf",kajakkutleie:"Kayak"
+    }
+  },
+  af: {
+    list:"Lys", map:"Kaart", surprise:"Verras my!", navigate:"Navigeer", close:"Sluit",
+    heroTitle:"Wat gaan ons doen?", heroSub:"Oslo · Asker · Bærum",
+    search:"Soek 'n plek...", allCats:"Alles", free:"Gratis",
+    transport:"Openbare vervoer", parking:"Parkering", toilet:"Toilet",
+    dog:"Honde OK", family:"Gesinsvriendlik", booking:"Bespreking nodig",
+    open:"Oop", closed:"Gesluit", seasonal:"Seisoenaal",
+    score:"Punte", mapBtn:"Wys op kaart", noResults:"Geen resultate 🤷",
+    langTitle:"Kies taal",
+    cats:{
+      bading:"Swem",badstue:"Sauna",bordtennis:"Tafeltenis",basketballbane:"Basketbal",
+      volleyballbane:"Volleyball",discgolf:"Skyfgolf",tennisbane:"Tennis",skatepark:"Skaatpark",
+      tuftpark:"Buiteluggim",park:"Parke",museum:"Museum",skiløype:"Skilopers",
+      løperute:"Hardloop",klatring:"Klim",padelbane:"Padel",utsikt:"Uitkykpunt",
+      skøytebane:"Yskaats",fotballbane:"Sokker",golf:"Gholf",kajakkutleie:"Kajak"
+    }
+  },;
   document.getElementById('heroTitle').textContent = t('heroTitle');
   document.getElementById('heroSub').textContent = t('heroSub');
   document.getElementById('searchInput').placeholder = t('search');
-  document.documentElement.dir = (lang==='ar'||lang==='ur') ? 'rtl' : 'ltr';
+  document.documentElement.dir = (lang==='ar'||lang==='ur'||lang==='he') ? 'rtl' : 'ltr';
   renderFilterBar();
   renderList();
 }
