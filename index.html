@@ -2639,9 +2639,11 @@ if($('langToggle')){
 // ══ INIT ══
 applyLang();
 initMap();
-// Fjern splash
-const _sp=document.getElementById('splash');
-if(_sp){setTimeout(()=>{_sp.style.opacity='0';_sp.style.transition='opacity .3s';setTimeout(()=>_sp.remove(),300);},400);}
+// Fjern splash når kart og UI er klart
+window.addEventListener('load',()=>{
+  const _sp=document.getElementById('splash');
+  if(_sp){_sp.style.transition='opacity .25s';_sp.style.opacity='0';setTimeout(()=>_sp.remove(),260);}
+});
 addMyPosControl();
 
 // ── GEO CONSENT SHEET ──
