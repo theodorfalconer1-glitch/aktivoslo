@@ -514,6 +514,30 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 </div>
 </div>
 
+
+<div id="geoSheet" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -6px 32px rgba(0,0,0,.13);max-width:520px;margin:0 auto">
+  <div style="width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:0 auto 18px"></div>
+  <div style="text-align:center;font-size:2rem;margin-bottom:8px">📍</div>
+  <div id="geoSheetTitle" style="font-size:1.05rem;font-weight:900;color:var(--navy);text-align:center;margin-bottom:8px;letter-spacing:-.3px"></div>
+  <div id="geoSheetBody" style="font-size:.82rem;line-height:1.65;color:#4b5563;text-align:center;margin-bottom:20px;max-width:340px;margin-left:auto;margin-right:auto"></div>
+  <button id="geoAllowBtn" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:13px;font-size:.92rem;font-weight:800;cursor:pointer;margin-bottom:8px;letter-spacing:-.2px"></button>
+  <button id="geoLaterBtn" style="width:100%;padding:12px;background:#f3f4f6;color:var(--navy);border:none;border-radius:13px;font-size:.87rem;font-weight:700;cursor:pointer;margin-bottom:6px"></button>
+  <button id="geoNeverBtn" style="width:100%;padding:10px;background:none;color:var(--muted);border:none;font-size:.78rem;cursor:pointer"></button>
+</div>
+<!-- GEO CONSENT SHEET -->
+<div id="geoOv" style="display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)"></div>
+<div id="geoSheet" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:20px 22px calc(26px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(0,0,0,.14);max-width:520px;margin:0 auto">
+  <div style="width:36px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 16px"></div>
+  <div style="text-align:center;font-size:2.2rem;margin-bottom:6px">📍</div>
+  <div id="geoSheetTitle" style="font-weight:900;font-size:1.05rem;color:var(--navy);text-align:center;margin-bottom:10px;letter-spacing:-.3px"></div>
+  <div style="background:#f0f7ff;border-radius:12px;padding:12px 14px;margin-bottom:18px;border:1px solid #dbeafe">
+    <div id="geoSheetBody" style="font-size:.81rem;line-height:1.7;color:#374151;text-align:center"></div>
+  </div>
+  <button id="geoAllowBtn" style="width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:13px;font-size:.9rem;font-weight:800;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:7px;touch-action:manipulation"></button>
+  <button id="geoLaterBtn" style="width:100%;padding:13px;background:#f3f4f6;color:var(--navy);border:1.5px solid var(--border);border-radius:13px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:6px;touch-action:manipulation"></button>
+  <button id="geoNeverBtn" style="width:100%;padding:10px;background:none;color:var(--muted);border:none;font-size:.76rem;cursor:pointer;touch-action:manipulation"></button>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ── TIDLIGE GLOBALE FUNKSJONER (kjøres uten DOM-avhengighet) ──
@@ -2775,27 +2799,5 @@ if(localStorage.getItem('ao_geo_state')==='granted') startGeo(null);
 
 
 </script>
-<div id="geoSheet" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -6px 32px rgba(0,0,0,.13);max-width:520px;margin:0 auto">
-  <div style="width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:0 auto 18px"></div>
-  <div style="text-align:center;font-size:2rem;margin-bottom:8px">📍</div>
-  <div id="geoSheetTitle" style="font-size:1.05rem;font-weight:900;color:var(--navy);text-align:center;margin-bottom:8px;letter-spacing:-.3px"></div>
-  <div id="geoSheetBody" style="font-size:.82rem;line-height:1.65;color:#4b5563;text-align:center;margin-bottom:20px;max-width:340px;margin-left:auto;margin-right:auto"></div>
-  <button id="geoAllowBtn" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:13px;font-size:.92rem;font-weight:800;cursor:pointer;margin-bottom:8px;letter-spacing:-.2px"></button>
-  <button id="geoLaterBtn" style="width:100%;padding:12px;background:#f3f4f6;color:var(--navy);border:none;border-radius:13px;font-size:.87rem;font-weight:700;cursor:pointer;margin-bottom:6px"></button>
-  <button id="geoNeverBtn" style="width:100%;padding:10px;background:none;color:var(--muted);border:none;font-size:.78rem;cursor:pointer"></button>
-</div>
-<!-- GEO CONSENT SHEET -->
-<div id="geoOv" style="display:none;position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)"></div>
-<div id="geoSheet" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:20px 22px calc(26px + env(safe-area-inset-bottom));box-shadow:0 -8px 40px rgba(0,0,0,.14);max-width:520px;margin:0 auto">
-  <div style="width:36px;height:4px;background:#e5e7eb;border-radius:2px;margin:0 auto 16px"></div>
-  <div style="text-align:center;font-size:2.2rem;margin-bottom:6px">📍</div>
-  <div id="geoSheetTitle" style="font-weight:900;font-size:1.05rem;color:var(--navy);text-align:center;margin-bottom:10px;letter-spacing:-.3px"></div>
-  <div style="background:#f0f7ff;border-radius:12px;padding:12px 14px;margin-bottom:18px;border:1px solid #dbeafe">
-    <div id="geoSheetBody" style="font-size:.81rem;line-height:1.7;color:#374151;text-align:center"></div>
-  </div>
-  <button id="geoAllowBtn" style="width:100%;padding:15px;background:var(--accent);color:#fff;border:none;border-radius:13px;font-size:.9rem;font-weight:800;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:7px;touch-action:manipulation"></button>
-  <button id="geoLaterBtn" style="width:100%;padding:13px;background:#f3f4f6;color:var(--navy);border:1.5px solid var(--border);border-radius:13px;font-size:.85rem;font-weight:700;cursor:pointer;margin-bottom:6px;touch-action:manipulation"></button>
-  <button id="geoNeverBtn" style="width:100%;padding:10px;background:none;color:var(--muted);border:none;font-size:.76rem;cursor:pointer;touch-action:manipulation"></button>
-</div>
 </body>
 </html>
