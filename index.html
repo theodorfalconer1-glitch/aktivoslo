@@ -488,8 +488,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   <div id="onbCnt" style="text-align:center;font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:16px"></div>
 
   <!-- Knapper -->
-  <button class="btn-pr" id="onbLogin" style="margin-bottom:8px"></button>
-  <button class="btn-se" id="onbGuest"></button>
+  <button class="btn-pr" id="onbLogin" style="margin-bottom:8px" onclick="onbDoLogin()"></button>
+  <button class="btn-se" id="onbGuest" onclick="onbDoGuest()"></button>
 
   <!-- Språkvalg — kompakt nedtrekk -->
   <div style="margin-top:12px;text-align:center">
@@ -516,6 +516,22 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// ── TIDLIGE GLOBALE FUNKSJONER (kjøres uten DOM-avhengighet) ──
+function onbDoGuest(){
+  var el=document.getElementById('onb');
+  if(el) el.style.display='none';
+  localStorage.setItem('ao_guest','1');
+  if(!localStorage.getItem('ao_geo_state')){
+    setTimeout(function(){if(typeof showGeoConsent==='function')showGeoConsent(null);},800);
+  }
+}
+function onbDoLogin(){
+  var el=document.getElementById('onb');
+  if(el) el.style.display='none';
+  localStorage.setItem('ao_guest','1');
+  setTimeout(function(){if(typeof showSscr==='function')showSscr('scr-login');},50);
+}
+
 
 const T={
 no:{
@@ -2593,10 +2609,7 @@ document.querySelectorAll('.li').forEach(li=>li.addEventListener('click',()=>{
 
 // ══ ONBOARDING ══
 (()=>{const langs=[['no','🇳🇴'],['en','🇬🇧'],['de','🇩🇪'],['sv','🇸🇪'],['da','🇩🇰'],['fr','🇫🇷'],['pt','🇧🇷'],['es','🇪🇸'],['af','🇿🇦'],['zh','🇨🇳'],['ar','🇸🇦'],['he','🇮🇱'],['pl','🇵🇱'],['so','🇸🇴'],['ur','🇵🇰']];const el=$('onbLangs');langs.forEach(([l,f])=>{const b=document.createElement('button');b.className='lp';b.textContent=f;b.dataset.l=l;b.addEventListener('click',()=>setLang(l));el.appendChild(b);});})();
-$('onbLogin').addEventListener('click',()=>{
-  closeOnb();
-  showSscr('scr-login');
-});
+// onbLogin via onclick i HTML
 // ── ONBOARDING ──
 function closeOnb(){
   const onbEl=$('onb');
@@ -2607,7 +2620,7 @@ function closeOnb(){
   }
 }
 
-$('onbGuest').addEventListener('click',closeOnb);
+// onbGuest via onclick i HTML
 
 // Språkvelger inne i onboarding
 if($('langToggle')){
