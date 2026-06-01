@@ -21,6 +21,11 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .onb-title{font-size:2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;margin-bottom:6px}
 .onb-tag{font-size:.88rem;color:var(--muted);text-align:center;line-height:1.55;margin-bottom:5px;max-width:320px}
 .onb-cnt{font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:26px}
+.onb-what{background:var(--sand);border:1.5px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:16px;width:100%;max-width:340px;text-align:left}
+.onb-what-t{font-size:.82rem;font-weight:800;color:var(--navy);margin-bottom:5px}
+.onb-what-d{font-size:.75rem;color:var(--muted);line-height:1.55}
+.onb-cats{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;width:100%;max-width:340px}
+.onb-cat{font-size:.7rem;font-weight:700;background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:4px 9px;color:var(--navy)}
 .feat-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:340px;margin-bottom:24px}
 .feat{background:var(--sand);border:1.5px solid var(--border);border-radius:13px;padding:12px 14px;display:flex;gap:11px;align-items:flex-start}
 .feat-i{font-size:1.35rem;flex-shrink:0;margin-top:1px}
@@ -266,21 +271,28 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   <div class="onb-scroll">
     <div class="onb-logo">🗺️</div>
     <div class="onb-title">AktivOslo</div>
-    <div class="onb-tag" id="onbTag">Finn gratis og rimelige aktiviteter rett utenfor døren</div>
-    <div class="onb-cnt" id="onbCnt">238 steder · Oslo, Asker og Bærum</div>
+    <div class="onb-tag" id="onbTag">Din guide til gratis og rimelige aktiviteter i Oslo-området</div>
+    <div class="onb-cnt" id="onbCnt">244 steder · Oslo, Asker og Bærum</div>
+    <div class="onb-what">
+      <div class="onb-what-t">Hva er AktivOslo?</div>
+      <div class="onb-what-d">AktivOslo samler de beste lavterskelaktivitetene i Oslo-regionen på ett sted. Finn riktig sted med interaktivt kart, GPS-navigasjon og filtrering — fra badeplasser og badstuer til klatrefelt og skateparker.</div>
+    </div>
     <div class="feat-list">
-      <div class="feat"><span class="feat-i">🗺️</span><div><div class="feat-t" id="f1t">Kart og liste</div><div class="feat-d" id="f1d">238 steder med interaktivt kart og GPS-navigasjon</div></div></div>
-      <div class="feat"><span class="feat-i">👥</span><div><div class="feat-t" id="f2t">Planlegg med venner</div><div class="feat-d" id="f2d">Opprett aktiviteter og inviter venner</div></div></div>
-      <div class="feat"><span class="feat-i">🏅</span><div><div class="feat-t" id="f3t">Samle steder</div><div class="feat-d" id="f3d">Logg besøk, tjen merker og klatre på vennetoppen</div></div></div>
-      <div class="feat"><span class="feat-i">☀️</span><div><div class="feat-t" id="f4t">Solforhold</div><div class="feat-d" id="f4d">Se når hvert sted har best sol gjennom dagen</div></div></div>
+      <div class="feat"><span class="feat-i">🗺️</span><div><div class="feat-t">Interaktivt kart</div><div class="feat-d">Se alle 244 steder på kart og naviger direkte med GPS</div></div></div>
+      <div class="feat"><span class="feat-i">🔍</span><div><div class="feat-t">Søk og filter</div><div class="feat-d">Bading, badstue, klatring, skate, tennis og mye mer</div></div></div>
+      <div class="feat"><span class="feat-i">☀️</span><div><div class="feat-t">Sol og sesong</div><div class="feat-d">Se når hvert sted har best sol gjennom dagen</div></div></div>
+      <div class="feat"><span class="feat-i">👥</span><div><div class="feat-t">Planlegg med venner</div><div class="feat-d">Opprett aktiviteter, logg besøk og klatre på vennetoppen</div></div></div>
+    </div>
+    <div class="onb-cats">
+      <span class="onb-cat">🏊 Bading</span><span class="onb-cat">🧖 Badstue</span><span class="onb-cat">🛹 Skate</span><span class="onb-cat">🧗 Klatring</span><span class="onb-cat">🏀 Basketball</span><span class="onb-cat">🎾 Tennis</span><span class="onb-cat">🥏 Discgolf</span><span class="onb-cat">🌳 Parker</span>
     </div>
     <div class="onb-btns">
       <button class="btn-pr" id="onbLogin">Logg inn / Registrer deg</button>
-      <button class="btn-se" id="onbGuest">Fortsett som gjest</button>
+      <button class="btn-se" id="onbGuest">Utforsk uten konto</button>
     </div>
     <div class="lang-pills" id="onbLangs"></div>
   </div>
-</div>
+</div></div>
 
 <!-- ══ LOGIN ══ -->
 <div id="scr-login" class="screen">
@@ -587,9 +599,7 @@ function startApp(){
   // Sett riktig språk umiddelbart
   setLang(lang);
   buildHero();buildCatGrid();buildFbar();renderList();renderSocial();renderProfile();
-  // Kartet initialiseres NÅ — #mv er visibility:hidden men har dimensjoner
-  // Dette er kritisk: Leaflet må ha en container med faktiske pikseldimensjoner
-  initMap();
+  // Kartet initialiseres når brukeren åpner kartfanen (ikke her)
 }
 
 // ══ HOME-NAVIGASJON ═══════════════════════════════════════════════════════
@@ -781,10 +791,13 @@ document.getElementById('bshNav').onclick=()=>{
 // Leaflet kan dermed initialiseres umiddelbart uten resize-problemer.
 function initMap(){
   if(apMap)return;
-  // Sørg for at map-div har eksplisitte dimensjoner
   const mapEl=document.getElementById('map');
-  mapEl.style.width='100%';
-  mapEl.style.height='100%';
+  const hdrH=document.getElementById('hdr')?.offsetHeight||52;
+  const bnavH=document.getElementById('bnav')?.offsetHeight||56;
+  mapEl.style.position='absolute';
+  mapEl.style.inset='0';
+  mapEl.style.width=window.innerWidth+'px';
+  mapEl.style.height=(window.innerHeight-hdrH-bnavH)+'px';
   apMap=L.map('map',{
     zoomControl:true,
     attributionControl:false,
@@ -845,8 +858,10 @@ function showView(id){
   const bm={lv:'bn0',mv:'bn1',sv:'bn2',pv:'bn3'};
   if(bm[id])document.getElementById(bm[id]).classList.add('on');
   if(id==='mv'){
-    // Kartet er allerede initialisert — bare invalidate og re-render markører
-    if(apMap){
+    if(!apMap){
+      // Første gang kartet åpnes — init med riktige dimensjoner
+      requestAnimationFrame(()=>setTimeout(initMap,30));
+    } else {
       requestAnimationFrame(()=>{
         apMap.invalidateSize({animate:false});
         renderMarkers();
