@@ -11493,8 +11493,8 @@ function heroGreeting() {
 function heroPickCat(cat) {
   S.activeCat = cat;
   document.getElementById('heroSection').style.display = 'none';
-  document.querySelectorAll('.cat-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.cat === cat);
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.classList.toggle('on', b.textContent.trim() === (CATS.find(c=>c.id===cat)||{l:cat}).l);
   });
   renderList();
   document.getElementById('listView').scrollTop = 0;
@@ -11524,5 +11524,31 @@ function buildNearbyStrip() {
     </div>`).join('');
   strip.style.display = 'block';
 }
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initDebug();
+  initIntroMap();
+  heroGreeting();
+  checkAuth();
 
+  // Bygg kategori-rader
+  buildFilters();
+  buildMapCatRow();
 
+  // Render innhold
+  renderList();
+
+  // GPS — prøv stille i bakgrunnen
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      S.userLat = pos.coords.latitude;
+      S.userLng = pos.coords.longitude;
+      buildNearbyStrip();
+      // Oppdater avstandssortering hvis aktiv
+      if(S.sortMode === 'distance') renderList();
+    }, () => {}, { timeout: 8000, maximumAge: 60000 });
+  }
+});
+</script>
+</body>
+</html>
