@@ -152,7 +152,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
    KRITISK: #mv bruker visibility, ikke display:none
    Dette sikrer at #map alltid har fysiske dimensjoner i DOM
    slik at Leaflet kan initialiseres korrekt */
-#mv{visibility:hidden;pointer-events:none;position:absolute;inset:0;display:flex;flex-direction:column}
+#mv{visibility:hidden;pointer-events:none;position:absolute;inset:0;flex-direction:column}
 #mv.on{visibility:visible;pointer-events:all}
 #map{width:100%;height:100%;background:#e8eae0;position:absolute;inset:0}
 
@@ -587,9 +587,8 @@ function startApp(){
   // Sett riktig språk umiddelbart
   setLang(lang);
   buildHero();buildCatGrid();buildFbar();renderList();renderSocial();renderProfile();
-  // Kartet initialiseres NÅ — #mv er visibility:hidden men har dimensjoner
-  // Dette er kritisk: Leaflet må ha en container med faktiske pikseldimensjoner
-  initMap();
+  // Kartet initialiseres første gang brukeren åpner kartvisningen
+  // (ikke her — scr-app kan ha 0px dimensjoner på dette tidspunktet)
 }
 
 // ══ HOME-NAVIGASJON ═══════════════════════════════════════════════════════
@@ -731,10 +730,16 @@ function openPlace(id){
   // Bytt til kart og sentrér
   if(!document.getElementById('mv').classList.contains('on')){
     showView('mv');
-    // Vent til kartet er synlig og initialisert
-    const tryFocus=()=>{if(apMap)focusOn(p);else setTimeout(tryFocus,100);};
-    setTimeout(tryFocus,80);
-  } else focusOn(p);
+    // Vent til kartet er initialisert (maks 3 sekunder)
+    let attempts=0;
+    const tryFocus=()=>{
+      if(apMap&&p.lat&&p.lng){focusOn(p);}
+      else if(attempts++<30){setTimeout(tryFocus,100);}
+    };
+    setTimeout(tryFocus,100);
+  } else {
+    if(apMap&&p.lat&&p.lng)focusOn(p);
+  }
 }
 
 document.querySelectorAll('.star').forEach(s=>s.addEventListener('click',()=>{
@@ -776,10 +781,17 @@ document.getElementById('bshNav').onclick=()=>{
 // Leaflet kan dermed initialiseres umiddelbart uten resize-problemer.
 function initMap(){
   if(apMap)return;
-  // Sørg for at map-div har eksplisitte dimensjoner
+  // Sett eksplisitte dimensjoner på map-div
+  // (window-dimensjoner minus header og bnav ~ 120px)
   const mapEl=document.getElementById('map');
-  mapEl.style.width='100%';
-  mapEl.style.height='100%';
+  const hdrH=document.getElementById('hdr')?.offsetHeight||52;
+  const bnavH=document.getElementById('bnav')?.offsetHeight||56;
+  const availH=window.innerHeight-hdrH-bnavH;
+  mapEl.style.position='absolute';
+  mapEl.style.top='0';
+  mapEl.style.left='0';
+  mapEl.style.width=window.innerWidth+'px';
+  mapEl.style.height=availH+'px';
   apMap=L.map('map',{
     zoomControl:true,
     attributionControl:false,
@@ -840,8 +852,12 @@ function showView(id){
   const bm={lv:'bn0',mv:'bn1',sv:'bn2',pv:'bn3'};
   if(bm[id])document.getElementById(bm[id]).classList.add('on');
   if(id==='mv'){
-    // Kartet er allerede initialisert — bare invalidate og re-render markører
-    if(apMap){
+    if(!apMap){
+      // Initialiser kartet nå - #mv er nå synlig og har dimensjoner
+      setTimeout(()=>{
+        initMap();
+      },50);
+    } else {
       requestAnimationFrame(()=>{
         apMap.invalidateSize({animate:false});
         renderMarkers();
