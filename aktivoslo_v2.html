@@ -229,6 +229,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
           <div class="qcat" onclick="heroPickCat('park')"><div class="qcat-ico">🌳</div><div class="qcat-lbl">Parker</div></div>
           <div class="qcat" onclick="heroPickCat('skatepark')"><div class="qcat-ico">🛹</div><div class="qcat-lbl">Skate</div></div>
           <div class="qcat" onclick="heroPickCat('løperute')"><div class="qcat-ico">🏃</div><div class="qcat-lbl">Løp</div></div>
+          <div class="qcat" onclick="heroPickCat('museum')"><div class="qcat-ico">🏛️</div><div class="qcat-lbl">Museum</div></div>
         </div>
 
         <!-- Tilfeldig sted — fristet meg -->
@@ -10793,6 +10794,476 @@ const PLACES = [
       "høst"
     ],
     "status": "active"
+  },
+  {
+    "id": "park_marienlyst",
+    "name": "Marienlystparken",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9342,
+    "lng": 10.7127,
+    "address": "Marienlystbakken, 0353 Oslo",
+    "neighborhood": "Marienlyst",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Rolig park i Marienlyst med grønne flater, treningsfelt og ballbinge. Populær blant barnefamilier og mosjonister.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "transport_details": "Buss til Marienlyst",
+    "score_total": 70,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_middelalder",
+    "name": "Middelalderparken",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9036,
+    "lng": 10.7587,
+    "address": "Sørenga, 0194 Oslo",
+    "neighborhood": "Gamlebyen",
+    "municipality": "Oslo",
+    "area": "Oslo øst",
+    "description": "Park med ruiner fra middelalderens Oslo, rett ved Oslofjorden. Historisk perle med flott utsikt.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "transport_details": "Buss til Bispelokket",
+    "score_total": 75,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_grønland",
+    "name": "Grønland Torg og park",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9101,
+    "lng": 10.7636,
+    "address": "Grønland, 0190 Oslo",
+    "neighborhood": "Grønland",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Grønt pusterom midt i Grønland. Levende nabolagspark med lek og aktivitet.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "T-bane til Grønland",
+    "score_total": 62,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_sagene",
+    "name": "Sagene park",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9401,
+    "lng": 10.7525,
+    "address": "Sagene, 0459 Oslo",
+    "neighborhood": "Sagene",
+    "municipality": "Oslo",
+    "area": "Oslo nord",
+    "description": "Lokal park i Sagene med grønne arealer, lek og sosiale soner. Rolig og familievennlig.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "score_total": 65,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_youngstorget",
+    "name": "Youngstorget",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9154,
+    "lng": 10.7492,
+    "address": "Youngstorget, 0181 Oslo",
+    "neighborhood": "Sentrum",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Kjent torg og møteplass i hjertet av Oslo. Brukes til konserter, markeder og hverdagsliv.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "T-bane til Stortinget",
+    "score_total": 68,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_grünereng",
+    "name": "Grünereng (Akerselva)",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9285,
+    "lng": 10.7572,
+    "address": "Grünereng, 0564 Oslo",
+    "neighborhood": "Grünerløkka",
+    "municipality": "Oslo",
+    "area": "Oslo øst",
+    "description": "Langstrakt parkbelte langs Akerselva med grønne enger, badeliv og sosiale soner. Mye brukt om sommeren.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "score_total": 78,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_ekeberg_utsikt",
+    "name": "Ekeberg — utsiktspunkt",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.8997,
+    "lng": 10.7729,
+    "address": "Kongsveien 23, 0193 Oslo",
+    "neighborhood": "Ekeberg",
+    "municipality": "Oslo",
+    "area": "Oslo sør",
+    "description": "Åspark med storslått utsikt over Oslo og fjorden, skulpturer og natursti. Nær Ekebergrestauranten.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "transport_details": "Trikk 18 til Ekebergparken",
+    "score_total": 84,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "park_vigeland",
+    "name": "Vigelandsparken",
+    "activity_types": [
+      "park"
+    ],
+    "lat": 59.9263,
+    "lng": 10.7002,
+    "address": "Nobels gate 32, 0268 Oslo",
+    "neighborhood": "Frogner",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Verdens største skulpturpark av én kunstner. Over 200 skulpturer av Gustav Vigeland i Frognerparken. Gratis og åpent hele året.",
+    "is_free": true,
+    "always_open": true,
+    "family_friendly": true,
+    "dog_friendly": true,
+    "public_transport": true,
+    "transport_details": "Trikk 12 til Vigelandsparken",
+    "score_total": 92,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_nasjonalmuseet",
+    "name": "Nasjonalmuseet",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9117,
+    "lng": 10.7292,
+    "address": "Brynjulf Bulls plass 3, 0250 Oslo",
+    "neighborhood": "Sentrum",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Norges største museum for kunst, arkitektur og design. Hjemsted for Munchs «Skrik». Åpnet 2022.",
+    "is_free": false,
+    "booking_required": false,
+    "public_transport": true,
+    "transport_details": "Buss/trikk til Aker Brygge",
+    "score_total": 90,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_munch",
+    "name": "Munchmuseet (MUNCH)",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9058,
+    "lng": 10.7553,
+    "address": "Edvard Munchs plass 1, 0194 Oslo",
+    "neighborhood": "Bjørvika",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Viet til Edvard Munchs liv og verk. Spektakulær skyskraper i Bjørvika med utsikt over fjorden. Åpnet 2021.",
+    "is_free": false,
+    "public_transport": true,
+    "transport_details": "Buss til Operaen / T-bane til Jernbanetorget",
+    "score_total": 88,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_frammuseet",
+    "name": "Frammuseet",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9023,
+    "lng": 10.6989,
+    "address": "Bygdøynesveien 39, 0286 Oslo",
+    "neighborhood": "Bygdøy",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Norsk polarhistorie og det originale polarskipet Fram. Kåret til Norges beste museum. Familievennlig.",
+    "is_free": false,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "Buss 30 eller ferge fra Aker Brygge (sommer)",
+    "score_total": 89,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_kontiki",
+    "name": "Kon-Tiki Museet",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9021,
+    "lng": 10.6976,
+    "address": "Bygdøynesveien 36, 0286 Oslo",
+    "neighborhood": "Bygdøy",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Thor Heyerdahls eventyrlige ekspedisjoner — det originale Kon-Tiki-flåten og Ra-båten. Fascinerende for alle aldre.",
+    "is_free": false,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "Buss 30 eller ferge fra Aker Brygge (sommer)",
+    "score_total": 84,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_folkemuseum",
+    "name": "Norsk Folkemuseum",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9055,
+    "lng": 10.6892,
+    "address": "Museumsveien 10, Bygdøy, 0287 Oslo",
+    "neighborhood": "Bygdøy",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Norges største friluftsmuseum med 160+ historiske bygninger, inkl. stavkirke fra 1200-tallet. Åpent hele året.",
+    "is_free": false,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "Buss 30 til Folkemuseet",
+    "score_total": 86,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_naturhistorisk",
+    "name": "Naturhistorisk museum (Botanisk hage)",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.92,
+    "lng": 10.7706,
+    "address": "Sars' gate 1, 0562 Oslo",
+    "neighborhood": "Tøyen",
+    "municipality": "Oslo",
+    "area": "Oslo øst",
+    "description": "Norges eldste naturhistoriske museum med dinosaurer, mineralsamlinger og Botanisk hage. Fri inngang til hagen.",
+    "is_free": false,
+    "family_friendly": true,
+    "public_transport": true,
+    "transport_details": "T-bane til Tøyen",
+    "score_total": 82,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_astrupfearnley",
+    "name": "Astrup Fearnley Museet",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9083,
+    "lng": 10.7263,
+    "address": "Strandpromenaden 2, 0252 Oslo",
+    "neighborhood": "Tjuvholmen",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Samtidskunst i Renzo Pianos ikoniske bygning på Tjuvholmen. Internasjonale navn og norsk toppkunst.",
+    "is_free": false,
+    "public_transport": true,
+    "transport_details": "Buss til Aker Brygge",
+    "score_total": 83,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_ibsen",
+    "name": "Ibsenmuseet",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9154,
+    "lng": 10.7308,
+    "address": "Henrik Ibsens gate 26, 0255 Oslo",
+    "neighborhood": "Frogner",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Henrik Ibsens originale leilighet og arbeidsrom, bevart slik det var da han døde i 1906. Guidede turer.",
+    "is_free": false,
+    "public_transport": true,
+    "transport_details": "T-bane til Nationaltheatret",
+    "score_total": 78,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_holocaust",
+    "name": "Holocaust-senteret (Villa Grande)",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9061,
+    "lng": 10.6951,
+    "address": "Huk Aveny 56, 0287 Oslo",
+    "neighborhood": "Bygdøy",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Norges senter for studier av Holocaust og livssynsminoriteter. Vakker villa med gripende utstillinger.",
+    "is_free": false,
+    "public_transport": true,
+    "transport_details": "Buss 30 til Bygdøy",
+    "score_total": 80,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "museum_historisk",
+    "name": "Historisk museum (UiO)",
+    "activity_types": [
+      "museum"
+    ],
+    "lat": 59.9158,
+    "lng": 10.7358,
+    "address": "Frederiks gate 2, 0164 Oslo",
+    "neighborhood": "Sentrum",
+    "municipality": "Oslo",
+    "area": "Oslo sentrum",
+    "description": "Norges kulturhistoriske samlinger fra steinalder til middelalder. Kjent for vikingsamlingen og myntkabinettet.",
+    "is_free": false,
+    "public_transport": true,
+    "transport_details": "T-bane til Nationaltheatret",
+    "score_total": 75,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst",
+      "vinter"
+    ],
+    "status": "active"
   }
 ];
 
@@ -10816,6 +11287,7 @@ const CATS = [
   {id:'kajakkutleie',l:'🚣 Kajakk'},
   {id:'øy',l:'🏝️ Øyer'},
   {id:'park',l:'🌳 Parker'},
+  {id:'museum',l:'🏛️ Museum'},
 ];
 
 const CAT_COLORS = {
