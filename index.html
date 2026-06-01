@@ -525,7 +525,6 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded",function(){
 
 const T={
 no:{
@@ -2639,11 +2638,9 @@ if($('langToggle')){
 // ══ INIT ══
 applyLang();
 initMap();
-// Fjern splash når kart og UI er klart
-window.addEventListener('load',()=>{
-  const _sp=document.getElementById('splash');
-  if(_sp){_sp.style.transition='opacity .25s';_sp.style.opacity='0';setTimeout(()=>_sp.remove(),260);}
-});
+// Fjern splash
+const _sp=document.getElementById('splash');
+if(_sp){setTimeout(()=>{_sp.style.opacity='0';_sp.style.transition='opacity .3s';setTimeout(()=>_sp.remove(),300);},400);}
 addMyPosControl();
 
 // ── GEO CONSENT SHEET ──
@@ -2770,7 +2767,6 @@ function startGeo(onDone){
 // Auto-start hvis tillatelse allerede er gitt
 if(localStorage.getItem('ao_geo_state')==='granted') startGeo(null);
 
-});
 </script>
 <div id="geoSheet" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -6px 32px rgba(0,0,0,.13);max-width:520px;margin:0 auto">
   <div style="width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:0 auto 18px"></div>
