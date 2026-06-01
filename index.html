@@ -75,7 +75,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
   position:absolute;
   inset:0;
 }
-.view.active{display:block}
+.view.active{display:flex;flex-direction:column}
 
 /* ── LISTE VIEW ── */
 #listView{
@@ -171,8 +171,8 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .score-tag{font-size:.65rem;background:#fefce8;color:#92400e;padding:2px 6px;border-radius:8px;font-weight:600}
 
 /* ── KART VIEW ── */
-#mapView{overflow:hidden}
-#map{width:100%;height:100%}
+#mapView{overflow:hidden;position:relative;flex:1}
+#map{position:absolute;inset:0;}
 .map-cat-row{
   position:absolute;top:8px;left:8px;right:8px;z-index:500;
   display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
@@ -11282,6 +11282,205 @@ const PLACES = [
       "vinter"
     ],
     "status": "active"
+  },
+  {
+    "id": "tn12",
+    "name": "IL Heming Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.9812,
+    "lng": 10.6723,
+    "address": "Stabækveien 75, 1356 Bekkestua",
+    "neighborhood": "Bekkestua",
+    "municipality": "Bærum",
+    "area": "Bærum",
+    "description": "Idrettslaget Hemings tennisanlegg på Bekkestua med flere utebaner og innendørshall.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "Buss til Bekkestua",
+    "score_total": 75,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn13",
+    "name": "Holmenkollen Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.9634,
+    "lng": 10.6678,
+    "address": "Holmenkollveien 119, 0790 Oslo",
+    "neighborhood": "Holmenkollen",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Tennisklubb i naturskjønne omgivelser ved Holmenkollen med grusbaner og klubbhus.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "T-bane linje 1 til Holmenkollen",
+    "score_total": 74,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn14",
+    "name": "Bekkestua Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.9089,
+    "lng": 10.5456,
+    "address": "Gommerudveien 18, 1357 Bekkestua",
+    "neighborhood": "Bekkestua",
+    "municipality": "Bærum",
+    "area": "Bærum",
+    "description": "Bærums største tennisklubb med 8 utebaner og 2 innendørsbaner. Aktiv i alle aldersgrupper.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "Buss til Bekkestua",
+    "score_total": 72,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn15",
+    "name": "Ullern Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.9256,
+    "lng": 10.6534,
+    "address": "Ullernchausseen 64, 0379 Oslo",
+    "neighborhood": "Ullern",
+    "municipality": "Oslo",
+    "area": "Oslo vest",
+    "description": "Familiær tennisklubb på Ullern med 6 grusbaner og godt treningstilbud.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "Buss til Ullern",
+    "score_total": 70,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn16",
+    "name": "Stabæk Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.9034,
+    "lng": 10.5623,
+    "address": "Gommerudveien 2, 1338 Sandvika",
+    "neighborhood": "Stabæk",
+    "municipality": "Bærum",
+    "area": "Bærum",
+    "description": "Aktiv tennisklubb i Bærum med gode fasiliteter og baner for alle nivåer.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "Tog til Stabekk",
+    "score_total": 68,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn17",
+    "name": "Bækkelaget Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.8823,
+    "lng": 10.7734,
+    "address": "Ekebergveien 50, 1166 Oslo",
+    "neighborhood": "Bækkelaget",
+    "municipality": "Oslo",
+    "area": "Oslo sør",
+    "description": "Koselig tennisklubb sør i Oslo med 5 utebaner og et aktivt kursopplegg.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "Buss 34 til Bækkelaget",
+    "score_total": 67,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn18",
+    "name": "Nordstrand Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.8734,
+    "lng": 10.8012,
+    "address": "Ekebergveien 230, 1166 Oslo",
+    "neighborhood": "Nordstrand",
+    "municipality": "Oslo",
+    "area": "Oslo sør",
+    "description": "Etablert tennisklubb på Nordstrand med grus- og hardcourt-baner.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "score_total": 66,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
+  },
+  {
+    "id": "tn19",
+    "name": "Oppsal Tennisklubb",
+    "activity_types": [
+      "tennisbane"
+    ],
+    "lat": 59.8923,
+    "lng": 10.8234,
+    "address": "Vetlandsveien 99B, 0685 Oslo",
+    "neighborhood": "Oppsal",
+    "municipality": "Oslo",
+    "area": "Oslo øst",
+    "description": "Tennisklubb på Oppsal med 6 utebaner og innendørsanlegg. Tilbyr kurs for alle nivåer.",
+    "is_free": false,
+    "booking_required": true,
+    "public_transport": true,
+    "transport_details": "T-bane til Oppsal",
+    "score_total": 68,
+    "seasons": [
+      "vår",
+      "sommer",
+      "høst"
+    ],
+    "status": "active"
   }
 ];
 
@@ -11386,8 +11585,11 @@ function switchView(v){
   document.getElementById('navKart').classList.toggle('on', v==='kart');
 
   if(v==='kart'){
-    if(!leafletMap){ initMap(); }
-    else { setTimeout(()=>leafletMap.invalidateSize(true),100); renderMap(); }
+    if(!leafletMap){
+      setTimeout(()=>{ initMap(); if(leafletMap) leafletMap.invalidateSize(true); },50);
+    } else {
+      setTimeout(()=>{ leafletMap.invalidateSize(true); renderMap(); },100);
+    }
   }
 }
 
