@@ -107,13 +107,18 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .nav-btn svg{width:22px;height:22px;fill:currentColor}
 .nav-btn.on{color:var(--navy)}
 /* ── AUTH ── */
-.auth-overlay{display:flex;position:fixed;inset:0;background:#fff;z-index:200;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;text-align:center}
-.auth-logo{font-size:3rem;margin-bottom:8px}
-.auth-title{font-size:1.4rem;font-weight:900;margin-bottom:6px}
-.auth-sub{font-size:.88rem;color:var(--muted);margin-bottom:24px}
-.auth-btn{width:100%;max-width:320px;padding:14px;border-radius:14px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.auth-overlay{display:flex;position:fixed;inset:0;background:#fff;z-index:200;flex-direction:column;overflow:hidden}
+.auth-logo{font-size:2.2rem;margin-bottom:4px}
+.auth-title{font-size:1.75rem;font-weight:900;line-height:1.15;margin-bottom:6px;color:#111}
+.auth-sub{font-size:.85rem;color:var(--muted);margin-bottom:0}
+.auth-btn{width:100%;max-width:380px;padding:14px;border-radius:12px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
 .auth-btn.primary{background:var(--navy);color:#fff}
-.auth-btn.secondary{background:var(--light);color:var(--text)}
+.auth-btn.secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.intro-hero{padding:22px 20px 14px;flex-shrink:0;background:#fff}
+.intro-stats{display:flex;gap:0;margin:14px 0 16px;border-left:3px solid var(--navy);padding-left:12px}
+.intro-stats span{display:block;font-size:.78rem;font-weight:600;color:#444;letter-spacing:.04em;text-transform:uppercase;line-height:1.8}
+.intro-map-wrap{flex:1;position:relative;min-height:0}
+.intro-cta{padding:14px 20px 20px;background:#fff;flex-shrink:0;border-top:1px solid #eee}
 .auth-input{width:100%;max-width:320px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:.9rem;font-family:inherit;margin-bottom:10px;outline:none}
 .auth-input:focus{border-color:var(--navy)}
 .avatar-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
@@ -139,18 +144,35 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 
 <!-- AUTH OVERLAY -->
 <div class="auth-overlay" id="authOverlay">
-  <!-- Mini-kart i bakgrunnen -->
-  <div id="introMap" style="position:absolute;inset:0;z-index:0;opacity:0.18;pointer-events:none"></div>
-  <!-- Innhold over kartet -->
-  <div style="position:relative;z-index:1;width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px">
-    <div class="auth-logo">🏃</div>
-    <div class="auth-title">AktivOslo</div>
-    <div class="auth-sub">Finn lavterskelaktiviteter i Oslo, Asker og Bærum</div>
-    <!-- Featured steder — klikkbare -->
-    <div id="featuredStrip" style="display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;width:100%;padding:4px 0 12px;-webkit-overflow-scrolling:touch"></div>
-    <div id="authContent" style="width:100%">
-      <button class="auth-btn primary" onclick="showRegister()">Opprett profil</button>
-      <button class="auth-btn secondary" onclick="continueAsGuest()">Fortsett som gjest</button>
+  <!-- HERO-TEKST -->
+  <div class="intro-hero">
+    <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--navy);text-transform:uppercase;margin-bottom:6px">🏃 AktivOslo</div>
+    <div class="auth-title">Finn noe å finne på<br><span style="color:var(--navy)">i dag.</span></div>
+    <div class="auth-sub">224 aktivitetssteder i Oslo, Asker og Bærum</div>
+    <div class="intro-stats">
+      <div>
+        <span>224 aktivitetssteder</span>
+        <span>20+ kategorier</span>
+        <span>Oslo · Asker · Bærum</span>
+      </div>
+    </div>
+    <button class="auth-btn primary" onclick="introGoToApp()" style="margin-bottom:0">Utforsk kartet →</button>
+  </div>
+
+  <!-- LIVE KART — fullt interaktivt -->
+  <div class="intro-map-wrap">
+    <div id="introMap" style="width:100%;height:100%"></div>
+    <!-- Pill som viser antall -->
+    <div style="position:absolute;top:10px;right:10px;background:#fff;border-radius:20px;padding:5px 12px;font-size:.75rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:400;pointer-events:none">
+      📍 Oslo · 224 steder
+    </div>
+  </div>
+
+  <!-- BUNN: Logg inn eller gjest -->
+  <div class="intro-cta">
+    <div style="display:flex;gap:10px">
+      <button class="auth-btn primary" onclick="introGoToApp()" style="margin:0;flex:2">Utforsk nå</button>
+      <button class="auth-btn secondary" onclick="showRegister()" style="margin:0;flex:1">Logg inn</button>
     </div>
   </div>
 </div>
@@ -11357,23 +11379,35 @@ function initIntroMap() {
   const mapEl = document.getElementById('introMap');
   if(!mapEl || window._introMap) return;
   window._introMap = L.map(mapEl, {
-    zoomControl: false, dragging: false, touchZoom: false,
-    scrollWheelZoom: false, doubleClickZoom: false,
-    keyboard: false, tap: false,
+    zoomControl: true,
+    dragging: true,
+    touchZoom: true,
+    scrollWheelZoom: false,
+    doubleClickZoom: true,
+    tap: true,
   }).setView([59.913, 10.752], 12);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19, attribution: ''
+    maxZoom: 19, attribution: '© OSM © CARTO'
   }).addTo(window._introMap);
-  // Tegn noen pins på kartet (ikke klikkbare)
-  const sample = PLACES.filter(p => p.lat && p.lng).slice(0, 40);
-  sample.forEach(p => {
-    const col = CAT_COLORS[(p.activity_types||[])[0]] || '#64748b';
-    L.circleMarker([p.lat, p.lng], {
-      radius: 5, fillColor: col, color: '#fff',
-      weight: 1.5, opacity: 1, fillOpacity: 0.85
-    }).addTo(window._introMap);
+
+  // Tegn alle pins — klikkbare
+  PLACES.filter(p => p.lat && p.lng).forEach(p => {
+    const cat = (p.activity_types||[])[0];
+    const col = CAT_COLORS[cat] || '#64748b';
+    const em = pEmoji(p);
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="width:30px;height:30px;border-radius:50%;background:${col};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:14px">${em}</div>`,
+      iconSize: [30, 30], iconAnchor: [15, 15]
+    });
+    L.marker([p.lat, p.lng], {icon})
+      .addTo(window._introMap)
+      .on('click', () => introOpenPlace(p.id));
   });
+
+  setTimeout(() => { if(window._introMap) window._introMap.invalidateSize(true); }, 300);
 }
+
 
 function buildFeaturedStrip() {
   const strip = document.getElementById('featuredStrip');
@@ -11401,51 +11435,25 @@ function buildFeaturedStrip() {
   }).join('');
 }
 
-function introOpenPlace(id) {
-  // Åpne modal selv om auth-overlay er oppe — gjem overlay midlertidig
-  const overlay = document.getElementById('authOverlay');
-  if(overlay) overlay.style.display = 'none';
-  openModal(id);
-  // Når modal lukkes, vis overlay igjen
-  const origClose = window._origCloseModal;
-  if(!origClose) {
-    window._origCloseModal = window.closeModal;
-    window.closeModal = function() {
-      window._origCloseModal();
-      if(document.getElementById('authOverlay') && !localStorage.getItem('aktivoslo_user')) {
-        document.getElementById('authOverlay').style.display = 'flex';
-      }
-      window.closeModal = window._origCloseModal;
-      window._origCloseModal = null;
-    };
-  }
+function introGoToApp() {
+  continueAsGuest();
+  setTimeout(() => switchTab('kart'), 80);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initDebug();
-  initIntroMap();
-  buildFeaturedStrip();
-  // Sett initial display på alle views
-  document.getElementById('mapView') && (document.getElementById('mapView').style.display = 'none');
-  document.getElementById('exploreView') && (document.getElementById('exploreView').style.display = 'none');
-  document.getElementById('listView') && (document.getElementById('listView').style.display = 'flex');
-  checkAuth();
-  updateStreakBadge();
-  buildFilters();
-  renderList();
-  fetchWeather();
-});
-</script>
+function introOpenPlace(id) {
+  // Åpne modal direkte — overlay blir skjult midlertidig
+  const overlay = document.getElementById('authOverlay');
+  const origClose = window.closeModal.bind(window);
+  if(overlay) overlay.style.display = 'none';
+  openModal(id);
+  const origCloseFn = window.closeModal;
+  window.closeModal = function() {
+    origCloseFn();
+    if(!AU || AU.isGuest) {
+      const ao = document.getElementById('authOverlay');
+      if(ao) ao.style.display = 'flex';
+    }
+    window.closeModal = origCloseFn;
+  };
+}
 
-<!-- DEBUG VIEW (aktivert med ?debug=1) -->
-<div id="debugView" style="display:none;position:fixed;inset:0;background:#fff;z-index:9999;overflow-y:auto;padding:12px;font-family:monospace;font-size:11px">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <b style="font-size:14px">🐛 Koordinat-debug</b>
-    <button onclick="document.getElementById('debugView').style.display='none'" style="padding:4px 10px;border-radius:6px;border:1px solid #ccc">✕ Lukk</button>
-  </div>
-  <input id="debugSearch" placeholder="Filtrer..." oninput="renderDebug()" style="width:100%;padding:6px;margin-bottom:6px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box">
-  <div id="debugTable"></div>
-</div>
-
-</body>
-</html>
