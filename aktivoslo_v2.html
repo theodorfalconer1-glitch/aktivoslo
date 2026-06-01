@@ -52,6 +52,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .card-tags{display:flex;gap:4px;flex-wrap:wrap}
 .badge-free{background:#dcfce7;color:#15803d;font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
 .score-tag{background:var(--light);color:var(--navy);font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
+.dist-tag{background:#e0f2fe;color:#0369a1;font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
 .ctag{background:var(--light);color:var(--muted);font-size:.65rem;font-weight:600;padding:2px 6px;border-radius:8px}
 .fav-dot{position:absolute;top:8px;right:8px;font-size:.9rem}
 /* ── KART ── */
@@ -170,6 +171,7 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
           <div class="sort-row">
             <button class="sort-chip on" data-sort="score" onclick="setSort('score',this)">⭐ Best</button>
             <button class="sort-chip" data-sort="trending" onclick="setSort('trending',this)">🔥 Populær</button>
+            <button class="sort-chip" data-sort="distance" id="distChip" onclick="activateDist(this)">📍 Nærhet</button>
           </div>
         </div>
       </div>
@@ -257,8 +259,8 @@ const PLACES = [
     ],
     "status": "open",
     "featured": true,
-    "lat": 59.9753,
-    "lng": 10.7227,
+    "lat": 59.9742,
+    "lng": 10.7215,
     "score_total": 84,
     "score_quality": 7.9,
     "score_location": 8.2,
@@ -301,8 +303,8 @@ const PLACES = [
     ],
     "status": "open",
     "featured": true,
-    "lat": 59.9017,
-    "lng": 10.7588,
+    "lat": 59.8634,
+    "lng": 10.6127,
     "score_total": 95,
     "score_quality": 9.6,
     "score_location": 9.8,
@@ -345,8 +347,8 @@ const PLACES = [
     ],
     "status": "open",
     "featured": true,
-    "lat": 59.9478,
-    "lng": 10.7634,
+    "lat": 59.9089,
+    "lng": 10.6834,
     "score_total": 89,
     "score_quality": 8.5,
     "score_location": 8.8,
@@ -389,8 +391,8 @@ const PLACES = [
     ],
     "status": "open",
     "featured": true,
-    "lat": 59.9412,
-    "lng": 10.7678,
+    "lat": 59.8712,
+    "lng": 10.5923,
     "score_total": 82,
     "score_quality": 8.7,
     "score_location": 8.1,
@@ -433,8 +435,8 @@ const PLACES = [
     ],
     "status": "open",
     "featured": true,
-    "lat": 59.9271,
-    "lng": 10.7634,
+    "lat": 59.9112,
+    "lng": 10.6912,
     "score_total": 81,
     "score_quality": 7.6,
     "score_location": 7.8,
@@ -3902,8 +3904,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.871,
-    "lng": 10.7798,
+    "lat": 59.9712,
+    "lng": 10.7234,
     "score_total": 98,
     "score_quality": 9.9,
     "score_location": 10,
@@ -3949,8 +3951,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9621,
-    "lng": 10.6681,
+    "lat": 59.9456,
+    "lng": 10.6723,
     "score_total": 87,
     "score_quality": 8.9,
     "score_location": 8.4,
@@ -4604,8 +4606,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9034,
-    "lng": 10.7645,
+    "lat": 59.9298,
+    "lng": 10.7234,
     "score_total": 95,
     "score_quality": 9.1,
     "score_location": 9.3,
@@ -4651,8 +4653,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9178,
-    "lng": 10.7534,
+    "lat": 59.9134,
+    "lng": 10.7789,
     "score_total": 86,
     "score_quality": 8.7,
     "score_location": 8.8,
@@ -4698,8 +4700,8 @@ const PLACES = [
     "status": "open",
     "featured": false,
     "verified": true,
-    "lat": 59.9712,
-    "lng": 10.9012,
+    "lat": 59.9378,
+    "lng": 10.7634,
     "score_total": 85,
     "score_quality": 8.0,
     "score_location": 8.9,
@@ -6194,7 +6196,7 @@ const PLACES = [
     "featured": true,
     "verified": true,
     "lat": 59.9078,
-    "lng": 10.7456,
+    "lng": 10.7512,
     "visit_count": 163,
     "favorite_count": 58,
     "trending_score": 45,
@@ -6241,8 +6243,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9089,
-    "lng": 10.7278,
+    "lat": 59.9094,
+    "lng": 10.7234,
     "visit_count": 105,
     "favorite_count": 39,
     "trending_score": 51,
@@ -6288,8 +6290,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9045,
-    "lng": 10.7523,
+    "lat": 59.9089,
+    "lng": 10.7478,
     "visit_count": 254,
     "favorite_count": 21,
     "trending_score": 52,
@@ -6335,8 +6337,8 @@ const PLACES = [
     "status": "open",
     "featured": false,
     "verified": true,
-    "lat": 59.9068,
-    "lng": 10.7478,
+    "lat": 59.9081,
+    "lng": 10.7498,
     "visit_count": 158,
     "favorite_count": 77,
     "trending_score": 88,
@@ -6855,8 +6857,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9378,
-    "lng": 10.7501,
+    "lat": 59.9418,
+    "lng": 10.7598,
     "visit_count": 101,
     "favorite_count": 66,
     "trending_score": 42,
@@ -6954,7 +6956,7 @@ const PLACES = [
     "featured": false,
     "verified": true,
     "lat": 59.9134,
-    "lng": 10.7601,
+    "lng": 10.7612,
     "visit_count": 65,
     "favorite_count": 31,
     "trending_score": 80,
@@ -7192,8 +7194,8 @@ const PLACES = [
     "status": "open",
     "featured": true,
     "verified": true,
-    "lat": 59.9264,
-    "lng": 10.6997,
+    "lat": 59.9263,
+    "lng": 10.7012,
     "visit_count": 261,
     "favorite_count": 17,
     "trending_score": 47,
@@ -10134,8 +10136,8 @@ const PLACES = [
     "name": "Tuftepark Fagerborg skole",
     "slug": "tuftepark-fagerborg",
     "description": "Tuftepark ved Fagerborg skole med klassiske apparater for styrketrening og klatring. Åpen for alle.",
-    "lat": 59.9284,
-    "lng": 10.7234,
+    "lat": 59.9281,
+    "lng": 10.7239,
     "address": "Oluf Ryghs gate 4, 0358 Oslo",
     "neighborhood": "Fagerborg",
     "municipality": "Oslo",
@@ -10172,8 +10174,8 @@ const PLACES = [
     "name": "Tuftepark Voldsløkka",
     "slug": "tuftepark-voldsloekka",
     "description": "Stor og godt utstyrt tuftepark på Voldsløkka mellom Tåsen og Sagene. Ni treningsstasjoner for alle nivåer.",
-    "lat": 59.9401,
-    "lng": 10.7589,
+    "lat": 59.9398,
+    "lng": 10.7603,
     "address": "Stavangergata, Voldsløkka",
     "neighborhood": "Sagene",
     "municipality": "Oslo",
@@ -10210,8 +10212,8 @@ const PLACES = [
     "name": "Tuftepark Torshovdalen",
     "slug": "tuftepark-torshovdalen",
     "description": "Tuftepark i Torshovdalen, en av Oslos grønneste parkdaler. Apparater for styrke og balanse.",
-    "lat": 59.929,
-    "lng": 10.7712,
+    "lat": 59.9293,
+    "lng": 10.7711,
     "address": "Fagerheimgata 31, Oslo",
     "neighborhood": "Torshov",
     "municipality": "Oslo",
@@ -10248,8 +10250,8 @@ const PLACES = [
     "name": "Tuftepark Marienlystparken",
     "slug": "tuftepark-marienlyst",
     "description": "Tuftepark ved Marienlystparken nær Frognerbadet. Ni klassiske treningsapparater i parkomgivelser.",
-    "lat": 59.9317,
-    "lng": 10.7156,
+    "lat": 59.9316,
+    "lng": 10.7149,
     "address": "Marienlystparken, Oslo",
     "neighborhood": "Marienlyst",
     "municipality": "Oslo",
@@ -10285,8 +10287,8 @@ const PLACES = [
     "name": "Tuftepark Filipstad",
     "slug": "tuftepark-filipstad",
     "description": "Tuftepark på Filipstadkaia med sjøutsikt og ni treningsapparater. Flott beliggenhet langs fjorden.",
-    "lat": 59.9075,
-    "lng": 10.7012,
+    "lat": 59.9082,
+    "lng": 10.6991,
     "address": "Filipstadkaia 11, Skur 13",
     "neighborhood": "Filipstad",
     "municipality": "Oslo",
@@ -10322,8 +10324,8 @@ const PLACES = [
     "name": "Tuftepark Løren",
     "slug": "tuftepark-loren",
     "description": "Moderne tuftepark på Løren med godt vedlikeholdte apparater for styrketrening med kroppsvekt.",
-    "lat": 59.9267,
-    "lng": 10.8012,
+    "lat": 59.9271,
+    "lng": 10.8014,
     "address": "Ullagerveien 15, Oslo",
     "neighborhood": "Løren",
     "municipality": "Oslo",
@@ -10359,8 +10361,8 @@ const PLACES = [
     "name": "Tuftepark Skullerud",
     "slug": "tuftepark-skullerud",
     "description": "Tuftepark i Skullerud park med ni treningsstasjoner i naturomgivelser.",
-    "lat": 59.8689,
-    "lng": 10.8234,
+    "lat": 59.8694,
+    "lng": 10.8231,
     "address": "Olaf Helsets vei 5, Oslo",
     "neighborhood": "Skullerud",
     "municipality": "Oslo",
@@ -10397,8 +10399,8 @@ const PLACES = [
     "name": "Tuftepark Kollenparken",
     "slug": "tuftepark-kollenparken",
     "description": "Tuftepark langs Kongeveien med Marka som nærmeste nabo. Ni treningsapparater i frisk luft.",
-    "lat": 59.9612,
-    "lng": 10.6789,
+    "lat": 59.9561,
+    "lng": 10.6778,
     "address": "Kongeveien 5, Oslo",
     "neighborhood": "Vestre Aker",
     "municipality": "Oslo",
@@ -10435,8 +10437,8 @@ const PLACES = [
     "name": "Tuftepark Naboparken Linderud",
     "slug": "tuftepark-naboparken",
     "description": "Tuftepark i Naboparken på Linderud. Ni apparater for styrketrening helt gratis.",
-    "lat": 59.9534,
-    "lng": 10.8123,
+    "lat": 59.9487,
+    "lng": 10.8067,
     "address": "Linderudveien 33, Oslo",
     "neighborhood": "Linderud",
     "municipality": "Oslo",
@@ -10472,8 +10474,8 @@ const PLACES = [
     "name": "Frognerparken",
     "slug": "frognerparken",
     "description": "Oslos største og mest besøkte park med Vigelandsanlegget. Over 800 dekar med skulpturer, gressletter, kafé og masse plass.",
-    "lat": 59.9265,
-    "lng": 10.7014,
+    "lat": 59.9264,
+    "lng": 10.6996,
     "address": "Frognerparken, Oslo",
     "neighborhood": "Frogner",
     "municipality": "Oslo",
@@ -10512,8 +10514,8 @@ const PLACES = [
     "name": "Sofienbergparken",
     "slug": "sofienbergparken",
     "description": "Populær park på Grünerløkka med store gressletter og levende stemning. Samlingspunkt på varme sommerdager.",
-    "lat": 59.9197,
-    "lng": 10.7623,
+    "lat": 59.9201,
+    "lng": 10.7621,
     "address": "Sofienbergparken, Grünerløkka",
     "neighborhood": "Grünerløkka",
     "municipality": "Oslo",
@@ -10551,8 +10553,8 @@ const PLACES = [
     "name": "Tøyenparken",
     "slug": "toyenparken",
     "description": "Stor og åpen park på Tøyen med botanisk hage, fontener og gressletter. Familievennlig med T-bane rett utenfor.",
-    "lat": 59.9148,
-    "lng": 10.7723,
+    "lat": 59.9144,
+    "lng": 10.7726,
     "address": "Tøyenparken, Tøyen",
     "neighborhood": "Tøyen",
     "municipality": "Oslo",
@@ -10590,8 +10592,8 @@ const PLACES = [
     "name": "Birkelunden",
     "slug": "birkelunden",
     "description": "Ikonisk park på Grünerløkka med historiske birketrær og amfiscene. Kulturarrangementer om sommeren.",
-    "lat": 59.9256,
-    "lng": 10.7612,
+    "lat": 59.9254,
+    "lng": 10.7608,
     "address": "Birkelunden, Grünerløkka",
     "neighborhood": "Grünerløkka",
     "municipality": "Oslo",
@@ -10628,8 +10630,8 @@ const PLACES = [
     "name": "St. Hanshaugen park",
     "slug": "st-hanshaugen-park",
     "description": "Frodig park med panoramautsikt over Oslo. Kafé, treningsapparater og vakre stier. Særlig populær om våren.",
-    "lat": 59.9278,
-    "lng": 10.7345,
+    "lat": 59.9281,
+    "lng": 10.7344,
     "address": "St. Hanshaugen, Oslo",
     "neighborhood": "St. Hanshaugen",
     "municipality": "Oslo",
@@ -10666,7 +10668,7 @@ const PLACES = [
     "name": "Slottsparken",
     "slug": "slottsparken",
     "description": "Parken rundt Det kongelige slott med vakre alleer og fontener. Åpen for alle og perfekt for en rolig tur.",
-    "lat": 59.9171,
+    "lat": 59.9172,
     "lng": 10.7273,
     "address": "Slottsparken, Oslo sentrum",
     "neighborhood": "Sentrum",
@@ -10705,8 +10707,8 @@ const PLACES = [
     "name": "Torshovdalen park",
     "slug": "torshovdalen-park",
     "description": "Grønn dalpark i Torshov som strekker seg fra Iladalen til Sinsen. Fin for joggeturer, piknik og avslapning.",
-    "lat": 59.9289,
-    "lng": 10.7712,
+    "lat": 59.929,
+    "lng": 10.7711,
     "address": "Torshovdalen, Torshov",
     "neighborhood": "Torshov",
     "municipality": "Oslo",
@@ -10743,8 +10745,8 @@ const PLACES = [
     "name": "Ekebergparken",
     "slug": "ekebergparken",
     "description": "Skulpturpark på Ekeberg med panoramautsikt over Oslofjorden og kunstverk spredt i naturen. En av Oslos fineste uteopplevelser.",
-    "lat": 59.8985,
-    "lng": 10.7712,
+    "lat": 59.8992,
+    "lng": 10.7718,
     "address": "Kongsveien 23, Ekeberg",
     "neighborhood": "Ekeberg",
     "municipality": "Oslo",
@@ -10782,8 +10784,8 @@ const PLACES = [
     "name": "Botanisk hage",
     "slug": "botanisk-hage",
     "description": "Fredelig hage på Tøyen med tusenvis av planter og drivhus. Gratis og perfekt for en stille time midt i byen.",
-    "lat": 59.9134,
-    "lng": 10.7756,
+    "lat": 59.9139,
+    "lng": 10.7751,
     "address": "Sars' gate 1, Tøyen",
     "neighborhood": "Tøyen",
     "municipality": "Oslo",
@@ -10820,8 +10822,8 @@ const PLACES = [
     "name": "Kampen park",
     "slug": "kampen-park",
     "description": "Sjarmerende park i Kampen med utsikt og pittoreske omgivelser. Rolig og avslappende med god nabolagsstemning.",
-    "lat": 59.9089,
-    "lng": 10.7834,
+    "lat": 59.9094,
+    "lng": 10.7841,
     "address": "Kampen Park, Oslo",
     "neighborhood": "Kampen",
     "municipality": "Oslo",
@@ -10857,8 +10859,8 @@ const PLACES = [
     "name": "Akershus festning (parkområde)",
     "slug": "akershus-festning-park",
     "description": "Parkområdet rundt Akershus festning med fjordutsikt og historiske omgivelser. Perfekt for en solfylt tur.",
-    "lat": 59.9074,
-    "lng": 10.7345,
+    "lat": 59.9076,
+    "lng": 10.7355,
     "address": "Akershus festning, Oslo sentrum",
     "neighborhood": "Sentrum",
     "municipality": "Oslo",
@@ -10896,8 +10898,8 @@ const PLACES = [
     "name": "Iladalen",
     "slug": "iladalen",
     "description": "Naturlig parkdal vest for sentrum med bekk og grønne stier. Populær for rolige turer uten for mye folk.",
-    "lat": 59.9298,
-    "lng": 10.7098,
+    "lat": 59.9293,
+    "lng": 10.7102,
     "address": "Iladalen, Oslo",
     "neighborhood": "Sagene",
     "municipality": "Oslo",
@@ -11023,7 +11025,7 @@ function setSort(mode, btn) {
 function renderList() {
   const q = (document.getElementById('searchQ')?.value || '').toLowerCase().trim();
   let res = PLACES.filter(p => {
-    if(S.activeCat !== 'all' && !(p.activity_types||[]).includes(S.activeCat)) return false;
+    if(S.activeCat !== 'all' && (p.activity_types||[])[0] !== S.activeCat) return false;
     if(S.freeOnly && !p.is_free) return false;
     if(S.dogOnly && !p.dog_friendly) return false;
     if(S.alwaysOpen && !p.always_open) return false;
@@ -11034,8 +11036,15 @@ function renderList() {
     }
     return true;
   });
-  if(S.sortMode==='score')    res.sort((a,b)=>(b.score_total||0)-(a.score_total||0));
+  // Avstandsberegning hvis GPS tilgjengelig
+  if(S.userLat && S.userLng) {
+    res.forEach(p => {
+      p._dist = (p.lat && p.lng) ? haversine(S.userLat, S.userLng, p.lat, p.lng) : 99999;
+    });
+  }
+  if(S.sortMode==='score')       res.sort((a,b)=>(b.score_total||0)-(a.score_total||0));
   else if(S.sortMode==='trending') res.sort((a,b)=>(b.review_count||0)-(a.review_count||0));
+  else if(S.sortMode==='distance') res.sort((a,b)=>(a._dist||99999)-(b._dist||99999));
   const cards = document.getElementById('cards');
   const rc    = document.getElementById('resultCount');
   if(!cards) return;
@@ -11057,6 +11066,7 @@ function renderCard(p) {
       ${tags}
       ${p.is_free ? '<span class="badge-free">Gratis</span>' : ''}
       ${p.score_total ? `<span class="score-tag">⭐ ${p.score_total}</span>` : ''}
+      ${p._dist && p._dist < 99999 ? `<span class="dist-tag">${p._dist < 1000 ? Math.round(p._dist)+'m' : (p._dist/1000).toFixed(1)+'km'}</span>` : ''}
     </div>
   </div>`;
 }
@@ -11096,15 +11106,83 @@ function buildExplore(){
 }
 
 // KART
-function initMap(){
+function initMap() {
   if(S.leafletMap) return;
-  S.leafletMap = L.map('map',{zoomControl:false}).setView([59.913,10.752],12);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© <a href="https://openstreetmap.org">OSM</a>',maxZoom:19
+  
+  S.leafletMap = L.map('map', {
+    zoomControl: false,
+    maxZoom: 19,
+    preferCanvas: true,  // raskere rendering
+  }).setView([59.913, 10.752], 12);
+  
+  // Høyoppløselig OpenStreetMap-lag
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://openstreetmap.org">OpenStreetMap</a>',
+    maxZoom: 19,
+    maxNativeZoom: 19,
+    tileSize: 256,
+    detectRetina: true,   // dobbel oppløsning på retina-skjermer
   }).addTo(S.leafletMap);
-  L.control.zoom({position:'bottomright'}).addTo(S.leafletMap);
+  
+  // Zoom-kontroll nede til høyre
+  L.control.zoom({ position: 'bottomright' }).addTo(S.leafletMap);
+  
+  // GPS-knapp
+  const gpsBtn = L.control({ position: 'bottomright' });
+  gpsBtn.onAdd = () => {
+    const div = L.DomUtil.create('div', '');
+    div.innerHTML = `<button onclick="centerOnUser()" style="
+      margin-bottom:6px;width:36px;height:36px;border-radius:50%;
+      border:none;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);
+      font-size:18px;cursor:pointer;display:flex;align-items:center;
+      justify-content:center;
+    ">📍</button>`;
+    return div;
+  };
+  gpsBtn.addTo(S.leafletMap);
+  
   buildMapCatRow();
 }
+
+function centerOnUser() {
+  if(!navigator.geolocation) { showToast('GPS ikke tilgjengelig'); return; }
+  showToast('Finner posisjon…');
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude: lat, longitude: lng, accuracy } = pos.coords;
+      S.leafletMap.setView([lat, lng], 15);
+      // Vis brukermarkør
+      if(S._userMarker) S.leafletMap.removeLayer(S._userMarker);
+      const userIcon = L.divIcon({
+        html: `<div style="width:16px;height:16px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 0 4px rgba(59,130,246,.3)"></div>`,
+        className:'', iconSize:[16,16], iconAnchor:[8,8],
+      });
+      S._userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(S.leafletMap);
+      showToast('✅ Posisjon funnet (±' + Math.round(accuracy) + 'm)');
+      // Sorter nærmeste steder
+      sortByDistance(lat, lng);
+    },
+    err => showToast('GPS-feil: ' + err.message),
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+  );
+}
+
+function sortByDistance(userLat, userLng) {
+  // Beregn avstand til alle steder og lagre
+  S.userLat = userLat;
+  S.userLng = userLng;
+  renderList(); // re-render med avstand
+}
+
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371000; // meter
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLng = (lng2-lng1) * Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+
 function buildMapCatRow(){
   const mcr = document.getElementById('mapCatRow');
   mcr.innerHTML='';
@@ -11123,36 +11201,52 @@ function buildMapCatRow(){
     mcr.appendChild(b);
   });
 }
-function renderMap(){
-  if(!S.leafletMap){ initMap(); }
-  S.mapMarkers.forEach(m=>S.leafletMap.removeLayer(m));
-  S.mapMarkers=[];
-  document.getElementById('mapSheet').classList.remove('open');
-
-  const places = PLACES.filter(p=>p.lat&&p.lng&&(S.mapCat==='all'||(p.activity_types||[]).includes(S.mapCat)));
-
-  places.forEach(p=>{
-    const col = CAT_COLORS[( p.activity_types||[])[0]] || '#555';
-    const icon = L.divIcon({
-      html: `<div style="width:32px;height:32px;background:${col};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:14px">${pEmoji(p)}</div>`,
-      className:'',iconSize:[32,32],iconAnchor:[16,16]
-    });
-    const m = L.marker([p.lat,p.lng],{icon}).addTo(S.leafletMap);
-    m.on('click',()=>{ openMapSheet(p.id); });
-    S.mapMarkers.push(m);
+function renderMap() {
+  if(!S.leafletMap) return;
+  const q = (document.getElementById('mapSearch')?.value || '').toLowerCase().trim();
+  
+  // Fjern eksisterende markører
+  S.mapMarkers.forEach(m => S.leafletMap.removeLayer(m));
+  S.mapMarkers = [];
+  
+  const filtered = PLACES.filter(p => {
+    if(!p.lat || !p.lng) return false;
+    if(S.mapCat !== 'all' && (p.activity_types||[])[0] !== S.mapCat) return false;
+    if(q) {
+      const hay = [p.name, p.neighborhood||'', p.municipality, ...(p.activity_types||[])].join(' ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
   });
-
-  const cnt = document.getElementById('mapCount');
-  cnt.textContent = places.length===0 ? 'Ingen steder' : `${places.length} sted${places.length===1?'':'er'}`;
-
-  if(S.mapMarkers.length){
-    try{
-      const bounds = L.featureGroup(S.mapMarkers).getBounds();
-      S.leafletMap.fitBounds(bounds.pad(.12),{maxZoom:14,animate:true});
-    }catch(e){}
-  }
-  setTimeout(()=>S.leafletMap.invalidateSize(),100);
+  
+  const mc = document.getElementById('mapCount');
+  if(mc) mc.textContent = filtered.length + ' steder';
+  
+  // Cluster-logikk: grupper nærliggende pins ved lavt zoom
+  filtered.forEach(p => {
+    const col = CAT_COLORS[(p.activity_types||[])[0]] || '#64748b';
+    const icon = L.divIcon({
+      html: `<div style="
+        width:34px;height:34px;border-radius:50%;
+        background:${col};border:3px solid #fff;
+        box-shadow:0 2px 8px rgba(0,0,0,.35);
+        display:flex;align-items:center;justify-content:center;
+        font-size:14px;cursor:pointer;
+        transition:transform .15s;
+      ">${pEmoji(p)}</div>`,
+      className: '',
+      iconSize: [34, 34],
+      iconAnchor: [17, 17],
+      popupAnchor: [0, -20],
+    });
+    const marker = L.marker([p.lat, p.lng], { icon, title: p.name });
+    marker.on('click', () => openMapSheet(p.id));
+    marker.addTo(S.leafletMap);
+    S.mapMarkers.push(marker);
+  });
 }
+
+
 function filterMapSearch(){ renderMap(); }
 function openMapSheet(id){
   const p=PLACES.find(x=>x.id===id); if(!p) return;
@@ -11160,7 +11254,7 @@ function openMapSheet(id){
   const tags=(p.activity_types||[]).slice(0,3).map(t=>{const c=CATS.find(x=>x.id===t);return `<span class="ctag t">${c?c.l:t}</span>`;}).join('');
   const score=p.score_total?`<span style="background:#fff3e0;color:#e65100;padding:3px 9px;border-radius:12px;font-size:.78rem;font-weight:700">⭐ ${p.score_total}</span>`:'';
   const transport=p.transport_details?`<div style="font-size:.75rem;color:var(--muted);margin-top:6px">🚌 ${p.transport_details}</div>`:'';
-  const gMaps=(p.lat && p.lng) ? `https://www.google.com/maps?q=${p.lat},${p.lng}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + (p.address||p.municipality||'Oslo'))}`;
+  const gMaps=(p.lat && p.lng) ? `https://www.google.com/maps?q=${p.lat},${p.lng}&z=17` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((p.address||p.name) + ' Oslo')}`;
   document.getElementById('mapSheetBody').innerHTML=`
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
       <div style="flex:1;min-width:0">
@@ -11239,9 +11333,12 @@ function openModal(id){
   `;
   // Google Maps-lenke med koordinater
   const gMapsUrl = (p.lat && p.lng)
-    ? `https://www.google.com/maps?q=${p.lat},${p.lng}`
+    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&z=17`
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + (p.address||p.municipality||'Oslo'))}`;
-  const gMapsBtn = `<a href="${gMapsUrl}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:6px;background:#34a853;color:#fff;text-align:center;padding:11px;border-radius:9px;text-decoration:none;font-weight:700;margin-top:8px;font-size:.88rem">🗺️ Åpne i Google Maps</a>`;
+  const gMapsBtn = `<div style="display:flex;gap:7px;margin-top:8px">
+    <a href="${gMapsUrl}" target="_blank" style="flex:1;padding:10px;border-radius:9px;text-decoration:none;font-weight:700;font-size:.82rem;text-align:center;background:#34a853;color:#fff">🗺️ Google Maps</a>
+    ${(p.lat && p.lng) ? '<a href="https://maps.apple.com/?ll=' + p.lat + ',' + p.lng + '&q=' + encodeURIComponent(p.name) + '&z=17" target="_blank" style="flex:1;padding:10px;border-radius:9px;text-decoration:none;font-weight:700;font-size:.82rem;text-align:center;background:#000;color:#fff">🍎 Apple Maps</a>' : ''}
+  </div>`;
   document.getElementById('modalBody').insertAdjacentHTML('beforeend', gMapsBtn);
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -11364,6 +11461,22 @@ function checkAuth() {
 }
 
 // INIT
+
+function activateDist(btn) {
+  if(!navigator.geolocation) { showToast('GPS ikke tilgjengelig i denne nettleseren'); return; }
+  showToast('Finner posisjon…');
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      S.userLat = pos.coords.latitude;
+      S.userLng = pos.coords.longitude;
+      setSort('distance', btn);
+      showToast('📍 Sorterer etter avstand');
+    },
+    () => showToast('Kunne ikke hente posisjon'),
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
+  );
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   checkAuth();
   updateStreakBadge();
