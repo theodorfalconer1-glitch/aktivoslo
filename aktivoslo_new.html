@@ -30,29 +30,29 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
 .home-btn{display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;padding:4px;border-radius:9px;flex-shrink:0}
 .home-btn:active{background:var(--sand)}
 .home-logo{font-weight:900;font-size:.9rem;color:var(--navy);letter-spacing:-.3px;white-space:nowrap}
-.srch-btn{
+.hdr-srch{
   flex:1;display:flex;align-items:center;gap:7px;
-  background:#f3f4f6;border:none;border-radius:22px;
-  padding:8px 13px;min-width:0;cursor:pointer;
-  font-size:.83rem;color:#6b7280;font-family:inherit;
-  text-align:left;transition:background .1s
+  background:#f3f4f6;border:1.5px solid transparent;border-radius:22px;
+  padding:7px 12px;min-width:0;transition:border-color .15s,background .15s
 }
-.srch-btn:active{background:#e5e7eb}
+.hdr-srch:focus-within{background:#fff;border-color:var(--accent)}
+.hdr-srch input{border:none;background:none;outline:none;font-size:.83rem;
+  color:var(--text);font-family:inherit;width:100%}
+.hdr-srch input::placeholder{color:#9ca3af}
 .hbtn{background:none;border:none;cursor:pointer;font-size:1.05rem;padding:7px;border-radius:9px;flex-shrink:0;transition:background .1s}
 .hbtn:active{background:var(--sand)}
 
 /* SEARCH PANEL */
-#srchPanel{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.15);
-  transform:translateY(-110%);transition:transform .22s cubic-bezier(.4,0,.2,1);
-  border-radius:0 0 16px 16px;
-  padding-top:env(safe-area-inset-top)
+#srchDropdown{
+  position:fixed;
+  top:calc(var(--hdr) + env(safe-area-inset-top) + 3px);
+  left:8px;right:8px;z-index:400;
+  background:#fff;border-radius:14px;
+  box-shadow:0 8px 28px rgba(0,0,0,.14);
+  display:none;overflow:hidden
 }
-#srchPanel.on{transform:translateY(0)}
-.srch-inner{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border)}
-.srch-inner input{flex:1;border:none;outline:none;font-size:.92rem;color:var(--text);font-family:inherit}
-#srchResults{max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#srchDropdown.on{display:block}
+#srchResults{max-height:58vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .sr-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #f3f4f6;cursor:pointer;touch-action:manipulation}
 .sr-item:active{background:#f9fafb}
 .sr-ico{font-size:1.1rem;flex-shrink:0;width:32px;height:32px;background:var(--sand);border-radius:8px;display:flex;align-items:center;justify-content:center}
@@ -240,22 +240,15 @@ html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFo
     <span style="font-size:1rem">🗺️</span>
     <span class="home-logo">AktivOslo</span>
   </button>
-  <button class="srch-btn" id="srchOpenBtn">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <span id="srchBtnTxt">Søk etter sted...</span>
-  </button>
-  <button class="hbtn" id="listBtn">☰</button>
+  <div class="hdr-srch" id="hdrSrch">
+    <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="si" type="search" autocomplete="off" spellcheck="false">
+    <button id="siClear" style="display:none;background:none;border:none;color:#9ca3af;font-size:.9rem;cursor:pointer;padding:2px 4px;flex-shrink:0">✕</button>
+  </div>
   <button class="hbtn" id="langBtn">🌐</button>
 </div>
 
-<div id="srchPanel">
-  <div class="srch-inner">
-    <svg width="15" height="15" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input id="si" type="search" autocomplete="off">
-    <button id="srchClose" style="background:none;border:none;font-size:1.1rem;cursor:pointer;padding:4px;color:#6b7280">✕</button>
-  </div>
-  <div id="srchResults"></div>
-</div>
+<div id="srchDropdown"><div id="srchResults"></div></div>
 
 <!-- LIST SCREEN -->
 <div id="scr-list" class="sscr">
@@ -1048,7 +1041,6 @@ function applyLang(){
   document.getElementById('bn3t').textContent=tr('profile');
 
   // Header søk
-  document.getElementById('srchBtnTxt').textContent=tr('searchBtn');
   document.getElementById('si').placeholder=tr('search');
   document.getElementById('siFull').placeholder=tr('search');
 
@@ -1241,29 +1233,33 @@ document.getElementById('fbar').addEventListener('click',e=>{
 });
 
 // ══ SØKEPANEL ══
-document.getElementById('srchOpenBtn').onclick=()=>{
-  document.getElementById('srchPanel').classList.add('on');
-  setTimeout(()=>document.getElementById('si').focus(),80);
-};
-document.getElementById('srchClose').onclick=()=>{
-  document.getElementById('srchPanel').classList.remove('on');
-  document.getElementById('si').value='';
+const siEl=document.getElementById('si');
+const siClear=document.getElementById('siClear');
+const srchDrop=document.getElementById('srchDropdown');
+function closeSrch(){
+  srchDrop.classList.remove('on');
+  siEl.value='';siEl.blur();
+  siClear.style.display='none';
   document.getElementById('srchResults').innerHTML='';
-};
-document.getElementById('si').addEventListener('input',e=>{
+}
+siEl.addEventListener('input',e=>{
   const v=e.target.value.trim();
-  if(!v){document.getElementById('srchResults').innerHTML='';return;}
+  siClear.style.display=v?'inline':'none';
+  if(!v){srchDrop.classList.remove('on');document.getElementById('srchResults').innerHTML='';return;}
   const hits=getFiltered(v,'all').slice(0,12);
   document.getElementById('srchResults').innerHTML=hits.length
     ?hits.map(p=>{const c0=(p.activity_types||['?'])[0];return`<div class="sr-item" data-id="${p.id}"><div class="sr-ico">${ICO[c0]||'📍'}</div><div><div class="sr-name">${p.name}</div><div class="sr-sub">${[p.neighborhood,p.municipality].filter(Boolean).join(', ')||''} · ${trC(c0)}</div></div></div>`;}).join('')
     :`<div class="sr-empty">${tr('noResults')}</div>`;
+  srchDrop.classList.add('on');
 });
+siEl.addEventListener('focus',()=>{if(siEl.value.trim())srchDrop.classList.add('on');});
+siClear.addEventListener('click',closeSrch);
 document.getElementById('srchResults').addEventListener('click',e=>{
   const item=e.target.closest('.sr-item');if(!item)return;
-  document.getElementById('srchPanel').classList.remove('on');
-  document.getElementById('si').value='';
-  document.getElementById('srchResults').innerHTML='';
-  openPlace(item.dataset.id);
+  closeSrch();openPlace(item.dataset.id);
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#hdrSrch')&&!e.target.closest('#srchDropdown'))closeSrch();
 });
 
 // ══ LISTE-SCREEN ══
@@ -1386,7 +1382,6 @@ document.getElementById('homeBtn').onclick=()=>{
   buildFbar();renderMarkers();showSscr(null);hideSheet();
   apMap?.setView([59.913,10.740],12,{animate:true});
 };
-document.getElementById('listBtn').onclick=openListScreen;
 document.getElementById('listBack').onclick=()=>showSscr(null);
 document.getElementById('socialBack').onclick=()=>showSscr(null);
 document.getElementById('profileBack').onclick=()=>showSscr(null);
