@@ -11434,7 +11434,7 @@ function renderList(){
   const q = (document.getElementById('searchQ').value||'').toLowerCase().trim();
 
   let res = PLACES.filter(p=>{
-    if(p.status && p.status!=='active') return false;
+    if(p.status && p.status==='closed') return false;
     if(activeCat!=='all' && (p.activity_types||[])[0]!==activeCat) return false;
     if(freeOnly && !p.is_free) return false;
     if(q){
