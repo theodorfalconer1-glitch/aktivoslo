@@ -191,72 +191,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:va
   <div id="main">
 
     <!-- LISTE VIEW -->
-    <div id="listView" class="visible">
+    <div id="listView" class="view visible">
       <div class="filter-bar">
         <div class="search-wrap">
-          <input type="text" id="searchQ" placeholder="🔍 Søk sted, bydel, aktivitet..." oninput="renderList()" autocomplete="off">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchQ" placeholder="Søk etter sted eller aktivitet…" oninput="renderList()" autocomplete="off">
         </div>
         <div class="cat-row" id="catRow"></div>
-        <div class="chip-row" id="chipRow"></div>
+        <div class="results-bar" id="resultsBar">
+          <span id="resultCount"></span>
+          <div class="sort-row">
+            <button class="sort-chip" data-sort="score" onclick="setSort('score',this)">⭐ Score</button>
+            <button class="sort-chip" data-sort="trending" onclick="setSort('trending',this)">🔥 Populær</button>
+          </div>
+        </div>
       </div>
-      <div class="results-bar" id="resultsBar"></div>
       <div class="cards" id="cards"></div>
     </div>
 
-    <!-- UTFORSK VIEW -->
-    <div id="exploreView">
-      <div class="explore-pad">
-
-        <div class="ex-section">
-          <div class="ex-title">🏆 Høyest rangert</div>
-          <div class="rank-list" id="rankList"></div>
-        </div>
-
-        <div class="ex-section">
-          <div class="ex-title">🔥 Trendende nå</div>
-          <div class="h-scroll" id="trendRow"></div>
-        </div>
-
-        <div class="ex-section">
-          <div class="ex-title">💎 Skjulte perler</div>
-          <div class="h-scroll" id="gemsRow"></div>
-        </div>
-
-        <div class="ex-section">
-          <div class="ex-title">🪣 Din aktivitetsliste</div>
-          <div class="bucket-row" id="bucketRow"></div>
-        </div>
-
+    <!-- MAP VIEW -->
+    <div id="mapView" class="view">
+      <div class="map-header">
+        <input class="map-search" type="text" id="mapSearch" placeholder="🔍 Søk i kartet…" oninput="filterMapSearch()">
+        <div class="map-count" id="mapCount"></div>
+      </div>
+      <div class="map-cats" id="mapCatRow"></div>
+      <div id="map"></div>
+      <div class="map-sheet" id="mapSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-body" id="mapSheetBody"></div>
       </div>
     </div>
 
-
-    <!-- SOCIAL VIEW -->
-    <div id="socialView">
-      <div id="socialContent"></div>
-    </div>
-    <!-- MAP VIEW -->
-    <div id="mapView" class="view">
-
-    <!-- MAP HEADER med søk -->
-    <div class="map-header">
-      <input class="map-search" type="text" id="mapSearch" placeholder="🔍 Søk i kartet…" oninput="filterMapSearch()">
-      <div class="map-count" id="mapCount">205 steder</div>
-    </div>
-
-    <!-- MAP KATEGORIER -->
-    <div class="map-cats" id="mapCatRow"></div>
-
-    <!-- LEAFLET MAP -->
-    <div id="map"></div>
-
-    <!-- BOTTOM SHEET -->
-    <div class="map-sheet" id="mapSheet">
-      <div class="sheet-handle"></div>
-      <div class="sheet-body" id="mapSheetBody"></div>
+    <!-- UTFORSK VIEW -->
+    <div id="exploreView" class="view">
+      <div style="overflow-y:auto;height:100%;padding:12px">
+        <div style="margin-bottom:14px">
+          <div style="font-weight:800;font-size:.95rem;margin-bottom:8px">🏆 Høyest rangert</div>
+          <div id="rankList"></div>
+        </div>
+        <div style="margin-bottom:14px">
+          <div style="font-weight:800;font-size:.95rem;margin-bottom:8px">💎 Skjulte perler</div>
+          <div id="gemsRow" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:6px"></div>
+        </div>
+      </div>
     </div>
 
-  </div>
   </div>
 
   <!-- BOTTOM NAV -->
@@ -557,31 +537,22 @@ const CATS = [
 
 function buildFilters(){
   const cr = document.getElementById('catRow');
+  if(!cr) return;
+  cr.innerHTML = '';
   CATS.forEach(c=>{
     const b = document.createElement('button');
-    b.className='cat-btn'+(c.id===S.activeCat?' active':'');
-    b.textContent=c.l; b.dataset.cat=c.id;
-    b.onclick=()=>{ S.activeCat=c.id; cr.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active')); b.classList.add('active'); renderList(); };
+    b.className = 'cat-btn' + (c.id===S.activeCat?' on':'');
+    b.textContent = c.l;
+    b.onclick = ()=>{
+      S.activeCat = c.id;
+      cr.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      renderList();
+    };
     cr.appendChild(b);
   });
-  const chips = document.getElementById('chipRow');
-  const makeChip=(id,label,key)=>{
-    const c=document.createElement('button');
-    c.className='chip'; c.textContent=label; c.id=id;
-    c.onclick=()=>{ S[key]=!S[key]; c.classList.toggle('on',S[key]); renderList(); };
-    chips.appendChild(c);
-  };
-  makeChip('cFree','✅ Gratis','freeOnly');
-  makeChip('cDog','🐕 Hund OK','dogOnly');
-  const sortChips=[['⭐ Best rangert','score'],['🔥 Trending','trending'],['🎯 Din match','match']];
-  sortChips.forEach(([l,mode])=>{
-    const c=document.createElement('button');
-    c.className='chip'+(S.sortMode===mode?' on':'');
-    c.textContent=l; c.dataset.sort=mode;
-    c.onclick=()=>{ S.sortMode=mode; chips.querySelectorAll('[data-sort]').forEach(x=>x.classList.remove('on')); c.classList.add('on'); renderList(); };
-    chips.appendChild(c);
-  });
 }
+
 
 // ═══════════════════════════════════════════
 // LIST RENDER
@@ -882,20 +853,28 @@ function showToast(msg){ const t=document.getElementById('toast'); t.textContent
 // TAB SWITCH
 // ═══════════════════════════════════════════
 function switchTab(tab){
-  S.tab=tab;
-  ['liste','utforsk','kart'].forEach(t=>{
-    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('active',t===tab);
-    document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1)).classList.toggle('on',t===tab);
+  S.tab = tab;
+  // Tab-knapper
+  ['Liste','Kart','Utforsk'].forEach(t=>{
+    const id = t.toLowerCase();
+    const te = document.getElementById('tab'+t);
+    const ne = document.getElementById('nav'+t);
+    if(te) te.classList.toggle('active', id===tab);
+    if(ne) ne.classList.toggle('on', id===tab);
   });
-  document.getElementById('listView').classList.toggle('visible', tab==='liste');
-  document.getElementById('exploreView').classList.toggle('visible', tab==='utforsk');
-  const mv=document.getElementById('mapView');
-  if(tab==='kart'){ mv.classList.add('visible'); initMap(); setTimeout(()=>{S.leafletMap.invalidateSize();renderMap();},150); }
-  else mv.classList.remove('visible');
+  // Views
+  ['listView','mapView','exploreView'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    const show = (id==='listView'&&tab==='liste')||(id==='mapView'&&tab==='kart')||(id==='exploreView'&&tab==='utforsk');
+    el.classList.toggle('visible', show);
+  });
+  // Kart init
+  if(tab==='kart'){
+    if(!S.leafletMap){ initMap(); setTimeout(()=>{S.leafletMap.invalidateSize();renderMap();},200); }
+    else setTimeout(()=>{S.leafletMap.invalidateSize();renderMap();},80);
+  }
   if(tab==='utforsk') buildExplore();
-  // Filter bar bare synlig på liste
-  document.querySelector('.filter-bar').style.display = tab==='liste'?'block':'none';
-  document.getElementById('resultsBar').style.display = tab==='liste'?'block':'none';
 }
 
 // ═══════════════════════════════════════════
