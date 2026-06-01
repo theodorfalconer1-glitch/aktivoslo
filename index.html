@@ -2177,7 +2177,7 @@ function buildFbar(){
   });
   const fb=$('fbar');fb.innerHTML='';fb.appendChild(frag);
 }
-window.addEventListener('load',function(){
+// Init når DOM er klar
 
 $('fbar').addEventListener('click',e=>{
   const chip=e.target.closest('.chip');if(!chip) return;
@@ -2761,7 +2761,6 @@ function startGeo(onDone){
 if(localStorage.getItem('ao_geo_state')==='granted') startGeo(null);
 
 
-});
 </script>
 <div id="geoSheet" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:8001;background:#fff;border-radius:22px 22px 0 0;padding:22px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -6px 32px rgba(0,0,0,.13);max-width:520px;margin:0 auto">
   <div style="width:36px;height:4px;background:#d1d5db;border-radius:2px;margin:0 auto 18px"></div>
