@@ -1,325 +1,341 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>AktivOslo</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <style>
-:root{--navy:#0f172a;--acc:#16a34a;--acc2:#0ea5e9;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--sand:#f8fafc;--light:#f1f5f9;--radius:14px}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);background:var(--sand);-webkit-tap-highlight-color:transparent}
-#app{height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-#header{background:#fff;border-bottom:1px solid var(--border);padding:10px 14px 0;flex-shrink:0}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.logo{font-size:1.2rem;font-weight:900;letter-spacing:-.5px;color:var(--navy)}
-.logo span{color:var(--acc)}
-.header-right{display:flex;align-items:center;gap:6px}
-.hdr-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;padding:4px}
-.streak-badge{font-size:.72rem;font-weight:700;background:var(--acc);color:#fff;border-radius:20px;padding:2px 7px;display:none}
-.tabs{display:flex}
-.tab{flex:1;text-align:center;padding:9px 4px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .15s}
-.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
-#main{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column}
-.view{position:absolute;inset:0;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-#listView{position:relative;flex:1;display:none;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-#listView.visible{display:flex}
-.view.visible{display:flex}
-/* ── LISTE ── */
-.filter-bar{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-.search-wrap{display:flex;align-items:center;padding:10px 12px 6px}
-.search-wrap input{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:.88rem;font-family:inherit;outline:none;background:var(--light)}
-.search-wrap input:focus{border-color:var(--navy)}
-.cat-row{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:4px 12px 10px;min-height:44px}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AktivOslo</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1a2b4a;
+  --accent:#2563eb;
+  --green:#16a34a;
+  --sand:#f8f7f4;
+  --border:#e5e7eb;
+  --text:#111827;
+  --muted:#6b7280;
+  --radius:12px;
+}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--sand);color:var(--text);-webkit-tap-highlight-color:transparent}
+
+/* ── APP SHELL ── */
+#app{
+  display:flex;
+  flex-direction:column;
+  height:100dvh;
+  height:100vh; /* fallback */
+  overflow:hidden;
+}
+
+/* ── HEADER ── */
+#header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  padding:12px 16px 8px;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.logo{font-weight:900;font-size:1.1rem;color:var(--navy);flex:1}
+.search-box{
+  display:flex;align-items:center;gap:6px;
+  background:var(--sand);border:1px solid var(--border);
+  border-radius:20px;padding:6px 12px;flex:2;
+}
+.search-box input{border:none;background:none;outline:none;font-size:.9rem;width:100%}
+
+/* ── TAB-BAR TOPP ── */
+#tabs{
+  display:flex;
+  background:#fff;
+  border-bottom:2px solid var(--border);
+  flex-shrink:0;
+}
+.tab{
+  flex:1;padding:10px 4px;text-align:center;font-size:.8rem;font-weight:700;
+  color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;
+  margin-bottom:-2px;touch-action:manipulation;
+}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ── CONTENT ── */
+#content{
+  flex:1;
+  overflow:hidden;
+  position:relative;
+}
+
+/* ── VIEWS ── */
+/* Alle views fyller #content */
+.view{
+  display:none;
+  position:absolute;
+  inset:0;
+}
+.view.active{display:block}
+
+/* ── LISTE VIEW ── */
+#listView{
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* HERO */
+.hero{
+  background:#fff;
+  padding:18px 16px 14px;
+  border-bottom:1px solid var(--border);
+}
+.hero h1{font-size:1.4rem;font-weight:900;color:var(--navy);margin-bottom:4px}
+.hero p{font-size:.85rem;color:var(--muted)}
+.quick-cats{
+  display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;
+  scrollbar-width:none;
+}
+.quick-cats::-webkit-scrollbar{display:none}
+.qcat{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:var(--sand);border:1px solid var(--border);border-radius:12px;
+  padding:10px 12px;cursor:pointer;flex-shrink:0;min-width:64px;
+  touch-action:manipulation;transition:background .1s;
+}
+.qcat:active{background:#dbeafe}
+.qcat-ico{font-size:1.4rem}
+.qcat-lbl{font-size:.65rem;font-weight:700;color:var(--navy);white-space:nowrap}
+
+/* FILTER-BAR */
+.filter-bar{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+.cat-row{
+  display:flex;gap:6px;overflow-x:auto;padding:8px 12px;
+  scrollbar-width:none;
+}
 .cat-row::-webkit-scrollbar{display:none}
-.cat-btn{white-space:nowrap;padding:8px 16px;border-radius:22px;border:2px solid var(--border);background:#fff;font-size:.85rem;font-weight:700;cursor:pointer;color:var(--text);transition:all .15s;flex-shrink:0;letter-spacing:-.2px}
-.cat-btn.on{background:var(--navy);color:#fff;border-color:var(--navy);box-shadow:0 2px 8px rgba(15,23,42,.25)}
-.filter-pills{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 12px 8px}
-.filter-pills::-webkit-scrollbar{display:none}
-.fpill{white-space:nowrap;padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;flex-shrink:0}
-.fpill.on{background:#dcfce7;color:#15803d;border-color:#86efac}
-.results-bar{display:flex;align-items:center;justify-content:space-between;padding:4px 12px 8px;flex-shrink:0}
-.result-count{font-size:.73rem;color:var(--muted)}
-.sort-row{display:flex;gap:5px}
-.sort-chip{padding:4px 10px;border-radius:16px;border:1.5px solid var(--border);background:#fff;font-size:.75rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s}
-.sort-chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-.cards{padding:10px 10px 80px;display:grid;grid-template-columns:1fr 1fr;gap:9px;align-content:start}
+.cat-btn{
+  flex-shrink:0;padding:5px 12px;border-radius:20px;border:1px solid var(--border);
+  background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--muted);
+  touch-action:manipulation;white-space:nowrap;
+}
+.cat-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* SORT-ROW */
+.sort-row{
+  display:flex;gap:6px;padding:6px 12px 8px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.sort-row::-webkit-scrollbar{display:none}
+.sort-btn{
+  flex-shrink:0;padding:4px 10px;border-radius:20px;border:1px solid var(--border);
+  background:#fff;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--muted);
+  touch-action:manipulation;
+}
+.sort-btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* RESULT-COUNT */
+.result-count{
+  padding:8px 14px 4px;font-size:.78rem;color:var(--muted);font-weight:600;
+}
+
+/* CARDS GRID */
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  padding:8px 10px 100px;
+}
 @media(min-width:500px){.cards{grid-template-columns:repeat(3,1fr)}}
-.card{background:#fff;border-radius:var(--radius);padding:14px 12px;border:1px solid var(--border);cursor:pointer;transition:background .1s,transform .1s;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
-.card:active{transform:scale(.97)}
-.card-emoji{font-size:1.7rem;margin-bottom:4px}
-.card-name{font-size:.85rem;font-weight:800;line-height:1.2;margin-bottom:3px}
+
+/* CARD */
+.card{
+  background:#fff;border-radius:var(--radius);padding:14px 12px;
+  border:1px solid var(--border);cursor:pointer;
+  touch-action:manipulation;user-select:none;
+  transition:background .1s, transform .1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.card:active{background:#eff6ff;transform:scale(.97)}
+.card-emoji{font-size:1.6rem;margin-bottom:6px}
+.card-name{font-size:.85rem;font-weight:800;color:var(--text);margin-bottom:3px;line-height:1.2}
 .card-sub{font-size:.72rem;color:var(--muted);margin-bottom:6px}
-.card-tags{display:flex;gap:4px;flex-wrap:wrap}
-.badge-free{background:#dcfce7;color:#15803d;font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
-.score-tag{background:var(--light);color:var(--navy);font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
-.dist-tag{background:#e0f2fe;color:#0369a1;font-size:.67rem;font-weight:700;padding:2px 6px;border-radius:8px}
-.ctag{background:var(--light);color:var(--muted);font-size:.65rem;font-weight:600;padding:2px 6px;border-radius:8px}
-.fav-dot{position:absolute;top:8px;right:8px;font-size:.9rem}
-/* ── KART ── */
-.map-header{background:#fff;border-bottom:1px solid var(--border);padding:8px 12px;flex-shrink:0;display:flex;align-items:center;gap:8px}
-.map-search{flex:1;padding:7px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:.85rem;font-family:inherit;outline:none;background:var(--light)}
-.map-search:focus{border-color:var(--navy)}
-.map-count{font-size:.73rem;color:var(--muted);white-space:nowrap}
-.map-cats{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:8px 12px;background:#fff;border-bottom:1px solid var(--border);flex-shrink:0}
-.map-cats::-webkit-scrollbar{display:none}
-.mcat{white-space:nowrap;padding:5px 11px;border-radius:18px;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;color:var(--muted);transition:all .15s;flex-shrink:0}
-.mcat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-#map{flex:1;z-index:1;min-height:0;width:100%;position:relative;}
-.map-sheet{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:18px 18px 0 0;box-shadow:0 -4px 24px rgba(0,0,0,.12);transform:translateY(100%);transition:transform .3s;z-index:100;max-height:70%}
-.map-sheet.open{transform:translateY(0)}
-.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0}
-.sheet-body{padding:12px 16px 32px;overflow-y:auto}
-/* ── UTFORSK ── */
-.explore-view{overflow-y:auto !important}.explore-pad{padding:14px}
-.ex-title{font-weight:800;font-size:.95rem;margin-bottom:8px}
-.rank-list{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
-.rank-item{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:10px 12px;border:1px solid var(--border);cursor:pointer}
-.rank-num{font-size:.8rem;font-weight:900;color:var(--muted);width:18px}
-.rank-name{font-size:.85rem;font-weight:700;flex:1}
-.rank-score{font-size:.78rem;color:var(--acc);font-weight:700}
-.h-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;margin-bottom:16px}
-.h-scroll::-webkit-scrollbar{display:none}
-.gem-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:10px 12px;min-width:140px;cursor:pointer}
+.card-tags{display:flex;flex-wrap:wrap;gap:3px}
+.ctag{font-size:.65rem;background:#f0f4ff;color:var(--accent);padding:2px 6px;border-radius:8px;font-weight:600}
+.badge-free{font-size:.65rem;background:#f0fdf4;color:var(--green);padding:2px 6px;border-radius:8px;font-weight:700}
+.score-tag{font-size:.65rem;background:#fefce8;color:#92400e;padding:2px 6px;border-radius:8px;font-weight:600}
+
+/* ── KART VIEW ── */
+#mapView{overflow:hidden}
+#map{width:100%;height:100%}
+.map-cat-row{
+  position:absolute;top:8px;left:8px;right:8px;z-index:500;
+  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+.map-cat-row::-webkit-scrollbar{display:none}
+.mcat-btn{
+  flex-shrink:0;padding:5px 12px;border-radius:20px;
+  background:#fff;border:1px solid var(--border);font-size:.76rem;font-weight:700;
+  cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);touch-action:manipulation;
+}
+.mcat-btn.on{background:var(--accent);color:#fff}
+
 /* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:flex-end;justify-content:center}.modal-overlay.open{display:flex}
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.5);z-index:1000;
+  align-items:flex-end;justify-content:center;
+}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:18px 18px 0 0;padding:20px 16px 36px;width:100%;max-width:520px;position:relative;max-height:85vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.modal-close{position:absolute;top:14px;right:14px;background:var(--light);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.modal-title{font-size:1.1rem;font-weight:900;margin-bottom:4px}
-.modal-sub{font-size:.77rem;color:var(--muted);margin-bottom:8px}
-.modal-desc{font-size:.84rem;color:#444;line-height:1.6;margin-bottom:12px}
-.modal-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.modal-actions{display:flex;gap:7px;margin-top:12px}
-.m-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--light);font-size:.8rem}
-.m-label{color:var(--muted);font-weight:600}
-.m-val{font-weight:600}
-.btn-fav,.btn-done,.btn-maps{flex:1;padding:10px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:.82rem;text-align:center;text-decoration:none}
-.btn-fav{background:var(--light);color:var(--text)}
-.btn-fav.btn-fav-on{background:#fee2e2;color:#dc2626}
-.btn-done{background:var(--light);color:var(--text)}
-.btn-maps{background:#34a853;color:#fff;display:flex;align-items:center;justify-content:center;gap:4px}
-/* ── TOAST ── */
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:9px 18px;border-radius:20px;font-size:.82rem;font-weight:600;z-index:500;pointer-events:none;animation:toastIn .25s forwards}
-@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.modal{
+  background:#fff;border-radius:20px 20px 0 0;
+  width:100%;max-width:540px;
+  max-height:88vh;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:20px 18px 40px;position:relative;
+}
+.modal-handle{
+  width:36px;height:4px;background:#e5e7eb;
+  border-radius:4px;margin:0 auto 16px;
+}
+.modal-close{
+  position:absolute;top:14px;right:14px;
+  width:30px;height:30px;border-radius:50%;border:none;
+  background:var(--sand);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  touch-action:manipulation;
+}
+.modal-emoji{font-size:2.4rem;margin-bottom:8px}
+.modal-name{font-size:1.3rem;font-weight:900;color:var(--navy);margin-bottom:4px}
+.modal-loc{font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.modal-badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+.modal-desc{font-size:.88rem;line-height:1.55;color:var(--text);margin-bottom:14px}
+.info-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:.83rem}
+.ir-l{color:var(--muted);font-weight:600}
+.ir-v{color:var(--text);font-weight:500;text-align:right;max-width:60%}
+.nav-btns{display:flex;gap:8px;margin-top:16px}
+.nav-btn-maps{
+  flex:1;padding:12px 8px;border-radius:10px;text-decoration:none;
+  font-weight:800;font-size:.85rem;text-align:center;display:block;
+  touch-action:manipulation;
+}
+.btn-google{background:#34a853;color:#fff}
+.btn-apple{background:#000;color:#fff}
+.mark-btn{
+  display:block;width:100%;margin-top:10px;padding:12px;
+  border-radius:10px;border:2px solid var(--border);background:#fff;
+  font-size:.88rem;font-weight:700;cursor:pointer;touch-action:manipulation;
+}
+.mark-btn.done{border-color:var(--green);color:var(--green)}
+
 /* ── NAV ── */
-#bottomNav{background:#fff;border-top:1px solid var(--border);display:flex;padding:6px 0 env(safe-area-inset-bottom);flex-shrink:0}
-.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;cursor:pointer;padding:6px 4px;color:var(--muted);font-size:.68rem;font-weight:600;transition:color .15s}
-.nav-btn svg{width:22px;height:22px;fill:currentColor}
-.nav-btn.on{color:var(--navy)}
-/* ── AUTH ── */
-.auth-overlay{display:flex;position:fixed;inset:0;background:#fff;z-index:200;flex-direction:column;overflow:hidden}
-.auth-logo{font-size:2.2rem;margin-bottom:4px}
-.auth-title{font-size:1.75rem;font-weight:900;line-height:1.15;margin-bottom:6px;color:#111}
-.auth-sub{font-size:.85rem;color:var(--muted);margin-bottom:0}
-.auth-btn{width:100%;max-width:380px;padding:14px;border-radius:12px;border:none;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
-.auth-btn.primary{background:var(--navy);color:#fff}
-.auth-btn.secondary{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
-.intro-hero{padding:22px 20px 14px;flex-shrink:0;background:#fff}
-.intro-stats{display:flex;gap:0;margin:14px 0 16px;border-left:3px solid var(--navy);padding-left:12px}
-.intro-stats span{display:block;font-size:.78rem;font-weight:600;color:#444;letter-spacing:.04em;text-transform:uppercase;line-height:1.8}
-.intro-map-wrap{flex:1;position:relative;min-height:0}
-.intro-cta{padding:14px 20px 20px;background:#fff;flex-shrink:0;border-top:1px solid #eee}
-.auth-input{width:100%;max-width:320px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:.9rem;font-family:inherit;margin-bottom:10px;outline:none}
-.auth-input:focus{border-color:var(--navy)}
-.avatar-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}
-.ava-btn{font-size:1.6rem;width:42px;height:42px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:var(--light);display:flex;align-items:center;justify-content:center;transition:all .15s}
-.ava-btn.sel{border-color:var(--navy);background:#e0e7ff}
-  
-/* ===== HERO ===== */
-.hero-section{background:#fff;padding:22px 18px 16px;border-bottom:1px solid var(--border)}
-.hero-greeting{font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:4px;letter-spacing:.02em}
-.hero-title{font-size:1.75rem;font-weight:900;line-height:1.12;margin:0 0 18px;letter-spacing:-.04em;color:#111}
-/* Hurtigkategorier */
-.quick-cats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
-.qcat{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;-webkit-tap-highlight-color:transparent;padding:4px 0}
-.qcat-ico{font-size:1.65rem;line-height:1;transition:transform .12s}
-.qcat-lbl{font-size:.68rem;font-weight:700;color:#555;text-align:center;letter-spacing:.01em}
-.qcat:active .qcat-ico{transform:scale(.85)}
-/* Surprise me */
-.hero-random-wrap{margin-bottom:14px}
-.hero-random-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:#f8f9fa;border:1.5px solid #e5e7eb;border-radius:13px;font-size:.92rem;font-weight:700;color:#111;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s}
-.hero-random-btn:active{background:#e5e7eb}
-.hero-random-ico{font-size:1.2rem}
-/* Nær deg */
-.nearby-strip{margin-bottom:4px}
-.nearby-label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
-.nearby-scroll{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
-.nearby-scroll::-webkit-scrollbar{display:none}
-.nearby-card{flex-shrink:0;width:130px;background:#f8f9fa;border-radius:12px;padding:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;border:1px solid #eee}
-.nearby-card:active{background:#e5e7eb}
-.nc-emoji{font-size:1.4rem;margin-bottom:3px}
-.nc-name{font-size:.75rem;font-weight:800;line-height:1.2;margin-bottom:2px;color:#111}
-.nc-dist{font-size:.68rem;color:var(--muted)}
+#nav{
+  display:flex;background:#fff;
+  border-top:1px solid var(--border);
+  padding-bottom:env(safe-area-inset-bottom);
+  flex-shrink:0;
+}
+.nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:2px;padding:8px 4px;cursor:pointer;color:var(--muted);
+  font-size:.62rem;font-weight:700;border:none;background:none;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+.nav-item.on{color:var(--accent)}
+.nav-icon{font-size:1.3rem}
+
+/* ── EMPTY STATE ── */
+.empty{
+  grid-column:1/-1;padding:40px 20px;text-align:center;color:var(--muted);font-size:.9rem;
+}
 </style>
 </head>
 <body>
-
-<!-- AUTH OVERLAY -->
-<div class="auth-overlay" id="authOverlay">
-  <!-- HERO-TEKST -->
-  <div class="intro-hero">
-    <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--navy);text-transform:uppercase;margin-bottom:6px">🏃 AktivOslo</div>
-    <div class="auth-title">Finn noe å finne på<br><span style="color:var(--navy)">i dag.</span></div>
-    <div class="auth-sub">224 aktivitetssteder i Oslo, Asker og Bærum</div>
-    <div class="intro-stats">
-      <div>
-        <span>224 aktivitetssteder</span>
-        <span>20+ kategorier</span>
-        <span>Oslo · Asker · Bærum</span>
-      </div>
-    </div>
-    <button class="auth-btn primary" onclick="introGoToApp()" style="margin-bottom:0">Utforsk kartet →</button>
-  </div>
-
-  <!-- LIVE KART — fullt interaktivt -->
-  <div class="intro-map-wrap" style="pointer-events:none">
-    <div id="introMap" style="width:100%;height:100%;pointer-events:none"></div>
-    <!-- Pill som viser antall -->
-    <div style="position:absolute;top:10px;right:10px;background:#fff;border-radius:20px;padding:5px 12px;font-size:.75rem;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:400;pointer-events:none">
-      📍 Oslo · 224 steder
-    </div>
-  </div>
-
-  <!-- BUNN: Logg inn eller gjest -->
-  <div class="intro-cta">
-    <div style="display:flex;gap:10px">
-      <button class="auth-btn primary" onclick="introGoToApp()" style="margin:0;flex:2">Utforsk nå</button>
-      <button class="auth-btn secondary" onclick="showRegister()" style="margin:0;flex:1">Logg inn</button>
-    </div>
-  </div>
-</div>
-
-<!-- APP -->
 <div id="app">
+
+  <!-- HEADER -->
   <div id="header">
-    <div class="header-top">
-      <div class="logo">Aktiv<span>Oslo</span></div>
-      <div class="header-right">
-        <div class="streak-badge" id="streakBadge"></div>
-        <button class="hdr-btn" onclick="openSugg()" title="Finn noe å gjøre">✨</button>
-        <button class="hdr-btn" onclick="openFavs()" title="Favoritter">🤍</button>
-      </div>
-    </div>
-    <div class="tabs">
-      <div class="tab active" id="tabListe" onclick="switchTab('liste')">Liste</div>
-      <div class="tab" id="tabKart" onclick="switchTab('kart')">Kart</div>
-      <div class="tab" id="tabUtforsk" onclick="switchTab('utforsk')">Utforsk</div>
+    <div class="logo">🏃 AktivOslo</div>
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="searchQ" placeholder="Søk sted eller aktivitet…" oninput="renderList()">
     </div>
   </div>
 
-  <div id="main">
+  <!-- TABS -->
+  <div id="tabs">
+    <div class="tab active" id="tabListe" onclick="switchView('liste')">📋 Liste</div>
+    <div class="tab" id="tabKart" onclick="switchView('kart')">🗺️ Kart</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
     <!-- LISTE VIEW -->
-    <div id="listView" class="view">
+    <div id="listView" class="view active">
 
-      <!-- HERO — avhengighetsskapende forside -->
-      <div class="hero-section" id="heroSection">
-        <!-- Værbasert hilsen -->
-        <div class="hero-greeting" id="heroGreeting">God dag 👋</div>
-        <h1 class="hero-title" id="heroTitle">Hva skal du<br>finne på i dag?</h1>
-
-        <!-- Hurtigkategorier — store klikkbare ikoner -->
-        <div class="quick-cats" id="quickCats">
-          <div class="qcat" onclick="heroPickCat('bading')"><div class="qcat-ico">🏊</div><div class="qcat-lbl">Bading</div></div>
-          <div class="qcat" onclick="heroPickCat('badstue')"><div class="qcat-ico">🧖</div><div class="qcat-lbl">Badstue</div></div>
-          <div class="qcat" onclick="heroPickCat('tuftpark')"><div class="qcat-ico">🏋️</div><div class="qcat-lbl">Tuftepark</div></div>
-          <div class="qcat" onclick="heroPickCat('discgolf')"><div class="qcat-ico">🥏</div><div class="qcat-lbl">Discgolf</div></div>
-          <div class="qcat" onclick="heroPickCat('tennisbane')"><div class="qcat-ico">🎾</div><div class="qcat-lbl">Tennis</div></div>
-          <div class="qcat" onclick="heroPickCat('bordtennis')"><div class="qcat-ico">🏓</div><div class="qcat-lbl">Bordtennis</div></div>
-          <div class="qcat" onclick="heroPickCat('volleyballbane')"><div class="qcat-ico">🏐</div><div class="qcat-lbl">Volleyball</div></div>
-          <div class="qcat" onclick="heroPickCat('park')"><div class="qcat-ico">🌳</div><div class="qcat-lbl">Parker</div></div>
-          <div class="qcat" onclick="heroPickCat('skatepark')"><div class="qcat-ico">🛹</div><div class="qcat-lbl">Skate</div></div>
-          <div class="qcat" onclick="heroPickCat('løperute')"><div class="qcat-ico">🏃</div><div class="qcat-lbl">Løp</div></div>
-          <div class="qcat" onclick="heroPickCat('museum')"><div class="qcat-ico">🏛️</div><div class="qcat-lbl">Museum</div></div>
-        </div>
-
-        <!-- Tilfeldig sted — fristet meg -->
-        <div class="hero-random-wrap">
-          <button class="hero-random-btn" onclick="openRandomPlace()">
-            <span class="hero-random-ico">🎲</span>
-            <span>Surprise me</span>
-          </button>
-        </div>
-
-        <!-- Nærme steder -->
-        <div id="nearbyStrip" class="nearby-strip" style="display:none">
-          <div class="nearby-label">📍 Nær deg</div>
-          <div class="nearby-scroll" id="nearbyScroll"></div>
-        </div>
+      <!-- HERO -->
+      <div class="hero">
+        <h1>Hva vil du finne på?</h1>
+        <p id="heroSub">243 aktivitetssteder i Oslo, Asker og Bærum</p>
+        <div class="quick-cats" id="quickCats"></div>
       </div>
 
+      <!-- FILTER -->
       <div class="filter-bar">
-        <div class="search-wrap">
-          <input type="text" id="searchQ" placeholder="🔍 Søk sted eller aktivitet…" oninput="renderList()" autocomplete="off">
-        </div>
         <div class="cat-row" id="catRow"></div>
-        <div class="filter-pills">
-          <button class="fpill" id="fpFree" onclick="toggleFilter('freeOnly','fpFree')">✅ Gratis</button>
-          <button class="fpill" id="fpDog"  onclick="toggleFilter('dogOnly','fpDog')">🐕 Hund OK</button>
-          <button class="fpill" id="fpOpen" onclick="toggleFilter('alwaysOpen','fpOpen')">🕐 Alltid åpent</button>
-          <button class="fpill" id="fpWheel" onclick="toggleFilter('wheelchairOnly','fpWheel')">♿ Tilgjengelig</button>
-        </div>
-        <div class="results-bar">
-          <span class="result-count" id="resultCount"></span>
-          <div class="sort-row">
-            <button class="sort-chip on" data-sort="score" onclick="setSort('score',this)">⭐ Best</button>
-            <button class="sort-chip" data-sort="trending" onclick="setSort('trending',this)">🔥 Populær</button>
-            <button class="sort-chip" data-sort="distance" id="distChip" onclick="activateDist(this)">📍 Nærhet</button>
-          </div>
+        <div class="sort-row">
+          <button class="sort-btn on" id="sortBest" onclick="setSort('score')">⭐ Best rangert</button>
+          <button class="sort-btn" id="sortNear" onclick="setSort('distance')">📍 Nærmest</button>
+          <button class="sort-btn" id="sortFree" onclick="toggleFreeFilter(this)">🆓 Gratis</button>
         </div>
       </div>
+
+      <!-- RESULT COUNT -->
+      <div class="result-count" id="resultCount"></div>
+
+      <!-- CARDS -->
       <div class="cards" id="cards"></div>
+
     </div>
 
-    <!-- MAP VIEW -->
-    <div id="mapView" class="view map-view">
-      <div class="map-header">
-        <input class="map-search" type="text" id="mapSearch" placeholder="🔍 Søk i kartet…" oninput="filterMapSearch()">
-        <div class="map-count" id="mapCount"></div>
-      </div>
-      <div class="map-cats" id="mapCatRow"></div>
+    <!-- KART VIEW -->
+    <div id="mapView" class="view">
+      <div class="map-cat-row" id="mapCatRow"></div>
       <div id="map"></div>
-      <div class="map-sheet" id="mapSheet">
-        <div class="sheet-handle"></div>
-        <div class="sheet-body" id="mapSheetBody"></div>
-      </div>
     </div>
 
-    <!-- UTFORSK VIEW -->
-    <div id="exploreView" class="view explore-view">
-      <div class="explore-pad">
-        <div class="ex-title">🏆 Høyest rangert</div>
-        <div class="rank-list" id="rankList"></div>
-        <div class="ex-title">💎 Skjulte perler</div>
-        <div class="h-scroll" id="gemsRow"></div>
-      </div>
-    </div>
+  </div><!-- /content -->
+
+  <!-- NAV -->
+  <div id="nav">
+    <button class="nav-item on" id="navListe" onclick="switchView('liste')">
+      <div class="nav-icon">📋</div>Liste
+    </button>
+    <button class="nav-item" id="navKart" onclick="switchView('kart')">
+      <div class="nav-icon">🗺️</div>Kart
+    </button>
   </div>
 
-  <nav id="bottomNav">
-    <button class="nav-btn on" id="navListe" onclick="switchTab('liste')">
-      <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-      <span>Liste</span>
-    </button>
-    <button class="nav-btn" id="navKart" onclick="switchTab('kart')">
-      <svg viewBox="0 0 24 24"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
-      <span>Kart</span>
-    </button>
-    <button class="nav-btn" id="navUtforsk" onclick="switchTab('utforsk')">
-      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-      <span>Utforsk</span>
-    </button>
-  </nav>
-</div>
+</div><!-- /app -->
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><div id="modalBody"></div></div>
+  <div class="modal" id="modalBox">
+    <div class="modal-handle"></div>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
 <script>
-// DATA
+// ── DATA ──────────────────────────────────────────────────────────────────
 const PLACES = [
   {
     "id": "p1",
@@ -11292,753 +11308,343 @@ const CATS = [
   {id:'museum',l:'🏛️ Museum'},
 ];
 
+const QUICK_CATS = [
+  {id:'bading',ico:'🏊',lbl:'Bading'},
+  {id:'badstue',ico:'🧖',lbl:'Badstue'},
+  {id:'tuftpark',ico:'💪',lbl:'Tuftepark'},
+  {id:'park',ico:'🌳',lbl:'Parker'},
+  {id:'discgolf',ico:'🥏',lbl:'Discgolf'},
+  {id:'skatepark',ico:'🛹',lbl:'Skate'},
+  {id:'museum',ico:'🏛️',lbl:'Museum'},
+  {id:'tennisbane',ico:'🎾',lbl:'Tennis'},
+  {id:'bordtennis',ico:'🏓',lbl:'Bordtennis'},
+  {id:'skiløype',ico:'⛷️',lbl:'Ski'},
+];
+
 const CAT_COLORS = {
-  bading:'#0ea5e9',badstue:'#f97316',tuftpark:'#22c55e',
-  bordtennis:'#8b5cf6',tennisbane:'#eab308',basketballbane:'#f97316',
-  volleyballbane:'#06b6d4',fotballbane:'#16a34a',padelbane:'#d946ef',
-  skatepark:'#6366f1',discgolf:'#84cc16','løperute':'#10b981',
-  'skiløype':'#60a5fa','skøytebane':'#38bdf8',klatring:'#ef4444',
-  kajakkutleie:'#0284c7','øy':'#f59e0b','park':'#4ade80'
+  bading:'#0ea5e9',badstue:'#f97316',tuftpark:'#16a34a',bordtennis:'#84cc16',
+  tennisbane:'#eab308',basketballbane:'#f97316',volleyballbane:'#8b5cf6',
+  fotballbane:'#22c55e',padelbane:'#06b6d4',skatepark:'#6366f1',
+  discgolf:'#10b981',løperute:'#ef4444',skiløype:'#60a5fa',skøytebane:'#38bdf8',
+  klatring:'#a855f7',kajakkutleie:'#0ea5e9',øy:'#0ea5e9',
+  park:'#4ade80',museum:'#7c3aed',
 };
 
-// STATE
-const S = {
-  tab:'liste', activeCat:'all', mapCat:'all', sortMode:'score',
-  freeOnly:false, dogOnly:false, alwaysOpen:false, wheelchairOnly:false,
-  leafletMap:null, mapMarkers:[],
-};
+// ── STATE ─────────────────────────────────────────────────────────────────
+let activeCat = 'all';
+let sortMode  = 'score';
+let freeOnly  = false;
+let userLat   = null;
+let userLng   = null;
+let leafletMap = null;
+let markers   = [];
+let visited   = JSON.parse(localStorage.getItem('visited')||'[]');
+let favs      = JSON.parse(localStorage.getItem('favs')||'[]');
 
-const LS = {
-  get: k => { try{ return JSON.parse(localStorage.getItem('ao_'+k)); }catch{ return null; } },
-  set: (k,v) => localStorage.setItem('ao_'+k, JSON.stringify(v))
-};
-
-let favs    = LS.get('favs')    || [];
-let visited = LS.get('visited') || [];
-let AU = null;
-const AVATARS = ['🏃','🧗','🏊','🚴','🥏','🎾','🛹','🏋️','⛷️','🧖','🐕','🌿','🏄','⛺','🎯'];
-let selectedAvatar = '🏃';
-
-// HELPERS
-function pEmoji(p){ return (p.activity_types||[])[0] && ({"bading":"🏊","badstue":"🧖","tuftpark":"💪","bordtennis":"🏓","tennisbane":"🎾","basketballbane":"🏀","volleyballbane":"🏐","fotballbane":"⚽","padelbane":"🏸","skatepark":"🛹","discgolf":"🥏","løperute":"🏃","skiløype":"⛷️","skøytebane":"⛸️","klatring":"🧗","kajakkutleie":"🚣","øy":"🏝️"}[p.activity_types[0]]) || "📍"; }
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
-function updateStreakBadge(){
-  const s = getStreak();
-  document.getElementById('streakNum').textContent = s.count;
+// ── HELPERS ───────────────────────────────────────────────────────────────
+function pEmoji(p){
+  const t=(p.activity_types||[])[0];
+  const map={bading:'🏊',badstue:'🧖',tuftpark:'💪',bordtennis:'🏓',
+    tennisbane:'🎾',basketballbane:'🏀',volleyballbane:'🏐',fotballbane:'⚽',
+    padelbane:'🏸',skatepark:'🛹',discgolf:'🥏',løperute:'🏃',skiløype:'⛷️',
+    skøytebane:'⛸️',klatring:'🧗',kajakkutleie:'🚣',øy:'🏝️',park:'🌳',museum:'🏛️'};
+  return map[t]||'📍';
 }
 
-// FILTERS
-function buildFilters() {
+function catLabel(id){
+  const c=CATS.find(x=>x.id===id);
+  return c?c.l:id;
+}
+
+function haversine(la1,ln1,la2,ln2){
+  const R=6371000,dLa=(la2-la1)*Math.PI/180,dLn=(ln2-ln1)*Math.PI/180;
+  const a=Math.sin(dLa/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLn/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+function ls(key, val){
+  if(val===undefined) return localStorage.getItem(key);
+  localStorage.setItem(key, typeof val==='string'?val:JSON.stringify(val));
+}
+
+// ── VIEW SWITCHING ────────────────────────────────────────────────────────
+let currentView = 'liste';
+
+function switchView(v){
+  currentView = v;
+
+  // Views
+  document.getElementById('listView').classList.toggle('active', v==='liste');
+  document.getElementById('mapView').classList.toggle('active', v==='kart');
+
+  // Tabs
+  document.getElementById('tabListe').classList.toggle('active', v==='liste');
+  document.getElementById('tabKart').classList.toggle('active', v==='kart');
+
+  // Nav
+  document.getElementById('navListe').classList.toggle('on', v==='liste');
+  document.getElementById('navKart').classList.toggle('on', v==='kart');
+
+  if(v==='kart'){
+    if(!leafletMap){ initMap(); }
+    else { setTimeout(()=>leafletMap.invalidateSize(true),100); renderMap(); }
+  }
+}
+
+// ── KATEGORIFILTER ────────────────────────────────────────────────────────
+function buildFilters(){
   const cr = document.getElementById('catRow');
-  if(!cr) return;
-  cr.innerHTML = '';
-  CATS.forEach(c => {
-    const b = document.createElement('button');
-    b.className = 'cat-btn' + (c.id === S.activeCat ? ' on' : '');
-    b.textContent = c.l;
-    b.onclick = () => {
-      S.activeCat = c.id;
-      cr.querySelectorAll('.cat-btn').forEach(x => x.classList.remove('on'));
-      b.classList.add('on');
-      renderList();
-    };
-    cr.appendChild(b);
+  cr.innerHTML = CATS.map(c=>`
+    <button class="cat-btn${c.id===activeCat?' on':''}" onclick="pickCat('${c.id}')">${c.l}</button>
+  `).join('');
+
+  const qc = document.getElementById('quickCats');
+  qc.innerHTML = QUICK_CATS.map(q=>`
+    <div class="qcat" onclick="pickCat('${q.id}')">
+      <div class="qcat-ico">${q.ico}</div>
+      <div class="qcat-lbl">${q.lbl}</div>
+    </div>
+  `).join('');
+}
+
+function pickCat(cat){
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>{
+    b.classList.toggle('on', b.textContent.trim()===(CATS.find(c=>c.id===cat)||{l:cat}).l);
   });
-}
-function toggleFilter(key, btnId) {
-  S[key] = !S[key];
-  const btn = document.getElementById(btnId);
-  if(btn) btn.classList.toggle('on', S[key]);
-  renderList();
-}
-function setSort(mode, btn) {
-  S.sortMode = mode;
-  document.querySelectorAll('.sort-chip').forEach(b => b.classList.remove('on'));
-  if(btn) btn.classList.add('on');
+  document.getElementById('listView').scrollTop = 0;
   renderList();
 }
 
-// LISTE
-function renderList() {
-  const q = (document.getElementById('searchQ')?.value || '').toLowerCase().trim();
-  let res = PLACES.filter(p => {
-    if(S.activeCat !== 'all' && (p.activity_types||[])[0] !== S.activeCat) return false;
-    if(S.freeOnly && !p.is_free) return false;
-    if(S.dogOnly && !p.dog_friendly) return false;
-    if(S.alwaysOpen && !p.always_open) return false;
-    if(S.wheelchairOnly && !p.wheelchair_accessible) return false;
-    if(q) {
-      const hay = [p.name,p.description||'',p.neighborhood||'',p.municipality,...(p.activity_types||[]),...(p.best_for_tags||[])].join(' ').toLowerCase();
+function setSort(mode){
+  sortMode = mode;
+  document.getElementById('sortBest').classList.toggle('on', mode==='score');
+  document.getElementById('sortNear').classList.toggle('on', mode==='distance');
+  renderList();
+}
+
+function toggleFreeFilter(btn){
+  freeOnly = !freeOnly;
+  btn.classList.toggle('on', freeOnly);
+  renderList();
+}
+
+// ── RENDER LISTE ──────────────────────────────────────────────────────────
+function renderList(){
+  const q = (document.getElementById('searchQ').value||'').toLowerCase().trim();
+
+  let res = PLACES.filter(p=>{
+    if(p.status && p.status!=='active') return false;
+    if(activeCat!=='all' && (p.activity_types||[])[0]!==activeCat) return false;
+    if(freeOnly && !p.is_free) return false;
+    if(q){
+      const hay=[p.name,p.description||'',p.neighborhood||'',p.municipality||'',
+        ...(p.activity_types||[])].join(' ').toLowerCase();
       if(!hay.includes(q)) return false;
     }
     return true;
   });
-  // Avstandsberegning hvis GPS tilgjengelig
-  if(S.userLat && S.userLng) {
-    res.forEach(p => {
-      p._dist = (p.lat && p.lng) ? haversine(S.userLat, S.userLng, p.lat, p.lng) : 99999;
+
+  if(userLat && userLng){
+    res.forEach(p=>{
+      p._dist=(p.lat&&p.lng)?haversine(userLat,userLng,p.lat,p.lng):999999;
     });
   }
-  if(S.sortMode==='score')       res.sort((a,b)=>(b.score_total||0)-(a.score_total||0));
-  else if(S.sortMode==='trending') res.sort((a,b)=>(b.review_count||0)-(a.review_count||0));
-  else if(S.sortMode==='distance') res.sort((a,b)=>(a._dist||99999)-(b._dist||99999));
+
+  if(sortMode==='score') res.sort((a,b)=>(b.score_total||0)-(a.score_total||0));
+  else if(sortMode==='distance') res.sort((a,b)=>(a._dist||999999)-(b._dist||999999));
+
   const cards = document.getElementById('cards');
-  const rc    = document.getElementById('resultCount');
-  if(!cards) return;
-  if(rc) rc.textContent = res.length + ' sted' + (res.length===1?'':'er');
-  cards.innerHTML = res.length === 0
-    ? '<div style="grid-column:1/-1;padding:32px;text-align:center;color:var(--muted)">Ingen steder funnet 🤷</div>'
-    : res.map(p => renderCard(p)).join('');
-}
-function renderCard(p) {
-  const isFav = favs.includes(p.id);
-  const catLabel = t => { const c=CATS.find(x=>x.id===t); return c?c.l:t; };
-  const primaryCat = (p.activity_types||[])[0];
-  const tag = primaryCat ? `<span class="ctag">${catLabel(primaryCat)}</span>` : '';
-  return `<div class="card" data-id="${p.id}">
-    ${isFav ? '<div class="fav-dot">❤️</div>' : ''}
-    <div class="card-emoji">${pEmoji(p)}</div>
-    <div class="card-name">${p.name}</div>
-    <div class="card-sub">📍 ${p.neighborhood||p.municipality}</div>
-    <div class="card-tags">
-      ${tag}
-      ${p.is_free ? '<span class="badge-free">Gratis</span>' : ''}
-      ${p.score_total ? `<span class="score-tag">⭐ ${p.score_total}</span>` : ''}
-      ${p._dist && p._dist < 99999 ? `<span class="dist-tag">${p._dist < 1000 ? Math.round(p._dist)+'m' : (p._dist/1000).toFixed(1)+'km'}</span>` : ''}
-    </div>
-  </div>`;
-}
+  document.getElementById('resultCount').textContent = res.length+' steder';
 
-// UTFORSK
-function buildExplore(){
-  // Top 5
-  const top5 = [...PLACES].sort((a,b)=>(b.score_total||0)-(a.score_total||0)).slice(0,5);
-  document.getElementById('rankList').innerHTML = top5.map((p,i)=>`
-    <div class="rank-item" onclick="openModal('${p.id}')">
-      <div class="rank-num ${i<3?'top':''}">${i+1}</div>
-      <div style="font-size:1.5rem">${pEmoji(p)}</div>
-      <div class="rank-info">
-        <div class="rank-name">${p.name}</div>
-        <div class="rank-sub">📍 ${p.neighborhood||p.municipality} · ${p.is_free?'Gratis':p.price_range||'Betalt'}</div>
+  if(!res.length){
+    cards.innerHTML='<div class="empty">Ingen steder funnet 🤷</div>';
+    return;
+  }
+
+  cards.innerHTML = res.map(p=>{
+    const dist = (p._dist&&p._dist<999999)
+      ? `<span class="score-tag">${p._dist<1000?Math.round(p._dist)+'m':(p._dist/1000).toFixed(1)+'km'}</span>`:'';
+    return `<div class="card" data-id="${p.id}">
+      <div class="card-emoji">${pEmoji(p)}</div>
+      <div class="card-name">${p.name}</div>
+      <div class="card-sub">📍 ${p.neighborhood||p.municipality||'Oslo'}</div>
+      <div class="card-tags">
+        ${p.is_free?'<span class="badge-free">Gratis</span>':''}
+        ${p.score_total?`<span class="score-tag">⭐ ${p.score_total}</span>`:''}
+        ${dist}
       </div>
-      <div style="font-size:.8rem;font-weight:800;color:var(--accent)">${p.score_total}</div>
-    </div>`).join('');
-
-  // Trending
-  const trend = [...PLACES].sort((a,b)=>(b.trending_score||0)-(a.trending_score||0)).slice(0,8);
-  document.getElementById('trendRow').innerHTML = trend.map(p=>hCard(p)).join('');
-
-  // Hidden gems
-  const gems = PLACES.filter(p=>!p.featured&&(p.score_total||0)>=78).sort((a,b)=>(b.score_total||0)-(a.score_total||0)).slice(0,8);
-  document.getElementById('gemsRow').innerHTML = gems.map(p=>hCard(p)).join('');
-
-  // Bucket list — ting du ikke har besøkt
-  const bucketCats = [{id:'badstue',l:'🧖 Prøv badstue'},{id:'discgolf',l:'🥏 Spill discgolf'},{id:'elvebad',l:'🏞️ Bad i elv'},{id:'klatring',l:'🧗 Klatre'},{id:'kayakkutleie',l:'🚣 Padle kajakk'},{id:'skatepark',l:'🛹 Kjør skate'},{id:'øy',l:'🏝️ Besøk en øy'},{id:'skiløype',l:'⛷️ Gå på ski'}];
-  document.getElementById('bucketRow').innerHTML = bucketCats.map(c=>{
-    const done = PLACES.filter(p=>(p.activity_types||[]).includes(c.id)).some(p=>visited.includes(p.id));
-    return `<button class="bucket-btn ${done?'done':''}" onclick="S.activeCat='${c.id}';switchTab('liste')">
-      <span class="bucket-icon">${c.l.split(' ')[0]}</span>${c.l.replace(/^. /,'')}
-      <div class="bucket-label">${done?'✓ Gjort!':'Ikke prøvd ennå'}</div>
-    </button>`;
+    </div>`;
   }).join('');
 }
 
-// KART
-function initMap() {
-  if(S.leafletMap) { S.leafletMap.invalidateSize(true); return; }
-  
-  const mapEl = document.getElementById('map');
-  if(!mapEl) return;
-  S.leafletMap = L.map(mapEl, {
-    zoomControl: false,
-    maxZoom: 19,
-    preferCanvas: true,
-    tap: false,  // Fix iOS touch-bug
-  }).setView([59.913, 10.752], 12);
-  
-  // Høyoppløselig OpenStreetMap-lag
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '© <a href="https://openstreetmap.org">OSM</a> © <a href="https://carto.com">CARTO</a>',
-    maxZoom: 19,
-    maxNativeZoom: 19,
-    tileSize: 256,
-    detectRetina: true,   // dobbel oppløsning på retina-skjermer
-  }).addTo(S.leafletMap);
-  
-  // Zoom-kontroll nede til høyre
-  L.control.zoom({ position: 'bottomright' }).addTo(S.leafletMap);
-  
-  // GPS-knapp
-  const gpsBtn = L.control({ position: 'bottomright' });
-  gpsBtn.onAdd = () => {
-    const div = L.DomUtil.create('div', '');
-    div.innerHTML = `<button onclick="centerOnUser()" style="
-      margin-bottom:6px;width:36px;height:36px;border-radius:50%;
-      border:none;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);
-      font-size:18px;cursor:pointer;display:flex;align-items:center;
-      justify-content:center;
-    ">📍</button>`;
-    return div;
-  };
-  gpsBtn.addTo(S.leafletMap);
-  
-  buildMapCatRow();
-}
-
-function centerOnUser() {
-  if(!navigator.geolocation) { showToast('GPS ikke tilgjengelig'); return; }
-  showToast('Finner posisjon…');
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      const { latitude: lat, longitude: lng, accuracy } = pos.coords;
-      S.leafletMap.setView([lat, lng], 15);
-      // Vis brukermarkør
-      if(S._userMarker) S.leafletMap.removeLayer(S._userMarker);
-      const userIcon = L.divIcon({
-        html: `<div style="width:16px;height:16px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 0 4px rgba(59,130,246,.3)"></div>`,
-        className:'', iconSize:[16,16], iconAnchor:[8,8],
-      });
-      S._userMarker = L.marker([lat, lng], { icon: userIcon }).addTo(S.leafletMap);
-      showToast('✅ Posisjon funnet (±' + Math.round(accuracy) + 'm)');
-      // Sorter nærmeste steder
-      sortByDistance(lat, lng);
-    },
-    err => showToast('GPS-feil: ' + err.message),
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
-  );
-}
-
-function sortByDistance(userLat, userLng) {
-  // Beregn avstand til alle steder og lagre
-  S.userLat = userLat;
-  S.userLng = userLng;
-  renderList(); // re-render med avstand
-}
-
-function haversine(lat1, lng1, lat2, lng2) {
-  const R = 6371000; // meter
-  const dLat = (lat2-lat1) * Math.PI/180;
-  const dLng = (lng2-lng1) * Math.PI/180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-
-
-function buildMapCatRow(){
-  const mcr = document.getElementById('mapCatRow');
-  mcr.innerHTML='';
-  [{id:'all',l:'🗺️ Alle'},...CATS.slice(1)].forEach(c=>{
-    const cnt = PLACES.filter(p=>c.id==='all'||(p.activity_types||[])[0]===c.id).length;
-    if(cnt===0) return;
-    const b=document.createElement('button');
-    b.className='mcat'+(c.id===S.mapCat?' active':'');
-    b.textContent=c.l;
-    b.onclick=()=>{
-      S.mapCat=c.id;
-      mcr.querySelectorAll('.mcat').forEach(x=>x.classList.remove('active'));
-      b.classList.add('active');
-      renderMap();
-    };
-    mcr.appendChild(b);
-  });
-}
-function renderMap() {
-  if(!S.leafletMap) return;
-  const q = (document.getElementById('mapSearch')?.value || '').toLowerCase().trim();
-  
-  // Fjern eksisterende markører
-  S.mapMarkers.forEach(m => S.leafletMap.removeLayer(m));
-  S.mapMarkers = [];
-  
-  const filtered = PLACES.filter(p => {
-    if(!p.lat || !p.lng) return false;
-    if(S.mapCat !== 'all' && (p.activity_types||[])[0] !== S.mapCat) return false;
-    if(q) {
-      const hay = [p.name, p.neighborhood||'', p.municipality, ...(p.activity_types||[])].join(' ').toLowerCase();
-      if(!hay.includes(q)) return false;
-    }
-    return true;
-  });
-  
-  const mc = document.getElementById('mapCount');
-  if(mc) mc.textContent = filtered.length + ' steder';
-  
-  // Cluster-logikk: grupper nærliggende pins ved lavt zoom
-  filtered.forEach(p => {
-    const col = CAT_COLORS[(p.activity_types||[])[0]] || '#64748b';
-    const icon = L.divIcon({
-      html: `<div style="
-        width:36px;height:36px;border-radius:50%;
-        background:${col};border:2.5px solid #fff;
-        box-shadow:0 2px 10px rgba(0,0,0,.4);
-        display:flex;align-items:center;justify-content:center;
-        font-size:15px;cursor:pointer;
-        -webkit-tap-highlight-color:transparent;
-      ">${pEmoji(p)}</div>`,
-      className: '',
-      iconSize: [34, 34],
-      iconAnchor: [17, 17],
-      popupAnchor: [0, -20],
-    });
-    const marker = L.marker([p.lat, p.lng], { icon, title: p.name });
-    marker.on('click', () => openMapSheet(p.id));
-    marker.addTo(S.leafletMap);
-    S.mapMarkers.push(marker);
-  });
-}
-
-
-function filterMapSearch(){ renderMap(); }
-function openMapSheet(id){
-  const p=PLACES.find(x=>x.id===id); if(!p) return;
-  const isFav=favs.includes(id);
-  const tags=(p.activity_types||[]).slice(0,3).map(t=>{const c=CATS.find(x=>x.id===t);return `<span class="ctag t">${c?c.l:t}</span>`;}).join('');
-  const score=p.score_total?`<span style="background:#fff3e0;color:#e65100;padding:3px 9px;border-radius:12px;font-size:.78rem;font-weight:700">⭐ ${p.score_total}</span>`:'';
-  const transport=p.transport_details?`<div style="font-size:.75rem;color:var(--muted);margin-top:6px">🚌 ${p.transport_details}</div>`:'';
-  const gMaps=(p.lat && p.lng) ? `https://www.google.com/maps?q=${p.lat},${p.lng}&z=17` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((p.address||p.name) + ' Oslo')}`;
-  document.getElementById('mapSheetBody').innerHTML=`
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px">
-      <div style="flex:1;min-width:0">
-        <div style="font-size:1.05rem;font-weight:800;line-height:1.3">${pEmoji(p)} ${p.name}</div>
-        <div style="font-size:.75rem;color:var(--muted);margin-top:2px">📍 ${p.address||p.neighborhood||p.municipality}</div>
-        ${transport}
-      </div>
-      <button onclick="document.getElementById('mapSheet').classList.remove('open')"
-        style="background:var(--sand);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:1rem;flex-shrink:0;display:flex;align-items:center;justify-content:center">✕</button>
-    </div>
-    <div style="font-size:.82rem;color:#444;line-height:1.55;margin:6px 0 10px">${(p.description||'').slice(0,160)}${(p.description||'').length>160?'…':''}</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
-      ${tags} ${score}
-      <span style="background:${p.is_free?'#e8f5e9':'#fff3e0'};color:${p.is_free?'#2e7d32':'#e65100'};padding:3px 9px;border-radius:12px;font-size:.78rem;font-weight:700">${p.is_free?'Gratis':p.price_range||'Betalt'}</span>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button onclick="toggleFav('${p.id}');this.textContent=favs.includes('${p.id}')?'❤️ Lagret':'🤍 Lagre'"
-        style="flex:1;padding:11px;border:1.5px solid var(--border);background:#fff;border-radius:10px;font-weight:600;cursor:pointer;font-family:inherit;font-size:.88rem">
-        ${isFav?'❤️ Lagret':'🤍 Lagre'}
-      </button>
-      <a href="${gMaps}" target="_blank" rel="noopener"
-        style="flex:1;padding:11px;background:#34a853;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-family:inherit;font-size:.88rem;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:4px">
-        🗺️ Google Maps
-      </a>
-      <button onclick="document.getElementById('mapSheet').classList.remove('open');setTimeout(()=>openModal('${p.id}'),80)"
-        style="flex:1;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-family:inherit;font-size:.88rem">
-        Detaljer →
-      </button>
-    </div>`;
-  document.getElementById('mapSheet').classList.add('open');
-  // Sentrér kartet på pinnen
-  S.leafletMap.setView([p.lat, p.lng], Math.max(S.leafletMap.getZoom(), 14), {animate:true});
-}
-
-// MODAL
+// ── MODAL ─────────────────────────────────────────────────────────────────
 function openModal(id){
-  const p=PLACES.find(x=>x.id===id); if(!p) return;
-  trackV(id);
-  const isFav=favs.includes(id), isDone=visited.includes(id);
-  const ms=matchScore(p);
-  const scores=[['Totalt',p.score_total],['Kvalitet',p.score_quality],['Beliggenhet',p.score_location],['Tilgjengelig',p.score_accessibility],['Atmosfære',p.score_atmosphere],['Verdi',p.score_value]].filter(x=>x[1]);
-  const infoRows=[
-    ['Adresse',p.address],['Bestilling',p.booking_required?'Kreves':'Ikke nødvendig'],
-    ['Kollektivt',p.public_transport?(p.transport_details||'Ja'):null],
-    ['Parkering',p.parking?'Ja':null],['Toalett',p.toilet?'Ja':null],
-    ['Hund OK',p.dog_friendly?'Ja':null],['Familie',p.family_friendly?'Ja':null],
-    ['Sesong',(p.seasons||[]).join(', ')],
-  ].filter(([,v])=>v).map(([l,v])=>`<div class="info-row"><span class="ir-l">${l}</span><span class="ir-v">${v}</span></div>`).join('');
+  const p = PLACES.find(x=>x.id===id);
+  if(!p) return;
 
-  document.getElementById('modalBody').innerHTML=`
-    <button class="modal-close" onclick="closeModal()">✕</button>
+  const isVisited = visited.includes(id);
+  const isFav = favs.includes(id);
+
+  const infoRows = [
+    ['Adresse', p.address],
+    ['Transport', p.public_transport?(p.transport_details||'Tilgjengelig'):null],
+    ['Parkering', p.parking?'Ja':null],
+    ['Toalett', p.toilet?'Ja':null],
+    ['Hund OK', p.dog_friendly?'Ja':null],
+    ['Familie', p.family_friendly?'Ja':null],
+    ['Sesong', (p.seasons||[]).join(', ')||null],
+  ].filter(([,v])=>v).map(([l,v])=>`
+    <div class="info-row"><span class="ir-l">${l}</span><span class="ir-v">${v}</span></div>
+  `).join('');
+
+  const gMapsUrl = (p.lat&&p.lng)
+    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&z=17`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' Oslo')}`;
+  const aMapsUrl = (p.lat&&p.lng)
+    ? `https://maps.apple.com/?ll=${p.lat},${p.lng}&q=${encodeURIComponent(p.name)}&z=17`
+    : null;
+
+  document.getElementById('modalBody').innerHTML = `
     <div class="modal-emoji">${pEmoji(p)}</div>
     <div class="modal-name">${p.name}</div>
-    <div class="modal-loc">📍 ${p.address||p.neighborhood||p.municipality} · ${p.area||''}</div>
+    <div class="modal-loc">📍 ${p.address||p.neighborhood||p.municipality||'Oslo'}</div>
     <div class="modal-badges">
-      <span class="${p.is_free?'badge-free':'badge-paid'}">${p.is_free?'Gratis':p.price_range||'Betalt'}</span>
-      ${ms>=70?`<span class="score-tag" style="background:#e8f0fe;color:var(--accent)">🎯 Passer deg ${ms}%</span>`:''}
-      ${isDone?'<span class="score-tag" style="background:#f0fdf4;color:var(--green)">✓ Besøkt</span>':''}
+      ${p.is_free?'<span class="badge-free">🆓 Gratis</span>':''}
+      ${p.score_total?`<span class="score-tag">⭐ ${p.score_total}/100</span>`:''}
+      ${isVisited?'<span class="badge-free">✓ Besøkt</span>':''}
     </div>
-    <div class="modal-desc">${p.description||''}</div>
-    ${scores.length?`<div class="score-grid">${scores.map(([l,v])=>`<div class="sg-box"><div class="sg-l">${l}</div><div class="sg-v">${v}</div></div>`).join('')}</div>`:''}
-    <div class="info-rows">${infoRows}</div>
-    <div class="rate-box">
-      <div class="rate-title">Gi en vurdering</div>
-      <div class="star-row" id="sr${id}">
-        ${[1,2,3,4,5].map(n=>`<button class="star-btn" onclick="rateStar('${id}',${n})" style="color:${n<=Math.round((p.score_total||70)/20)?'#fbbf24':'#ddd'}">★</button>`).join('')}
-      </div>
+    <p class="modal-desc">${p.description||''}</p>
+    ${infoRows}
+    <div class="nav-btns">
+      <a href="${gMapsUrl}" target="_blank" class="nav-btn-maps btn-google">🗺️ Google Maps</a>
+      ${aMapsUrl?`<a href="${aMapsUrl}" target="_blank" class="nav-btn-maps btn-apple">🍎 Apple Maps</a>`:''}
     </div>
-    <button class="mark-visited ${isDone?'done':''}" id="mv${id}" onclick="markVisited('${id}')">
-      ${isDone?'✓ Besøkt':'📍 Marker som besøkt'}
+    <button class="mark-btn${isVisited?' done':''}" onclick="toggleVisited('${id}',this)">
+      ${isVisited?'✓ Besøkt':'📍 Marker som besøkt'}
     </button>
-    <button class="fav-btn ${isFav?'on':''}" id="fb${id}" onclick="toggleFav('${id}')">
-      ${isFav?'❤️ Lagret som favoritt':'🤍 Lagre som favoritt'}
+    <button class="mark-btn${isFav?' done':''}" style="margin-top:8px" onclick="toggleFav('${id}',this)">
+      ${isFav?'❤️ Lagret':'🤍 Lagre som favoritt'}
     </button>
-    ${p.booking_url?`<a href="${p.booking_url}" target="_blank" style="display:block;background:var(--navy);color:#fff;text-align:center;padding:11px;border-radius:9px;text-decoration:none;font-weight:700;margin-top:8px;font-size:.88rem">📅 Book plass</a>`:''}
+    ${p.booking_url?`<a href="${p.booking_url}" target="_blank" class="nav-btn-maps btn-google" style="margin-top:10px;display:block">📅 Book plass</a>`:''}
   `;
-  // Google Maps-lenke med koordinater
-  const gMapsUrl = (p.lat && p.lng)
-    ? `https://www.google.com/maps?q=${p.lat},${p.lng}&z=17`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' ' + (p.address||p.municipality||'Oslo'))}`;
-  const gMapsBtn = `<div style="display:flex;gap:7px;margin-top:8px">
-    <a href="${gMapsUrl}" target="_blank" style="flex:1;padding:10px;border-radius:9px;text-decoration:none;font-weight:700;font-size:.82rem;text-align:center;background:#34a853;color:#fff">🗺️ Google Maps</a>
-    ${(p.lat && p.lng) ? '<a href="https://maps.apple.com/?ll=' + p.lat + ',' + p.lng + '&q=' + encodeURIComponent(p.name) + '&z=17" target="_blank" style="flex:1;padding:10px;border-radius:9px;text-decoration:none;font-weight:700;font-size:.82rem;text-align:center;background:#000;color:#fff">🍎 Apple Maps</a>' : ''}
-  </div>`;
-  document.getElementById('modalBody').insertAdjacentHTML('beforeend', gMapsBtn);
+
   document.getElementById('modalOverlay').classList.add('open');
-}
-function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); document.getElementById('modalBody').innerHTML=''; }
-
-// FAV + BESØKT
-function toggleFav(id){
-  if(favs.includes(id)){ favs=favs.filter(x=>x!==id); showToast('Fjernet fra favoritter'); }
-  else { favs.push(id); showToast('❤️ Lagret som favoritt!'); }
-  LS.set('favs',favs);
-  const btn=document.getElementById('fb'+id);
-  if(btn){ btn.textContent=favs.includes(id)?'❤️ Lagret som favoritt':'🤍 Lagre som favoritt'; btn.classList.toggle('on',favs.includes(id)); }
-}
-function markVisited(id){
-  if(!visited.includes(id)){ visited.push(id); LS.set('visited',visited); showToast('📍 Markert som besøkt!'); }
-  else { visited=visited.filter(x=>x!==id); LS.set('visited',visited); showToast('Fjernet fra besøkt'); }
-  const btn=document.getElementById('mv'+id);
-  if(btn){ btn.textContent=visited.includes(id)?'✓ Besøkt':'📍 Marker som besøkt'; btn.classList.toggle('done',visited.includes(id)); }
-  buildExplore();
-}
-function trackV(id){
-  const p=PLACES.find(x=>x.id===id); if(!p) return;
-  (p.activity_types||[]).forEach(t=>{ prefs.visits[t]=(prefs.visits[t]||0)+1; }); LS.set('prefs',prefs);
+  document.body.style.overflow = 'hidden';
 }
 
-// TABS
-function switchTab(tab) {
-  S.tab = tab;
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-  // Oppdater tab-knapper og nav
-  ['Liste','Kart','Utforsk'].forEach(t => {
-    const id = t.toLowerCase();
-    const te = document.getElementById('tab'+t);
-    const ne = document.getElementById('nav'+t);
-    if(te) te.classList.toggle('active', id===tab);
-    if(ne) ne.classList.toggle('on', id===tab);
+function toggleVisited(id, btn){
+  const idx = visited.indexOf(id);
+  if(idx>-1) visited.splice(idx,1); else visited.push(id);
+  ls('visited', visited);
+  btn.className = 'mark-btn'+(visited.includes(id)?' done':'');
+  btn.textContent = visited.includes(id)?'✓ Besøkt':'📍 Marker som besøkt';
+}
+
+function toggleFav(id, btn){
+  const idx = favs.indexOf(id);
+  if(idx>-1) favs.splice(idx,1); else favs.push(id);
+  ls('favs', favs);
+  btn.className = 'mark-btn'+(favs.includes(id)?' done':'');
+  btn.textContent = favs.includes(id)?'❤️ Lagret':'🤍 Lagre som favoritt';
+}
+
+// ── KART ──────────────────────────────────────────────────────────────────
+function initMap(){
+  leafletMap = L.map('map',{zoomControl:true}).setView([59.913,10.739],12);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+    attribution:'© OpenStreetMap © CARTO',maxZoom:19
+  }).addTo(leafletMap);
+
+  buildMapCatRow();
+  renderMap();
+
+  setTimeout(()=>leafletMap.invalidateSize(true),300);
+}
+
+function getMarkerIcon(type){
+  const color = CAT_COLORS[type]||'#6b7280';
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='28' height='38' viewBox='0 0 28 38'>
+    <path d='M14 0C6.3 0 0 6.3 0 14c0 10.5 14 24 14 24S28 24.5 28 14C28 6.3 21.7 0 14 0z' fill='${color}' opacity='0.95'/>
+    <circle cx='14' cy='14' r='7' fill='white' opacity='0.9'/>
+  </svg>`;
+  return L.divIcon({
+    html: svg, iconSize:[28,38], iconAnchor:[14,38], popupAnchor:[0,-38],
+    className:''
+  });
+}
+
+function renderMap(){
+  if(!leafletMap) return;
+  markers.forEach(m=>m.remove());
+  markers=[];
+
+  const filtered = PLACES.filter(p=>{
+    if(!p.lat||!p.lng) return false;
+    if(activeCat!=='all' && (p.activity_types||[])[0]!==activeCat) return false;
+    return true;
   });
 
-  // Vis riktig view — bruk inline style for å unngå CSS-spesifisitetskonflikter
-  const views = {
-    'liste':   'listView',
-    'kart':    'mapView',
-    'utforsk': 'exploreView',
-  };
-  Object.entries(views).forEach(([t, vid]) => {
-    const el = document.getElementById(vid);
-    if(!el) return;
-    if(t === tab) {
-      el.style.display = 'flex';
-      el.style.position = (vid === 'listView') ? 'relative' : 'absolute';
-    } else {
-      el.style.display = 'none';
-    }
+  filtered.forEach(p=>{
+    const type = (p.activity_types||[])[0];
+    const icon = getMarkerIcon(type);
+    const m = L.marker([p.lat,p.lng],{icon})
+      .addTo(leafletMap)
+      .bindPopup(`<b>${p.name}</b><br><small>${p.address||p.neighborhood||''}</small><br>
+        <button onclick="openModal('${p.id}')" style="margin-top:6px;padding:4px 10px;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.8rem">Se detaljer</button>`,
+        {maxWidth:200}
+      );
+    markers.push(m);
   });
+}
 
-  if(tab === 'kart') {
-    if(!S.leafletMap) {
-      initMap();
-      setTimeout(() => {
-        if(S.leafletMap) {
-          S.leafletMap.invalidateSize(true);
-          renderMap();
-        }
-      }, 200);
-    } else {
-      S.leafletMap.invalidateSize(true);
-      renderMap();
+function buildMapCatRow(){
+  const row = document.getElementById('mapCatRow');
+  if(!row) return;
+  row.innerHTML = CATS.slice(0,12).map(c=>`
+    <button class="mcat-btn${c.id===activeCat?' on':''}" onclick="mapPickCat('${c.id}')">${c.l}</button>
+  `).join('');
+}
+
+function mapPickCat(cat){
+  activeCat = cat;
+  document.querySelectorAll('.mcat-btn').forEach(b=>{
+    b.classList.toggle('on', b.dataset && false); // reset
+  });
+  buildMapCatRow();
+  renderMap();
+}
+
+// ── GPS ───────────────────────────────────────────────────────────────────
+function tryGPS(){
+  if(!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(pos=>{
+    userLat = pos.coords.latitude;
+    userLng = pos.coords.longitude;
+    if(sortMode==='distance') renderList();
+    if(leafletMap){
+      L.circleMarker([userLat,userLng],{radius:8,color:'#2563eb',fillColor:'#2563eb',fillOpacity:.8})
+        .addTo(leafletMap).bindPopup('Du er her');
     }
-  }
-
-  if(tab === 'utforsk') buildExplore();
+  }, ()=>{}, {timeout:8000,maximumAge:60000});
 }
 
-function openSugg(){
-  document.getElementById('suggOverlay').classList.add('open');
-  renderSugg();
-}
-function openFavs(){}
-
-// WEATHER
-async function fetchWeather(){
-  try{
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=59.913&longitude=10.752&current=temperature_2m,weathercode,windspeed_10m&timezone=Europe/Oslo');
-    const d = await r.json(); const c = d.current;
-    const t = Math.round(c.temperature_2m);
-    const code = c.weathercode;
-    const icons = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',71:'🌨️',80:'🌦️',95:'⛈️'};
-    const descs = {0:'klarvær',1:'lettskyet',2:'delvis skyet',3:'overskyet',45:'tåke',51:'yr',61:'regn',71:'snø',80:'regnbyger',95:'tordenvær'};
-    const ic  = icons[code] || icons[Math.floor(code/10)*10] || '🌡️';
-    const de  = descs[code] || descs[Math.floor(code/10)*10] || '';
-    weather = { temp: t, code, wind: Math.round(c.windspeed_10m), icon: ic, desc: de };
-    document.getElementById('wPill').innerHTML = `${ic} <strong>${t}°C</strong>&nbsp;${de}`;
-    buildTodayCard();
-    if(document.getElementById('suggOverlay').classList.contains('open')) renderSugg();
-  } catch(e) {
-    document.getElementById('wPill').innerHTML = '🌡️ <strong>Oslo</strong>';
-    buildTodayCard();
-  }
-}
-
-// AUTH
-function continueAsGuest() {
-  AU = { isGuest: true };
-  const ao = document.getElementById('authOverlay');
-  if(ao) ao.style.display = 'none';
-}
-function showRegister() {
-  const el = document.getElementById('authContent');
-  if(!el) return;
-  const avatarBtns = AVATARS.map(a => `<button class="ava-btn${a===selectedAvatar?' sel':''}" onclick="selectAvatar('${a}',this)">${a}</button>`).join('');
-  el.innerHTML = `
-    <div class="avatar-row">${avatarBtns}</div>
-    <input class="auth-input" id="authName" placeholder="Kallenavn" maxlength="20">
-    <button class="auth-btn primary" onclick="doRegister()">Kom i gang →</button>
-    <button class="auth-btn secondary" onclick="continueAsGuest()">Fortsett som gjest</button>
-  `;
-}
-function selectAvatar(a, btn) {
-  selectedAvatar = a;
-  document.querySelectorAll('.ava-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
-function doRegister() {
-  const name = document.getElementById('authName')?.value.trim();
-  if(!name) { showToast('Skriv inn et kallenavn'); return; }
-  AU = { id:'u_'+Date.now(), name, avatar: selectedAvatar, isGuest:false };
-  LS.set('user', AU);
-  const ao = document.getElementById('authOverlay');
-  if(ao) ao.style.display = 'none';
-  showToast('Velkommen, ' + AU.name + '! ' + AU.avatar);
-}
-function checkAuth() {
-  const saved = LS.get('user');
-  if(saved) {
-    AU = saved;
-    const ao = document.getElementById('authOverlay');
-    if(ao) ao.style.display = 'none';
-  }
-}
-
-// INIT
-
-function activateDist(btn) {
-  if(!navigator.geolocation) { showToast('GPS ikke tilgjengelig i denne nettleseren'); return; }
-  showToa
-function setCat(cat) {
-  const hero = document.getElementById('heroSection');
-  if(hero) hero.style.display = 'none';
-  S.activeCat = cat;
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', ()=>{
   buildFilters();
   renderList();
-}
-st('Finner posisjon…');
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      S.userLat = pos.coords.latitude;
-      S.userLng = pos.coords.longitude;
-      setSort('distance', btn);
-      showToast('📍 Sorterer etter avstand');
-    },
-    () => showToast('Kunne ikke hente posisjon'),
-    { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 }
-  );
-}
+  tryGPS();
 
-
-function handleListScroll(el) {
-  const hero = document.getElementById('heroSection');
-  if(!hero) return;
-  if(el.scrollTop > 20) hero.style.display = 'none';
-}
-
-// === DEBUG ===
-function renderDebug() {
-  const q = (document.getElementById('debugSearch')?.value||'').toLowerCase();
-  const rows = PLACES
-    .filter(p => !q || p.name.toLowerCase().includes(q) || (p.activity_types||[])[0].includes(q))
-    .map(p => {
-      const cat = (p.activity_types||['?'])[0];
-      const gmaps = `https://www.google.com/maps?q=${p.lat},${p.lng}&z=18`;
-      return `<div style="border-bottom:1px solid #eee;padding:5px 0">
-        <a href="${gmaps}" target="_blank" style="color:#1a56db;font-weight:700">${p.name}</a>
-        <span style="color:#888;margin-left:6px">[${cat}]</span><br>
-        <span style="color:#333">${p.lat?.toFixed(5)}, ${p.lng?.toFixed(5)}</span>
-        <span style="color:#888;margin-left:6px;font-size:10px">${p.address||''}</span>
-      </div>`;
-    });
-  document.getElementById('debugTable').innerHTML = 
-    `<div style="color:#888;margin-bottom:6px">${rows.length} steder</div>` + rows.join('');
-}
-function initDebug() {
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('debug')==='1') {
-    document.getElementById('debugView').style.display='block';
-    renderDebug();
-  }
-}
-
-function initIntroMap() {
-  const mapEl = document.getElementById('introMap');
-  if(!mapEl || window._introMap) return;
-  window._introMap = L.map(mapEl, {
-    zoomControl: true,
-    dragging: true,
-    touchZoom: true,
-    scrollWheelZoom: false,
-    doubleClickZoom: true,
-    tap: true,
-  }).setView([59.913, 10.752], 12);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19, attribution: '© OSM © CARTO'
-  }).addTo(window._introMap);
-
-  // Tegn alle pins — klikkbare
-  PLACES.filter(p => p.lat && p.lng).forEach(p => {
-    const cat = (p.activity_types||[])[0];
-    const col = CAT_COLORS[cat] || '#64748b';
-    const em = pEmoji(p);
-    const icon = L.divIcon({
-      className: '',
-      html: `<div style="width:30px;height:30px;border-radius:50%;background:${col};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:14px">${em}</div>`,
-      iconSize: [30, 30], iconAnchor: [15, 15]
-    });
-    L.marker([p.lat, p.lng], {icon})
-      .addTo(window._introMap)
-      .on('click', () => introOpenPlace(p.id));
-  });
-
-  setTimeout(() => { if(window._introMap) window._introMap.invalidateSize(true); }, 300);
-}
-
-
-function buildFeaturedStrip() {
-  const strip = document.getElementById('featuredStrip');
-  if(!strip) return;
-  // Velg 8 varierte featured steder
-  const picks = PLACES.filter(p => p.featured || p.score_total >= 80).slice(0, 8);
-  if(picks.length === 0) {
-    // Fallback: ta topp-scorere
-    const sorted = [...PLACES].filter(p=>p.score_total).sort((a,b)=>b.score_total-a.score_total).slice(0,8);
-    picks.push(...sorted);
-  }
-  strip.innerHTML = picks.map(p => {
-    const cat = CATS.find(c => c.id === (p.activity_types||[])[0]);
-    return `<div onclick="introOpenPlace('${p.id}')" style="
-      flex-shrink:0;width:140px;background:#fff;border-radius:14px;
-      padding:12px 10px;text-align:left;cursor:pointer;
-      box-shadow:0 2px 10px rgba(0,0,0,.10);border:1.5px solid rgba(0,0,0,.06);
-      transition:transform .15s;
-    " onmousedown="this.style.transform='scale(0.97)'" onmouseup="this.style.transform=''">
-      <div style="font-size:1.4rem;margin-bottom:4px">${pEmoji(p)}</div>
-      <div style="font-size:.8rem;font-weight:800;line-height:1.3;color:#111;margin-bottom:3px">${p.name}</div>
-      <div style="font-size:.72rem;color:#888">${cat ? cat.l : ''}</div>
-      ${p.score_total ? `<div style="font-size:.72rem;color:#e65100;font-weight:700;margin-top:4px">⭐ ${p.score_total}</div>` : ''}
-    </div>`;
-  }).join('');
-}
-
-function introGoToApp() {
-  continueAsGuest();
-  setTimeout(() => switchTab('kart'), 80);
-}
-
-function introOpenPlace(id) {
-  const overlay = document.getElementById('authOverlay');
-  if(overlay) overlay.style.display = 'none';
-  openModal(id);
-  // Overstyr closeModal midlertidig
-  const origClose = closeModal;
-  window.closeModal = function() {
-    document.getElementById('modalOverlay').classList.remove('open');
-    document.getElementById('modalBody').innerHTML = '';
-    window.closeModal = origClose;
-    if(!AU || AU.isGuest) {
-      const ao = document.getElementById('authOverlay');
-      if(ao) ao.style.display = 'flex';
-    }
-  };
-}
-
-// HERO FUNCTIONS
-function heroGreeting() {
-  const h = new Date().getHours();
-  const greetings = h < 11 ? ['God morgen ☀️','Klar for dagen?','Start dagen aktivt 🌅']
-    : h < 14 ? ['God formiddag 👋','Hva skal du finne på?','Perfekt tid 🌞']
-    : h < 18 ? ['God ettermiddag 🌤️','Klar for noe gøy?','Ta en pause ute 🍃']
-    : ['God kveld 🌙','Noe i kveld?','Kveldsturen kaller 🌆'];
-  const el = document.getElementById('heroGreeting');
-  if(el) el.textContent = greetings[Math.floor(Math.random()*greetings.length)];
-}
-
-function heroPickCat(cat) {
-  S.activeCat = cat;
-  document.getElementById('heroSection').style.display = 'none';
-  document.querySelectorAll('.cat-btn').forEach(b => {
-    b.classList.toggle('on', b.textContent.trim() === (CATS.find(c=>c.id===cat)||{l:cat}).l);
-  });
-  renderList();
-  document.getElementById('listView').scrollTop = 0;
-}
-
-function openRandomPlace() {
-  const eligible = PLACES.filter(p => p.status !== 'closed');
-  const p = eligible[Math.floor(Math.random() * eligible.length)];
-  if(p) openModal(p.id);
-}
-
-function buildNearbyStrip() {
-  if(!S.userLat || !S.userLng) return;
-  const nearby = PLACES
-    .filter(p => p.lat && p.lng)
-    .map(p => ({ ...p, _dist: haversine(S.userLat, S.userLng, p.lat, p.lng) }))
-    .sort((a,b) => a._dist - b._dist)
-    .slice(0, 8);
-  const scroll = document.getElementById('nearbyScroll');
-  const strip = document.getElementById('nearbyStrip');
-  if(!scroll || !strip) return;
-  scroll.innerHTML = nearby.map(p => `
-    <div class="nearby-card" onclick="openModal('${p.id}')">
-      <div class="nc-emoji">${pEmoji(p)}</div>
-      <div class="nc-name">${p.name}</div>
-      <div class="nc-dist">${p._dist < 1000 ? Math.round(p._dist)+'m' : (p._dist/1000).toFixed(1)+'km'} unna</div>
-    </div>`).join('');
-  strip.style.display = 'block';
-}
-// ── INIT ──────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  initDebug();
-  initIntroMap();
-  heroGreeting();
-  checkAuth();
-
-  // Sett initial display på views
-  const lv = document.getElementById('listView');
-  if(lv) { lv.style.display = 'flex'; lv.style.position = 'relative'; }
-
-  // Event delegation for kortene — robust mot re-render
-  document.getElementById('cards').addEventListener('click', e => {
+  // Event delegation — kort klikk
+  document.getElementById('cards').addEventListener('click', e=>{
     const card = e.target.closest('[data-id]');
     if(card) openModal(card.dataset.id);
   });
-
-  // Bygg kategori-rader
-  buildFilters();
-  buildMapCatRow();
-
-  // Render innhold
-  renderList();
-
-  // GPS — prøv stille i bakgrunnen
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(pos => {
-      S.userLat = pos.coords.latitude;
-      S.userLng = pos.coords.longitude;
-      buildNearbyStrip();
-      // Oppdater avstandssortering hvis aktiv
-      if(S.sortMode === 'distance') renderList();
-    }, () => {}, { timeout: 8000, maximumAge: 60000 });
-  }
 });
 </script>
 </body>
