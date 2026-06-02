@@ -2108,6 +2108,8 @@ const tr=k=>{const L=T[lang]||T.no;return L[k]??T.no[k]??k;};
 const trC=c=>{const L=T[lang]||T.no;return(L.cats&&L.cats[c])||(T.no.cats&&T.no.cats[c])||c;};
 
 function applyLang(){
+  try{
+
   const rtl=['ar','ur','he'].includes(lang);
   document.documentElement.lang=lang; document.documentElement.dir=rtl?'rtl':'ltr';
   $('bn0t').textContent=tr('map');$('bn1t').textContent=tr('list');$('bn2t').textContent=tr('social');$('bn3t').textContent=tr('profile');
@@ -2151,10 +2153,13 @@ function applyLang(){
   if($('scr-exp').classList.contains('on')) renderExpList();
   if($('scr-profile').classList.contains('on')) renderProfile();
   if($('scr-social').classList.contains('on')) renderSocial();
+
+  }catch(e){console.warn('applyLang feil:',e.message,e.stack);}
 }
 function setLang(l){lang=l;localStorage.setItem('ao_lang',l);applyLang();}
 const $$=id=>document.getElementById(id);
 const $=id=>document.getElementById(id);
+function $s(id,prop,val){const el=document.getElementById(id);if(el)el[prop]=val;return !!el;}
 
 function updateBshLang(){
   if(!activePl) return;
