@@ -464,12 +464,12 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
 <div class="onb-sheet">
   <div style="text-align:center;margin-bottom:16px">
     <div style="font-size:2.4rem;margin-bottom:6px">🗺️</div>
-    <div style="font-size:1.3rem;font-weight:900;color:var(--navy);letter-spacing:-.4px">AktivOslo</div>
+    <div id="onbTitle" style="font-size:1.3rem;font-weight:900;color:var(--navy);letter-spacing:-.4px">AktivOslo</div>
     <div id="onbSub" style="font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.4"></div>
   </div>
 
   <!-- Tre kompakte features -->
-  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
+  <div id="onbFeats" style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
     <div style="display:flex;align-items:center;gap:10px;background:#f0f7ff;border-radius:10px;padding:9px 12px">
       <span style="font-size:1.2rem">📍</span>
       <div id="feat1" style="font-size:.78rem;color:var(--navy);font-weight:700"></div>
@@ -2122,7 +2122,7 @@ function applyLang(){
   $('bshNav').textContent=tr('navigate'); $('ratingLbl').textContent=tr('yourRating');
   $('nearTxt').textContent=tr('nearMe');
   $('langTitle').textContent=tr('langTitle');
-  $('onbTitle').textContent=tr('onbTitle'); $('onbSub').textContent=tr('onbSub');
+  if($('onbTitle')) $('onbTitle').textContent=tr('onbTitle'); if($('onbSub')) $('onbSub').textContent=tr('onbSub');
   $('onbCnt').textContent=N_PLACES+' '+tr('counter');
   if($('onbLogin')) $('onbLogin').textContent=tr('onbLogin');
   if($('onbGuest')) $('onbGuest').textContent=tr('onbGuest');
