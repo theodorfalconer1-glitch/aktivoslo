@@ -80,6 +80,10 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
   border:none;background:rgba(255,255,255,.93);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   box-shadow:0 1px 6px rgba(0,0,0,.13);cursor:pointer;white-space:nowrap;flex-shrink:0;color:var(--navy);touch-action:manipulation
 }
+.msub-chip{padding:5px 12px;border-radius:20px;font-size:.7rem;font-weight:700;border:1.5px solid #e5e7eb;background:#fff;cursor:pointer;white-space:nowrap;transition:.15s;}
+.msub-chip.on{background:#111;color:#fff;border-color:#111;}
+#mapSubRow::-webkit-scrollbar{display:none;}
+
 .chip.on{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.35)}
 
 /* ── NÆR MEG-KNAPP ── */
@@ -271,6 +275,7 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
 
 <div id="map" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:1"></div>
 <div id="fbar"></div>
+<div id="mapSubRow" style="display:none;position:fixed;top:calc(var(--hdr) + env(safe-area-inset-top) + 54px);left:0;right:0;z-index:10;padding:4px 10px;gap:6px;overflow-x:auto;scrollbar-width:none;background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.06);"></div>
 
 <!-- HEADER -->
 <div id="hdr">
@@ -2092,7 +2097,7 @@ const FRIENDS_DEMO=[{name:'Andreas K.',pts:120,color:'#2563eb'},{name:'Maria L.'
 
 // ══ STATE ══
 let lang=localStorage.getItem('ao_lang')||'no';
-let mapCat='all', expCat='all', expQ='', expSubType='', expFilters={free:false,family:false,transport:false,parking:false};
+let mapCat='all', mapSubType='', expCat='all', expQ='', expSubType='', expFilters={free:false,family:false,transport:false,parking:false};
 let activePl=null, loginMode='login', listTab='visited';
 let user=JSON.parse(localStorage.getItem('ao_user')||'null');
 let visited=JSON.parse(localStorage.getItem('ao_visited')||'[]');
@@ -2208,7 +2213,7 @@ function getFiltered(q,c,filters){
 function renderMarkers(){
   if(!apMap||!mLayer) return;
   mLayer.clearLayers();
-  getFiltered('',mapCat,null).forEach(p=>{
+  getFiltered('',mapCat,null).filter(p=>!mapSubType||(p.sub_types||[]).includes(mapSubType)).forEach(p=>{
     if(!p.lat||!p.lng) return;
     const c0=(p.activity_types||['?'])[0];
     mLayer.addLayer(L.marker([p.lat,p.lng],{icon:makeIcon(c0,visited.includes(p.id))}).on('click',e=>{L.DomEvent.stopPropagation(e);openPlace(p.id);}));
@@ -2238,12 +2243,25 @@ function buildFbar(){
     frag.appendChild(el);
   });
   const fb=$('fbar');fb.innerHTML='';fb.appendChild(frag);
+  // Sub-type rad på kartet
+  const sr=$('mapSubRow');
+  if(mapCat==='løperute'){
+    sr.innerHTML='<div class="msub-chip'+(mapSubType===''?' on':'')+'" data-s="">Alle</div><div class="msub-chip'+(mapSubType==='trappeintervall'?' on':'')+'" data-s="trappeintervall">🪜 Trappeintervall</div>';
+    sr.style.display='flex';
+  } else {
+    sr.innerHTML='';sr.style.display='none';mapSubType='';
+  }
 }
 // Init når DOM er klar
 
 $('fbar').addEventListener('click',e=>{
   const chip=e.target.closest('.chip');if(!chip) return;
-  mapCat=chip.dataset.c;buildFbar();renderMarkers();
+  mapCat=chip.dataset.c;mapSubType='';buildFbar();renderMarkers();
+});
+// mapSubRow sub-type listener
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('#mapSubRow .msub-chip');if(!chip) return;
+  mapSubType=chip.dataset.s||'';buildFbar();renderMarkers();
 });
 
 // ══ SØKEDROPDOWN ══
@@ -2629,7 +2647,7 @@ function showSscr(id){
   if(id==='scr-profile'){renderProfile();}
 }
 $('homeBtn').addEventListener('click',()=>{
-  mapCat='all';buildFbar();renderMarkers();showSscr(null);hideSheet();
+  mapCat='all';mapSubType='';buildFbar();renderMarkers();showSscr(null);hideSheet();
   apMap?.setView([59.913,10.740],12,{animate:true});
 });
 ['expBack','socialBack','profileBack','loginBack'].forEach(id=>$(id)?.addEventListener('click',()=>showSscr(null)));
