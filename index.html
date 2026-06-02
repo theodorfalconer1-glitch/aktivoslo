@@ -460,58 +460,43 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
   <div class="sp-name">AktivOslo</div>
   <div class="sp-bar"><div class="sp-fill"></div></div>
 </div>
-<div id="onb">
-<div class="onb-sheet">
-  <div style="text-align:center;margin-bottom:16px">
-    <div style="font-size:2.4rem;margin-bottom:6px">🗺️</div>
-    <div id="onbTitle" style="font-size:1.3rem;font-weight:900;color:var(--navy);letter-spacing:-.4px">AktivOslo</div>
-    <div id="onbSub" style="font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.4"></div>
-  </div>
+<div id="onb" style="position:fixed;inset:0;z-index:9000;background:rgba(15,23,42,.7);display:flex;align-items:flex-end;justify-content:center;padding-bottom:0">
+  <div class="onb-sheet" style="background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:480px;padding:24px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -8px 40px rgba(0,0,0,.18)">
 
-  <!-- Tre kompakte features -->
-  <div id="onbFeats" style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px">
-    <div style="display:flex;align-items:center;gap:10px;background:#f0f7ff;border-radius:10px;padding:9px 12px">
-      <span style="font-size:1.2rem">📍</span>
-      <div id="feat1" style="font-size:.78rem;color:var(--navy);font-weight:700">Interaktivt kart</div>
+    <!-- Header -->
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:2.4rem;margin-bottom:6px">🗺️</div>
+      <div id="onbTitle" style="font-size:1.3rem;font-weight:900;color:var(--navy);letter-spacing:-.4px">AktivOslo</div>
+      <div id="onbSub" style="font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.4">Finn aktiviteter i Oslo</div>
     </div>
-    <div style="display:flex;align-items:center;gap:10px;background:#f0fdf4;border-radius:10px;padding:9px 12px">
-      <span style="font-size:1.2rem">☀️</span>
-      <div id="feat2" style="font-size:.78rem;color:var(--navy);font-weight:700">Søk og filtrer</div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;background:#fefce8;border-radius:10px;padding:9px 12px">
-      <span style="font-size:1.2rem">👥</span>
-      <div id="feat3" style="font-size:.78rem;color:var(--navy);font-weight:700">Planlegg med venner</div>
-    </div>
-  </div>
 
-  <!-- Antall steder -->
-  <div id="onbCnt" style="text-align:center;font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:16px">251 steder</div>
-
-  <!-- Knapper -->
-  Logg inn / Registrer<Logg inn / RegistrerbLogg inn / RegistreruLogg inn / RegistrertLogg inn / RegistrertLogg inn / RegistreroLogg inn / RegistrernLogg inn / Registrer Logg inn / RegistrercLogg inn / RegistrerlLogg inn / RegistreraLogg inn / RegistrersLogg inn / RegistrersLogg inn / Registrer=Logg inn / Registrer"Logg inn / RegistrerbLogg inn / RegistrertLogg inn / RegistrernLogg inn / Registrer-Logg inn / RegistrerpLogg inn / RegistrerrLogg inn / Registrer"Logg inn / Registrer Logg inn / RegistreriLogg inn / RegistrerdLogg inn / Registrer=Logg inn / Registrer"Logg inn / RegistreroLogg inn / RegistrernLogg inn / RegistrerbLogg inn / RegistrerLLogg inn / RegistreroLogg inn / RegistrergLogg inn / RegistreriLogg inn / RegistrernLogg inn / Registrer"Logg inn / Registrer Logg inn / RegistrersLogg inn / RegistrertLogg inn / RegistreryLogg inn / RegistrerlLogg inn / RegistrereLogg inn / Registrer=Logg inn / Registrer"Logg inn / RegistrermLogg inn / RegistreraLogg inn / RegistrerrLogg inn / RegistrergLogg inn / RegistreriLogg inn / RegistrernLogg inn / Registrer-Logg inn / RegistrerbLogg inn / RegistreroLogg inn / RegistrertLogg inn / RegistrertLogg inn / RegistreroLogg inn / RegistrermLogg inn / Registrer:Logg inn / Registrer8Logg inn / RegistrerpLogg inn / RegistrerxLogg inn / Registrer"Logg inn / Registrer Logg inn / RegistreroLogg inn / RegistrernLogg inn / RegistrercLogg inn / RegistrerlLogg inn / RegistreriLogg inn / RegistrercLogg inn / RegistrerkLogg inn / Registrer=Logg inn / Registrer"Logg inn / RegistreroLogg inn / RegistrernLogg inn / RegistrerbLogg inn / RegistrerDLogg inn / RegistreroLogg inn / RegistrerLLogg inn / RegistreroLogg inn / RegistrergLogg inn / RegistreriLogg inn / RegistrernLogg inn / Registrer(Logg inn / Registrer)Logg inn / Registrer"Logg inn / Registrer>Logg inn / Registrer<Logg inn / Registrer/Logg inn / RegistrerbLogg inn / RegistreruLogg inn / RegistrertLogg inn / RegistrertLogg inn / RegistreroLogg inn / RegistrernLogg inn / Registrer>Logg inn / Registrer
-  <button class="btn-se" id="onbGuest" onclick="onbDoGuest()"></button>
-
-  <!-- Språkvalg — kompakt nedtrekk -->
-  <div style="margin-top:12px;text-align:center">
-    <button id="langToggle" style="background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;padding:4px 8px">🌐 <span id="langToggleTxt"></span></button>
-    <div id="langPickerInline" style="display:none;margin-top:8px">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
-        <button class="lp-onb" data-l="no">🇳🇴 Norsk</button>
-        <button class="lp-onb" data-l="en">🇬🇧 English</button>
-        <button class="lp-onb" data-l="de">🇩🇪 Deutsch</button>
-        <button class="lp-onb" data-l="sv">🇸🇪 Svenska</button>
-        <button class="lp-onb" data-l="da">🇩🇰 Dansk</button>
-        <button class="lp-onb" data-l="fr">🇫🇷 Français</button>
-        <button class="lp-onb" data-l="ar">🇸🇦 ع</button>
-        <button class="lp-onb" data-l="pl">🇵🇱 Polski</button>
-        <button class="lp-onb" data-l="ur">🇵🇰 اردو</button>
-        <button class="lp-onb" data-l="so">🇸🇴 Somaali</button>
-        <button class="lp-onb" data-l="es">🇪🇸 Español</button>
-        <button class="lp-onb" data-l="zh">🇨🇳 中文</button>
+    <!-- Features -->
+    <div id="onbFeats" style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px;background:#f0f7ff;border-radius:10px;padding:9px 12px">
+        <span style="font-size:1.2rem">📍</span>
+        <div id="feat1" style="font-size:.78rem;color:var(--navy);font-weight:700">Interaktivt kart</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#f0fdf4;border-radius:10px;padding:9px 12px">
+        <span style="font-size:1.2rem">☀️</span>
+        <div id="feat2" style="font-size:.78rem;color:var(--navy);font-weight:700">Søk og filtrer</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#fefce8;border-radius:10px;padding:9px 12px">
+        <span style="font-size:1.2rem">👥</span>
+        <div id="feat3" style="font-size:.78rem;color:var(--navy);font-weight:700">Planlegg med venner</div>
       </div>
     </div>
+
+    <!-- Antall steder -->
+    <div id="onbCnt" style="text-align:center;font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:14px">355 steder</div>
+
+    <!-- Språkvalg -->
+    <div id="onbLangs" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px"></div>
+
+    <!-- Knapper -->
+    <button class="btn-pr" id="onbLogin" style="margin-bottom:8px;width:100%;padding:13px;border-radius:12px;font-size:.88rem;font-weight:700;border:none;background:var(--accent);color:#fff;cursor:pointer">Logg inn / Registrer</button>
+    <button id="onbGuest" style="width:100%;padding:11px;border-radius:12px;font-size:.82rem;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--navy);cursor:pointer">Fortsett som gjest</button>
+
   </div>
-</div>
 </div>
 
 
@@ -2651,7 +2636,7 @@ document.querySelectorAll('.li').forEach(li=>li.addEventListener('click',()=>{
 }));
 
 // ══ ONBOARDING ══
-(()=>{const langs=[['no','🇳🇴'],['en','🇬🇧'],['de','🇩🇪'],['sv','🇸🇪'],['da','🇩🇰'],['fr','🇫🇷'],['pt','🇧🇷'],['es','🇪🇸'],['af','🇿🇦'],['zh','🇨🇳'],['ar','🇸🇦'],['he','🇮🇱'],['pl','🇵🇱'],['so','🇸🇴'],['ur','🇵🇰']];const el=$('onbLangs');langs.forEach(([l,f])=>{const b=document.createElement('button');b.className='lp';b.textContent=f;b.dataset.l=l;b.addEventListener('click',()=>setLang(l));el.appendChild(b);});})();
+(()=>{const langs=[['no','🇳🇴'],['en','🇬🇧'],['de','🇩🇪'],['sv','🇸🇪'],['da','🇩🇰'],['fr','🇫🇷'],['pt','🇧🇷'],['es','🇪🇸'],['af','🇿🇦'],['zh','🇨🇳'],['ar','🇸🇦'],['he','🇮🇱'],['pl','🇵🇱'],['so','🇸🇴'],['ur','🇵🇰']];const el=$('onbLangs');if(!el)return;langs.forEach(([l,f])=>{const b=document.createElement('button');b.className='lp';b.textContent=f;b.dataset.l=l;b.addEventListener('click',()=>setLang(l));el.appendChild(b);});})();
 // onbLogin via onclick i HTML
 // ── ONBOARDING ──
 function closeOnb(){
@@ -2672,7 +2657,7 @@ function closeOnb(){
 if($('langToggle')){
   $('langToggle').addEventListener('click',()=>{
     const p=$('langPickerInline');
-    p.style.display=p.style.display==='none'?'block':'none';
+    if(p) p.style.display=p.style.display==='none'?'block':'none';
   });
   document.querySelectorAll('.lp-onb').forEach(b=>{
     b.classList.toggle('sel',b.dataset.l===lang);
@@ -2682,7 +2667,7 @@ if($('langToggle')){
       lang=b.dataset.l;
       localStorage.setItem('ao_lang',lang);
       applyLang();
-      $('langPickerInline').style.display='none';
+      const _lpi=$('langPickerInline');if(_lpi)_lpi.style.display='none';
     });
   });
 }
