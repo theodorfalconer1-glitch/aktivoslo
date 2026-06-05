@@ -2464,6 +2464,12 @@ document.addEventListener('click',e=>{
   const chip=e.target.closest('#expSubRow .xchip');if(!chip) return;
   expSubType=chip.dataset.s||'';buildExpFilters();renderExpList();
 });
+// Sol-filter listener
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('#expSolRow .xchip');if(!chip) return;
+  const f=chip.dataset.f;if(!f) return;
+  expFilters[f]=!expFilters[f];buildExpFilters();renderExpList();
+});
 function renderExpList(){
   const list=getFiltered(expQ,expCat,expFilters).sort((a,b)=>{
     const da=distTo(a),db=distTo(b);
