@@ -569,7 +569,8 @@ html,body{height:100%;height:100%;overflow:hidden;font-family:-apple-system,Blin
 function onbDoGuest(){
   var el=document.getElementById('onb');
   if(el) el.style.display='none';
-  localStorage.setItem('ao_guest','1');
+  localStorage.setItem('ao_guest','1');localStorage.removeItem('ao_user');user=null;
+  updateGuestNav();
   // Tving kartoppdatering etter at overlay forsvinner
   setTimeout(function(){
     if(typeof apMap!=='undefined' && apMap){
@@ -2342,6 +2343,9 @@ function buildFbar(){
     sr.innerHTML='';sr.style.display='none';mapSubType='';
   }
 }
+// Init guest nav state
+updateGuestNav();
+
 // Init når DOM er klar
 
 $('fbar').addEventListener('click',e=>{
@@ -2616,14 +2620,14 @@ function openPlace(id){
 }
 document.querySelectorAll('.star').forEach(s=>s.addEventListener('click',()=>{
   if(!activePl) return;
-  if(!user){showLoginGate('Rate and review places');return;}
+  if(!user){showLoginGate('rate');return;}
   const r=parseInt(s.dataset.r);
   ratings[activePl.id]=r;localStorage.setItem('ao_ratings',JSON.stringify(ratings));
   document.querySelectorAll('.star').forEach(x=>x.classList.toggle('on',parseInt(x.dataset.r)<=r));
 }));
 $('bshVisit').addEventListener('click',()=>{
   if(!activePl) return;
-  if(!user){showLoginGate('Log visited places and build your history');return;}
+  if(!user){showLoginGate('visit');return;}
   const id=activePl.id;
   if(!visited.includes(id)){
     visited.push(id);localStorage.setItem('ao_visited',JSON.stringify(visited));
@@ -2636,7 +2640,7 @@ $('bshVisit').addEventListener('click',()=>{
 });
 $('bshFav').addEventListener('click',()=>{
   if(!activePl) return;
-  if(!user){showLoginGate('Save your favorites');return;}
+  if(!user){showLoginGate('fav');return;}
   const id=activePl.id;
   if(favorites.includes(id)) favorites=favorites.filter(x=>x!==id);
   else favorites.push(id);
@@ -2645,14 +2649,14 @@ $('bshFav').addEventListener('click',()=>{
 });
 $('bshWant').addEventListener('click',()=>{
   if(!activePl) return;
-  if(!user){showLoginGate('Save places you want to visit');return;}
+  if(!user){showLoginGate('want');return;}
   const id=activePl.id;
   if(wantList.includes(id)) wantList=wantList.filter(x=>x!==id);
   else wantList.push(id);
   localStorage.setItem('ao_want',JSON.stringify(wantList));
   updateBshLang();renderExpList();
 });
-$('bshPlan').addEventListener('click',()=>{if(!activePl)return;if(!user){showLoginGate('Plan activities with friends');return;}openQPlan(activePl);});
+$('bshPlan').addEventListener('click',()=>{if(!activePl)return;if(!user){showLoginGate('plan');return;}openQPlan(activePl);});
 $('bshNav').addEventListener('click',()=>{
   if(!activePl) return;
   const{lat,lng,name}=activePl;
@@ -2670,24 +2674,67 @@ function updateStreak(){
 }
 
 // ══ SHEET ══
-function showLoginGate(reason){
-  // Vis innloggings-prompt for gjest
-  const overlay = document.createElement('div');
-  overlay.id = 'gateOverlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:8500;background:rgba(15,23,42,.55);backdrop-filter:blur(2px);display:flex;align-items:flex-end;justify-content:center;padding-bottom:0';
-  const sheet = document.createElement('div');
-  sheet.style.cssText = 'background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:480px;padding:24px 20px calc(28px + env(safe-area-inset-bottom)) 20px;box-shadow:0 -8px 40px rgba(0,0,0,.2);text-align:center';
-  sheet.innerHTML = `
-    <div style="font-size:1.6rem;margin-bottom:8px">🔐</div>
-    <div style="font-size:1rem;font-weight:900;color:var(--navy);margin-bottom:6px">${reason||'Log in to continue'}</div>
-    <div style="font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:18px">Log in to save this, invite friends,<br>and keep your activity history.</div>
-    <button onclick="document.getElementById('gateOverlay').remove();showSscr('scr-login');" style="width:100%;padding:13px;border-radius:12px;font-size:.88rem;font-weight:700;border:none;background:var(--accent);color:#fff;cursor:pointer;margin-bottom:8px">Log in / Register</button>
-    <button onclick="document.getElementById('gateOverlay').remove();" style="width:100%;padding:11px;border-radius:12px;font-size:.82rem;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--navy);cursor:pointer">Continue as guest</button>
+function isGuest(){
+  // Sann dersom brukeren er guest (ikke innlogget)
+  return !user;
+}
+
+function showLoginGate(featureKey){
+  // Fjern eksisterende gate
+  const ex=document.getElementById('gateOverlay');if(ex)ex.remove();
+  // Tekstkart per feature
+  const msgs={
+    fav:    {ico:'❤️', title:'Lagre favoritter',   desc:'Logg inn for å lagre favoritter, se dem igjen når som helst og dele dem med venner.'},
+    visit:  {ico:'📍', title:'Merk som besøkt',    desc:'Bygg din personlige aktivitetslogg og se alle steder du har vært på én plass.'},
+    want:   {ico:'🗂️', title:'Vil besøke-liste',   desc:'Planlegg neste tur – lagre steder du vil besøke og få dem lett tilgjengelig.'},
+    plan:   {ico:'📅', title:'Planlegg med venner', desc:'Foreslå aktiviteter, stem på steder og avtal tid – direkte i appen.'},
+    rate:   {ico:'⭐', title:'Anmeld steder',       desc:'Gi steder karakter og hjelp andre med å finne de beste plassene.'},
+    social: {ico:'👥', title:'Venner & aktivitetsfeed', desc:'Legg til venner, se hva de anbefaler og planlegg aktiviteter sammen.'},
+    profile:{ico:'👤', title:'Din aktivitetsprofil', desc:'Se statistikk, achievements og aktivitetshistorikk på din personlige profil.'},
+  };
+  const m=msgs[featureKey]||{ico:'🔐',title:'Logg inn for å bruke denne funksjonen',desc:'Opprett konto for å lagre favoritter, legge til venner, planlegge aktiviteter og bygge din egen aktivitetsprofil.'};
+  const overlay=document.createElement('div');
+  overlay.id='gateOverlay';
+  overlay.style.cssText='position:fixed;inset:0;z-index:8500;background:rgba(15,23,42,.55);backdrop-filter:blur(2px);display:flex;align-items:flex-end;justify-content:center;padding-bottom:0';
+  const sheet=document.createElement('div');
+  sheet.style.cssText='background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:480px;padding:28px 22px calc(32px + env(safe-area-inset-bottom)) 22px;box-shadow:0 -8px 40px rgba(0,0,0,.18);text-align:center';
+  sheet.innerHTML=`
+    <div style="font-size:2rem;margin-bottom:10px">${m.ico}</div>
+    <div style="font-size:1rem;font-weight:900;color:var(--navy);margin-bottom:8px">${m.title}</div>
+    <div style="font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:22px;max-width:300px;margin-left:auto;margin-right:auto">${m.desc}</div>
+    <button onclick="document.getElementById('gateOverlay').remove();showSscr('scr-login');"
+      style="width:100%;padding:14px;border-radius:13px;font-size:.9rem;font-weight:700;border:none;background:var(--accent);color:#fff;cursor:pointer;margin-bottom:9px;touch-action:manipulation">
+      Logg inn / Opprett konto
+    </button>
+    <button onclick="document.getElementById('gateOverlay').remove();"
+      style="width:100%;padding:12px;border-radius:13px;font-size:.82rem;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;touch-action:manipulation">
+      Fortsett som guest
+    </button>
   `;
   overlay.appendChild(sheet);
-  overlay.addEventListener('click', e=>{if(e.target===overlay) overlay.remove();});
+  overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
   document.body.appendChild(overlay);
 }
+// ══ GUEST NAV BADGE ══
+function updateGuestNav(){
+  // Vis låse-ikon på social og profil-tab for guest
+  const socialBtn=$('bnav').querySelector('[data-v="social"]');
+  const profileBtn=$('bnav').querySelector('[data-v="profile"]');
+  if(!socialBtn||!profileBtn) return;
+  if(isGuest()){
+    socialBtn.querySelector('.bn-i').textContent='🔒';
+    profileBtn.querySelector('.bn-i').textContent='🔒';
+    socialBtn.title='Krever innlogging';
+    profileBtn.title='Krever innlogging';
+  } else {
+    socialBtn.querySelector('.bn-i').textContent='👥';
+    profileBtn.querySelector('.bn-i').textContent='👤';
+    socialBtn.title='';
+    profileBtn.title='';
+  }
+}
+
+
 
 function showSheet(){$('bsh').classList.add('on');$('bshOv').classList.add('on');}
 function hideSheet(){$('bsh').classList.remove('on');$('bshOv').classList.remove('on');activePl=null;}
@@ -2729,24 +2776,11 @@ $('qpmSend').addEventListener('click',()=>{
 // ══ SOSIAL ══
 function addFeed(item){const f=JSON.parse(localStorage.getItem('ao_feed')||'[]');f.unshift(item);localStorage.setItem('ao_feed',JSON.stringify(f.slice(0,50)));}
 function renderSocial(){
-  // Vis innloggings-gate for gjester på social-fanen
+  // GUEST: vis ikke sosial-skjerm, men showLoginGate (håndteres i nav-listener)
+  // Denne funksjonen kalles kun for innloggede brukere
+  if(isGuest()) return;
   const existingSocGate=document.getElementById('guestSocialBanner');
   if(existingSocGate) existingSocGate.remove();
-  if(!user){
-    const sBody=$('scr-social')&&$('scr-social').querySelector('.sscr-body');
-    if(sBody){
-      const gate=document.createElement('div');
-      gate.id='guestSocialBanner';
-      gate.style.cssText='margin:16px 14px;background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:14px;padding:20px 16px;text-align:center';
-      gate.innerHTML=`
-        <div style="font-size:1.5rem;margin-bottom:8px">👥</div>
-        <div style="font-size:.9rem;font-weight:800;color:var(--navy);margin-bottom:6px">Connect with friends</div>
-        <div style="font-size:.74rem;color:var(--muted);line-height:1.5;margin-bottom:14px">Log in to add friends, invite them to activities, and see what they recommend.</div>
-        <button onclick="showSscr('scr-login')" style="width:100%;padding:11px;border-radius:10px;font-size:.84rem;font-weight:700;border:none;background:var(--accent);color:#fff;cursor:pointer">Log in or Register</button>
-      `;
-      sBody.prepend(gate);
-    }
-  }
   // Venner
   const allFr=[...FRIENDS_DEMO,...friends.filter(f=>!FRIENDS_DEMO.find(d=>d.name===f.name))];
   $('friendList').innerHTML=allFr.map(f=>{
@@ -2776,6 +2810,11 @@ window.inviteFr=function(name){openQPlan(activePl);};
 
 // ══ PROFIL ══
 function renderProfile(){
+  if(isGuest()){
+    // Bytt til login-skjerm direkte, med profil som årsak
+    showLoginGate('profile');
+    return;
+  }
   $('profAv').textContent=user?user.name[0].toUpperCase():'?';
   // Geo-toggle
   const geoState=localStorage.getItem('ao_geo_state');
@@ -2848,8 +2887,14 @@ $('bnav').addEventListener('click',e=>{
   const v=bn.dataset.v;
   if(v==='map') showSscr(null);
   else if(v==='exp') showSscr('scr-exp');
-  else if(v==='social') showSscr('scr-social');
-  else if(v==='profile') {if(!user&&!localStorage.getItem('ao_guest')) showSscr('scr-login'); else showSscr('scr-profile');}
+  else if(v==='social'){
+    if(isGuest()){showLoginGate('social');}
+    else showSscr('scr-social');
+  }
+  else if(v==='profile'){
+    if(isGuest()){showLoginGate('profile');}
+    else showSscr('scr-profile');
+  }
 });
 
 // ══ LOGIN ══
@@ -2861,12 +2906,21 @@ $('bnav').addEventListener('click',e=>{
   $('lmName').style.display=loginMode==='register'?'block':'none';
   applyLang();
 }));
-$('lmGuest').addEventListener('click',()=>{user=null;localStorage.setItem('ao_guest','1');closeOnb();showSscr(null);});
+$('lmGuest').addEventListener('click',()=>{
+  user=null;
+  localStorage.setItem('ao_guest','1');
+  localStorage.removeItem('ao_user');
+  closeOnb();
+  showSscr(null);
+  // Oppdater bnav for å vise låste tabs visuelt
+  updateGuestNav();
+});
 $('lmSubmit').addEventListener('click',()=>{
   const email=$('lmEmail').value.trim();if(!email) return;
   const name=loginMode==='register'?($('lmName').value.trim()||email.split('@')[0]):email.split('@')[0];
   user={email,name,joined:Date.now()};localStorage.setItem('ao_user',JSON.stringify(user));
-  localStorage.setItem('ao_guest','1');closeOnb();showSscr(null);renderProfile();
+  localStorage.setItem('ao_guest','1');closeOnb();updateGuestNav();
+  showSscr(null);renderProfile();
 });
 
 // ══ LANG ══
