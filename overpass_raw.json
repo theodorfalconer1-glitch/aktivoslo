@@ -1,0 +1,2768 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-06-12T12:14:17Z",
+    "timestamp_areas_base": "2026-06-12T12:14:17Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 3464038364,
+      "lat": 59.9264917,
+      "lon": 10.6180428,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6376890253,
+      "lat": 59.9186505,
+      "lon": 10.7862087,
+      "tags": {
+        "check_date": "2024-01-08",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6376890255,
+      "lat": 59.9175442,
+      "lon": 10.7835103,
+      "tags": {
+        "check_date": "2025-11-04",
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 6392003819,
+      "lat": 59.9208501,
+      "lon": 10.7909939,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7023981183,
+      "lat": 59.9325116,
+      "lon": 10.7952402,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7108407220,
+      "lat": 59.9086236,
+      "lon": 10.7833397,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7108407376,
+      "lat": 59.9093298,
+      "lon": 10.7699265,
+      "tags": {
+        "check_date": "2024-08-12",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7139925971,
+      "lat": 59.9274855,
+      "lon": 10.7804135,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7222682936,
+      "lat": 59.9481992,
+      "lon": 10.7648411,
+      "tags": {
+        "check_date": "2024-08-13",
+        "image": "https://photos.app.goo.gl/2dhyoRi8QWMs6rPM8",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7310548780,
+      "lat": 59.9448287,
+      "lon": 10.7476163,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7317479958,
+      "lat": 59.9097758,
+      "lon": 10.7994063,
+      "tags": {
+        "check_date": "2024-06-16",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7326180299,
+      "lat": 59.9393873,
+      "lon": 10.8321317,
+      "tags": {
+        "leisure": "fitness_station",
+        "level": "-1",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7340782897,
+      "lat": 59.9207195,
+      "lon": 10.8121381,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7344066282,
+      "lat": 59.9161184,
+      "lon": 10.8180612,
+      "tags": {
+        "check_date": "2025-10-18",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7384648875,
+      "lat": 59.9197172,
+      "lon": 10.7963137,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7734574185,
+      "lat": 59.931286,
+      "lon": 10.7378592,
+      "tags": {
+        "check_date": "2024-09-30",
+        "fitness_station:horizontal_ladder": "yes",
+        "fitness_station:parallel_bars": "yes",
+        "fitness_station:push-up": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7744619920,
+      "lat": 59.9118844,
+      "lon": 10.7195917,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7851458345,
+      "lat": 59.9205836,
+      "lon": 10.8561265,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7914375044,
+      "lat": 59.9455322,
+      "lon": 10.9085608,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7982010609,
+      "lat": 59.9175739,
+      "lon": 10.7491103,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7993711245,
+      "lat": 59.935545,
+      "lon": 10.7724652,
+      "tags": {
+        "fitness_station": "balance_beam",
+        "image": "https://photos.app.goo.gl/ogDnmAkFqicdSEv4A",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8086627751,
+      "lat": 59.9447211,
+      "lon": 10.9017506,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8117540154,
+      "lat": 59.917526,
+      "lon": 10.7487676,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8171978149,
+      "lat": 59.9294421,
+      "lon": 10.6653891,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8363381136,
+      "lat": 59.8659985,
+      "lon": 10.8422036,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 8968903632,
+      "lat": 59.9455708,
+      "lon": 10.8584048,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9588852050,
+      "lat": 59.9322585,
+      "lon": 10.7528956,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9858656657,
+      "lat": 59.9703797,
+      "lon": 10.927784,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9858657236,
+      "lat": 59.9666957,
+      "lon": 10.9355297,
+      "tags": {
+        "leisure": "fitness_station",
+        "name": "Lia treningspark"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9871181176,
+      "lat": 59.9692172,
+      "lon": 10.8947,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9871186537,
+      "lat": 59.9650112,
+      "lon": 10.922687,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9871188664,
+      "lat": 59.9710975,
+      "lon": 10.9008378,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9908358084,
+      "lat": 59.9334539,
+      "lon": 10.9240614,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9947198287,
+      "lat": 59.966185,
+      "lon": 10.7409343,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9968638499,
+      "lat": 59.9131599,
+      "lon": 10.8665034,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 9968638500,
+      "lat": 59.8993525,
+      "lon": 10.8496891,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10000625360,
+      "lat": 59.9003752,
+      "lon": 10.8529093,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10139369125,
+      "lat": 59.9706159,
+      "lon": 10.7920619,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10139390323,
+      "lat": 59.9704992,
+      "lon": 10.7925714,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10303422907,
+      "lat": 59.8688825,
+      "lon": 10.4819903,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059439,
+      "lat": 59.9099097,
+      "lon": 10.7990849,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059440,
+      "lat": 59.9098765,
+      "lon": 10.7990721,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059441,
+      "lat": 59.9098519,
+      "lon": 10.7990695,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059442,
+      "lat": 59.909826,
+      "lon": 10.7990721,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059443,
+      "lat": 59.9098025,
+      "lon": 10.7990815,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10539059444,
+      "lat": 59.9097722,
+      "lon": 10.7990943,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10789136175,
+      "lat": 59.962625,
+      "lon": 10.7283291,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10858826031,
+      "lat": 59.9297225,
+      "lon": 10.7651497,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10979361986,
+      "lat": 59.9665141,
+      "lon": 10.7713065,
+      "tags": {
+        "blind": "no",
+        "fitness_station": "push-up",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10979361987,
+      "lat": 59.9664948,
+      "lon": 10.7713751,
+      "tags": {
+        "blind": "no",
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 10979361988,
+      "lat": 59.9663969,
+      "lon": 10.7717301,
+      "tags": {
+        "blind": "no",
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11035506151,
+      "lat": 59.8674422,
+      "lon": 10.8431786,
+      "tags": {
+        "fitness_station:horizontal_bar": "yes",
+        "fitness_station:sit-up": "yes",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11035514444,
+      "lat": 59.8673871,
+      "lon": 10.8432118,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11035563676,
+      "lat": 59.8674323,
+      "lon": 10.8417696,
+      "tags": {
+        "fitness_station:dip_bench": "yes",
+        "fitness_station:horizontal_bar": "yes",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11111250763,
+      "lat": 59.8849786,
+      "lon": 10.5353978,
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11216337263,
+      "lat": 59.8468121,
+      "lon": 10.827395,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11261582498,
+      "lat": 59.9391224,
+      "lon": 10.6508868,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11335711957,
+      "lat": 59.965819,
+      "lon": 10.6797797,
+      "tags": {
+        "description": "Tuftepark",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11555465699,
+      "lat": 59.9180505,
+      "lon": 10.805002,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11561265629,
+      "lat": 59.8358119,
+      "lon": 10.7988159,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11605785338,
+      "lat": 59.8916976,
+      "lon": 10.6079909,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11605785339,
+      "lat": 59.8915554,
+      "lon": 10.6081131,
+      "tags": {
+        "fitness_station": "parallel_bars",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11605785340,
+      "lat": 59.8914668,
+      "lon": 10.6081775,
+      "tags": {
+        "fitness_station": "push-up",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11608864334,
+      "lat": 59.8351723,
+      "lon": 10.427227,
+      "tags": {
+        "fitness_station": "stairs",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11616869338,
+      "lat": 59.8830722,
+      "lon": 10.8595297,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11694427131,
+      "lat": 59.907101,
+      "lon": 10.7787225,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11839364471,
+      "lat": 59.7398623,
+      "lon": 10.3486932,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11843099548,
+      "lat": 59.7446181,
+      "lon": 10.4124193,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11879700228,
+      "lat": 59.9553293,
+      "lon": 10.907753,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11929801172,
+      "lat": 59.8736019,
+      "lon": 10.8134381,
+      "tags": {
+        "check_date": "2024-06-05",
+        "leisure": "fitness_station",
+        "name": "Lambertseter natur- og aktivitetspark",
+        "sport": "fitness",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11934081496,
+      "lat": 59.9457836,
+      "lon": 10.6545008,
+      "tags": {
+        "fitness_station": "parallel_bars",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 11956310815,
+      "lat": 59.8749881,
+      "lon": 10.8426293,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12026512741,
+      "lat": 59.8732457,
+      "lon": 10.8164918,
+      "tags": {
+        "check_date": "2024-07-01",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12039901545,
+      "lat": 59.9483907,
+      "lon": 10.8193841,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12065399291,
+      "lat": 59.9172122,
+      "lon": 10.7861654,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12090516359,
+      "lat": 59.910134,
+      "lon": 10.7858951,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12112679357,
+      "lat": 59.8963831,
+      "lon": 10.8362109,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12163025146,
+      "lat": 59.8839104,
+      "lon": 10.5423173,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12182718572,
+      "lat": 59.9623832,
+      "lon": 10.775124,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12189152880,
+      "lat": 59.9205188,
+      "lon": 10.8131015,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12351017047,
+      "lat": 59.7780599,
+      "lon": 10.4865321,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12463936635,
+      "lat": 59.9367143,
+      "lon": 10.6025635,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12463936636,
+      "lat": 59.9367261,
+      "lon": 10.6026635,
+      "tags": {
+        "fitness_station": "parallel_bars",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12463936637,
+      "lat": 59.9366972,
+      "lon": 10.6026307,
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 12544098756,
+      "lat": 59.9325961,
+      "lon": 10.4813393,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13056666797,
+      "lat": 59.9077499,
+      "lon": 10.6121056,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13330154949,
+      "lat": 59.9357588,
+      "lon": 10.8279032,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13359192694,
+      "lat": 59.910266,
+      "lon": 10.4972718,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643896,
+      "lat": 59.9228581,
+      "lon": 10.5858363,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643897,
+      "lat": 59.922835,
+      "lon": 10.5858918,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643898,
+      "lat": 59.9227609,
+      "lon": 10.5860643,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643899,
+      "lat": 59.9227338,
+      "lon": 10.5861275,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643900,
+      "lat": 59.9227018,
+      "lon": 10.5859465,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643901,
+      "lat": 59.9226524,
+      "lon": 10.5860743,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13435643902,
+      "lat": 59.9226045,
+      "lon": 10.5861976,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13436088575,
+      "lat": 59.9250491,
+      "lon": 10.5723908,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13436088576,
+      "lat": 59.9250681,
+      "lon": 10.5724557,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13653202689,
+      "lat": 59.9059975,
+      "lon": 10.5085978,
+      "tags": {
+        "fitness_station": "parallel_bars",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13653202690,
+      "lat": 59.9058999,
+      "lon": 10.5086009,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13653202691,
+      "lat": 59.9059534,
+      "lon": 10.5087114,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13798094287,
+      "lat": 59.9489429,
+      "lon": 10.9317223,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13868663556,
+      "lat": 59.9009955,
+      "lon": 10.525477,
+      "tags": {
+        "fitness_station": "horizontal_ladder",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13868663557,
+      "lat": 59.9009502,
+      "lon": 10.5255003,
+      "tags": {
+        "fitness_station": "horizontal_bar",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13914338010,
+      "lat": 59.9558292,
+      "lon": 10.6991288,
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "node",
+      "id": 13925527711,
+      "lat": 59.9233608,
+      "lon": 10.734887,
+      "tags": {
+        "fitness_station": "fitness_station",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 461754184,
+      "center": {
+        "lat": 59.9297087,
+        "lon": 10.8765518
+      },
+      "nodes": [
+        4572176903,
+        4572176896,
+        6074571914,
+        6074571915,
+        6074571916,
+        6074571917,
+        6074571910,
+        6074571913,
+        6074571911,
+        6074571912,
+        6074571908,
+        6074571909,
+        4572176485,
+        6074571907,
+        6074571906,
+        6074571905,
+        6074571904,
+        6074571903,
+        6074571902,
+        6074571901,
+        6074571900,
+        4572176488,
+        6074571898,
+        6074571899,
+        6074571897,
+        6074571896,
+        6074571895,
+        6074571922,
+        6074571921,
+        6074571920,
+        6074571919,
+        6074571918,
+        4572176903
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "name": "Lindebergparken",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 516209103,
+      "center": {
+        "lat": 59.9620579,
+        "lon": 10.9291264
+      },
+      "nodes": [
+        5039609419,
+        5039610023,
+        5039610028,
+        5039610032,
+        5039609419
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 622708316,
+      "center": {
+        "lat": 59.9184443,
+        "lon": 10.8537795
+      },
+      "nodes": [
+        5881470779,
+        5881470780,
+        5881470781,
+        5881470782,
+        5881470779
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 683304284,
+      "center": {
+        "lat": 59.8609129,
+        "lon": 10.8301308
+      },
+      "nodes": [
+        6400113569,
+        6400113570,
+        6400113571,
+        6400113573,
+        6400113569
+      ],
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 685033983,
+      "center": {
+        "lat": 59.9101355,
+        "lon": 10.6114894
+      },
+      "nodes": [
+        6418771324,
+        6418771323,
+        6418771322,
+        6418771321,
+        6418771320,
+        6418771319,
+        6418771318,
+        6418771317,
+        6418771316,
+        6418771315,
+        6418771314,
+        6418771324
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "source": "Norge i Bilder",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 713487739,
+      "center": {
+        "lat": 59.9614747,
+        "lon": 10.8777827
+      },
+      "nodes": [
+        6708483705,
+        6708483706,
+        6708483707,
+        6708483708,
+        6708483709,
+        6708483710,
+        6708483711,
+        6708483712,
+        6708483713,
+        6708483714,
+        6708483715,
+        6708483705
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 738978090,
+      "center": {
+        "lat": 59.5405556,
+        "lon": 10.5549285
+      },
+      "nodes": [
+        6919193329,
+        7066417770,
+        7066417772,
+        7066417773,
+        6919193330,
+        7066417774,
+        6919193331,
+        7066417771,
+        6919193332,
+        7066417775,
+        6919193329
+      ],
+      "tags": {
+        "access": "yes",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 751352412,
+      "center": {
+        "lat": 59.9322333,
+        "lon": 10.7899559
+      },
+      "nodes": [
+        7023980924,
+        7023980925,
+        7023980926,
+        7023980927,
+        7023980924
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "lit": "yes",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 765695091,
+      "center": {
+        "lat": 59.9217632,
+        "lon": 10.7876048
+      },
+      "nodes": [
+        7151239122,
+        7151239123,
+        7151239124,
+        7151239125,
+        7151239122
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 782351568,
+      "center": {
+        "lat": 59.9436814,
+        "lon": 10.7493352
+      },
+      "nodes": [
+        7305526373,
+        11659472568,
+        7305526374,
+        11659490569,
+        7305526375,
+        7305526376,
+        7305526373
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784305289,
+      "center": {
+        "lat": 59.9402643,
+        "lon": 10.8417937
+      },
+      "nodes": [
+        7326524189,
+        7326524190,
+        7326524191,
+        7326524192,
+        7326524189
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784305291,
+      "center": {
+        "lat": 59.9414031,
+        "lon": 10.8464411
+      },
+      "nodes": [
+        7326524196,
+        7326524197,
+        7326524198,
+        7326524199,
+        7326524196
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784647199,
+      "center": {
+        "lat": 59.9318699,
+        "lon": 10.772635
+      },
+      "nodes": [
+        7330346800,
+        7330346801,
+        7330346802,
+        7330346803,
+        7330346800
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784647218,
+      "center": {
+        "lat": 59.926961,
+        "lon": 10.7422551
+      },
+      "nodes": [
+        7330346927,
+        7330346928,
+        7330346929,
+        7330346930,
+        7330346927
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784908004,
+      "center": {
+        "lat": 59.9022881,
+        "lon": 10.790556
+      },
+      "nodes": [
+        7333126276,
+        7333126277,
+        7333126278,
+        7333126279,
+        7333126276
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 784908012,
+      "center": {
+        "lat": 59.9040513,
+        "lon": 10.7937956
+      },
+      "nodes": [
+        7333132093,
+        7333132094,
+        7333132095,
+        7333132096,
+        7333132093
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 785046169,
+      "center": {
+        "lat": 59.9152081,
+        "lon": 10.7753935
+      },
+      "nodes": [
+        7334505271,
+        7334505272,
+        7334505273,
+        7334505274,
+        7334505275,
+        7334505276,
+        7334505277,
+        7334505278,
+        7334505279,
+        7334505271
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 796545131,
+      "center": {
+        "lat": 59.9139026,
+        "lon": 10.5063984
+      },
+      "nodes": [
+        7449598430,
+        7449598429,
+        7449598428,
+        7449598427,
+        7449598426,
+        7449598425,
+        7449598430
+      ],
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 800857407,
+      "center": {
+        "lat": 59.9453103,
+        "lon": 10.8965602
+      },
+      "nodes": [
+        7490649653,
+        7490649654,
+        7490649655,
+        7490649656,
+        7490649657,
+        7490649658,
+        7490649662,
+        7490649653
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 800857409,
+      "center": {
+        "lat": 59.9447864,
+        "lon": 10.8964074
+      },
+      "nodes": [
+        7490649689,
+        7490649690,
+        7490649691,
+        7490649692,
+        7490649693,
+        7490649689
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 801539735,
+      "center": {
+        "lat": 59.9337521,
+        "lon": 10.7689697
+      },
+      "nodes": [
+        7496983489,
+        7496983490,
+        7496983491,
+        7496983492,
+        7496983489
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "lit": "yes",
+        "sport": "fitness",
+        "surface": "tartan"
+      }
+    },
+    {
+      "type": "way",
+      "id": 807327337,
+      "center": {
+        "lat": 59.9049208,
+        "lon": 10.6221509
+      },
+      "nodes": [
+        7549656743,
+        7549656744,
+        7549656745,
+        7549656746,
+        7549656747,
+        7549656743
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 814016724,
+      "center": {
+        "lat": 59.9114141,
+        "lon": 10.7769319
+      },
+      "nodes": [
+        7603971177,
+        7603971178,
+        11183108982,
+        7603971179,
+        7603971605,
+        7603971177
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 829029599,
+      "center": {
+        "lat": 59.9486194,
+        "lon": 10.680005
+      },
+      "nodes": [
+        7738638767,
+        7738638768,
+        7738638769,
+        7738638770,
+        7738638767
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 829782943,
+      "center": {
+        "lat": 59.9119104,
+        "lon": 10.7111572
+      },
+      "nodes": [
+        7744643787,
+        7744643788,
+        7744643789,
+        7744643790,
+        7744643787
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 833317737,
+      "center": {
+        "lat": 59.9300424,
+        "lon": 10.7973197
+      },
+      "nodes": [
+        7779181641,
+        8211035880,
+        7779181645,
+        8211035884,
+        8211035886,
+        8211035885,
+        8211035882,
+        8211035883,
+        8211069020,
+        7779181646,
+        8211035881,
+        7779181642,
+        7779181641
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 837640485,
+      "center": {
+        "lat": 59.909199,
+        "lon": 10.7212758
+      },
+      "nodes": [
+        2539677356,
+        7817916965,
+        7817916966,
+        8458723700,
+        8458723701,
+        2539677346,
+        2539677356
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 841512487,
+      "center": {
+        "lat": 59.9232139,
+        "lon": 10.8602562
+      },
+      "nodes": [
+        7851458299,
+        7851458300,
+        7851458301,
+        7851458302,
+        7851458299
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 842859641,
+      "center": {
+        "lat": 59.9605395,
+        "lon": 10.7917744
+      },
+      "nodes": [
+        12069478089,
+        12069478090,
+        12069478091,
+        12069478092,
+        12069478093,
+        12069478094,
+        7862920301,
+        12069478080,
+        7862920302,
+        12069478083,
+        12069478084,
+        12069478085,
+        12069478086,
+        12069478087,
+        12069478088,
+        7862920303,
+        12069478082,
+        7862920304,
+        12069478081,
+        12069478089
+      ],
+      "tags": {
+        "area": "yes",
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "surface": "artificial_turf"
+      }
+    },
+    {
+      "type": "way",
+      "id": 852329121,
+      "center": {
+        "lat": 59.9505504,
+        "lon": 10.6537428
+      },
+      "nodes": [
+        7950533522,
+        7950533523,
+        7950533524,
+        7950533525,
+        7950533526,
+        7950533527,
+        7950533522
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 852330597,
+      "center": {
+        "lat": 59.9540502,
+        "lon": 10.6477989
+      },
+      "nodes": [
+        7950528228,
+        7950528229,
+        7950528230,
+        7950528231,
+        7950528228
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 867102587,
+      "center": {
+        "lat": 59.9261075,
+        "lon": 10.8135679
+      },
+      "nodes": [
+        8082452645,
+        12542445274,
+        8082452646,
+        8082452647,
+        8082452648,
+        8082452645
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 882943953,
+      "center": {
+        "lat": 59.9299232,
+        "lon": 10.7977436
+      },
+      "nodes": [
+        7779181644,
+        8211069048,
+        8211069049,
+        8211069098,
+        7779181643,
+        8211069050,
+        7779181644
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "surface": "artificial_turf"
+      }
+    },
+    {
+      "type": "way",
+      "id": 882962746,
+      "center": {
+        "lat": 59.9282758,
+        "lon": 10.8003127
+      },
+      "nodes": [
+        8211144326,
+        8211144327,
+        8211144328,
+        8211144329,
+        8211144326
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 890128939,
+      "center": {
+        "lat": 59.9087817,
+        "lon": 10.4992833
+      },
+      "nodes": [
+        8273924258,
+        8273924257,
+        8273924256,
+        8273924255,
+        8273924254,
+        8273924253,
+        8273924252,
+        8273924251,
+        8273924258
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "lit": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 890128940,
+      "center": {
+        "lat": 59.9084737,
+        "lon": 10.4992933
+      },
+      "nodes": [
+        8273924267,
+        8273924266,
+        8273924265,
+        8273924264,
+        8273924263,
+        8273924262,
+        8273924261,
+        8273924260,
+        8273924259,
+        8273924267
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "parkour"
+      }
+    },
+    {
+      "type": "way",
+      "id": 891063959,
+      "center": {
+        "lat": 59.945056,
+        "lon": 10.7751792
+      },
+      "nodes": [
+        8281829113,
+        8281829114,
+        8281829115,
+        8281829113
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 917832923,
+      "center": {
+        "lat": 59.823187,
+        "lon": 10.4435555
+      },
+      "nodes": [
+        8524669065,
+        8524669066,
+        8524669067,
+        8524669068,
+        8524669069,
+        12048874751,
+        8524669070,
+        8524669065
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "name": "Tufteparken Risenga",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 925264250,
+      "center": {
+        "lat": 59.9217103,
+        "lon": 10.7205314
+      },
+      "nodes": [
+        8587087336,
+        8587087337,
+        8587087338,
+        8587087339,
+        8587087336
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 949844441,
+      "center": {
+        "lat": 59.8809681,
+        "lon": 10.7664082
+      },
+      "nodes": [
+        8793106351,
+        8793106350,
+        8793106349,
+        8793106348,
+        8793106347,
+        8793106346,
+        8793106345,
+        8793106344,
+        8793106343,
+        8793106342,
+        8793106341,
+        8793106340,
+        8793106339,
+        8793106338,
+        8793106337,
+        8793106336,
+        8793106335,
+        8793106334,
+        8793106333,
+        8793106332,
+        8793106331,
+        8793106330,
+        8793106329,
+        8793106328,
+        8793106327,
+        8793106326,
+        8793106325,
+        8793106324,
+        8793106323,
+        8793106322,
+        8793106351
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "parkour"
+      }
+    },
+    {
+      "type": "way",
+      "id": 971649662,
+      "center": {
+        "lat": 59.7873151,
+        "lon": 10.4430887
+      },
+      "nodes": [
+        8993065335,
+        8993065336,
+        8993065337,
+        8993065338,
+        8993065339,
+        8993065340,
+        8993065335
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 972252494,
+      "center": {
+        "lat": 59.9303124,
+        "lon": 10.4741317
+      },
+      "nodes": [
+        8998504910,
+        8998504909,
+        8998504908,
+        8998504907,
+        8998504910
+      ],
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1000291923,
+      "center": {
+        "lat": 59.9424466,
+        "lon": 10.6614248
+      },
+      "nodes": [
+        9233242037,
+        9233242046,
+        9233242045,
+        9233242044,
+        9233242043,
+        9233242042,
+        9233242041,
+        9233242036,
+        9233242035,
+        9233242034,
+        9233242052,
+        9233242051,
+        9233242050,
+        9233242049,
+        9233242048,
+        9233242047,
+        9233242040,
+        9233242039,
+        9233242038,
+        9233242037
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1017650839,
+      "center": {
+        "lat": 59.9302819,
+        "lon": 10.8007455
+      },
+      "nodes": [
+        9359176308,
+        9386557057,
+        9359176363,
+        9359176313,
+        9359176312,
+        9359176311,
+        9359176310,
+        9359176309,
+        9359176308
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "calisthenics"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1020208049,
+      "center": {
+        "lat": 59.9601443,
+        "lon": 10.6110075
+      },
+      "nodes": [
+        9409419667,
+        9409419668,
+        9409419669,
+        9409419670,
+        9409419667
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1024379776,
+      "center": {
+        "lat": 59.9358756,
+        "lon": 10.8024999
+      },
+      "nodes": [
+        9446007926,
+        9446007927,
+        9446007928,
+        9446007929,
+        9446007926
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "name": "L\u00f8ren Idrettspark",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1060530730,
+      "center": {
+        "lat": 59.8521778,
+        "lon": 10.4809982
+      },
+      "nodes": [
+        9743670814,
+        9743670815,
+        9743670816,
+        9743671617,
+        9743671618,
+        9743671619,
+        9743671620,
+        9743671621,
+        9743671622,
+        9743671623,
+        9743671624,
+        9743671625,
+        9743670814
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "name": "Tufteparken Holmen idrettspark",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1079622463,
+      "center": {
+        "lat": 59.92813,
+        "lon": 10.8765728
+      },
+      "nodes": [
+        9896260821,
+        9896260822,
+        9896260823,
+        9896260824,
+        9896260821
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1083514344,
+      "center": {
+        "lat": 59.8334492,
+        "lon": 10.7925907
+      },
+      "nodes": [
+        9929554025,
+        9929554026,
+        9929554027,
+        9929554028,
+        9929554029,
+        9929554030,
+        9929554031,
+        9929554025
+      ],
+      "tags": {
+        "blind": "no",
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1085663490,
+      "center": {
+        "lat": 59.9555732,
+        "lon": 10.7662407
+      },
+      "nodes": [
+        9947949129,
+        9947949130,
+        9947949131,
+        9947949132,
+        9947949129
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1086981590,
+      "center": {
+        "lat": 59.9598207,
+        "lon": 10.8646085
+      },
+      "nodes": [
+        9959345900,
+        9959345901,
+        9959345902,
+        9959345903,
+        9959345904,
+        9959345905,
+        9959345906,
+        9959345907,
+        9959345900
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1095235564,
+      "center": {
+        "lat": 59.9581568,
+        "lon": 10.8817582
+      },
+      "nodes": [
+        10030283652,
+        10030283653,
+        10030283654,
+        10030283655,
+        10030283652
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1147402646,
+      "center": {
+        "lat": 59.9120875,
+        "lon": 10.7681797
+      },
+      "nodes": [
+        10676583794,
+        10676583795,
+        1205811906,
+        10676583796,
+        1205811892,
+        7266038673,
+        7266038672,
+        7266038671,
+        7266038670,
+        7266038669,
+        7266038668,
+        7266038663,
+        10676583794
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "image": "https://photos.app.goo.gl/hAA8W3d64NArbx9Y6",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1196604287,
+      "center": {
+        "lat": 59.8968345,
+        "lon": 10.8402483
+      },
+      "nodes": [
+        11103185101,
+        11103185100,
+        11103185099,
+        11103185098,
+        11103185101
+      ],
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1196604288,
+      "center": {
+        "lat": 59.9002842,
+        "lon": 10.836455
+      },
+      "nodes": [
+        11103217505,
+        11103185104,
+        11103185103,
+        11103185102,
+        11103217505
+      ],
+      "tags": {
+        "fitness_station:balance_beam": "yes",
+        "fitness_station:horizontal_bar": "yes",
+        "fitness_station:parallel_bars": "yes",
+        "fitness_station:sit-up": "yes",
+        "fitness_station:stepping_stone": "yes",
+        "fitness_station:wall_bars": "yes",
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1223387657,
+      "center": {
+        "lat": 59.9458767,
+        "lon": 10.6586229
+      },
+      "nodes": [
+        11347920196,
+        11347920197,
+        11347920198,
+        11347920199,
+        11347920196
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1248328804,
+      "center": {
+        "lat": 59.888722,
+        "lon": 10.5960694
+      },
+      "nodes": [
+        11605785365,
+        11605785366,
+        11605785367,
+        11605785368,
+        13431052714,
+        11605785350,
+        11605785351,
+        11605785352,
+        11605785353,
+        11605785358,
+        11605785359,
+        11605785360,
+        11605785361,
+        11605785362,
+        11605785363,
+        11605785364,
+        11605785354,
+        11605785355,
+        11605785356,
+        11605785357,
+        11605785365
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1248330390,
+      "center": {
+        "lat": 59.8971182,
+        "lon": 10.6128142
+      },
+      "nodes": [
+        11605790455,
+        11605790456,
+        11605790457,
+        11605790458,
+        11605790455
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1250027627,
+      "center": {
+        "lat": 59.8958025,
+        "lon": 10.6109833
+      },
+      "nodes": [
+        11619636027,
+        11619636028,
+        11619636029,
+        11619636030,
+        11619636031,
+        11619636032,
+        11619636033,
+        11619636027
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1303225717,
+      "center": {
+        "lat": 59.9605018,
+        "lon": 10.7920994
+      },
+      "nodes": [
+        12069478109,
+        12069478110,
+        12069478111,
+        12069478112,
+        12069478113,
+        12069478095,
+        12069478096,
+        12069478097,
+        12069478098,
+        12069478103,
+        12069478104,
+        12069478115,
+        12069478105,
+        12069478106,
+        12069478107,
+        12069478108,
+        12069478099,
+        12069478100,
+        12069478101,
+        12069478102,
+        12069478109
+      ],
+      "tags": {
+        "area": "yes",
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness",
+        "surface": "artificial_turf"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1308479814,
+      "center": {
+        "lat": 59.9070394,
+        "lon": 10.7785721
+      },
+      "nodes": [
+        12117260432,
+        12117260433,
+        12117260434,
+        12117260435,
+        12117260432
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1311822227,
+      "center": {
+        "lat": 59.8334159,
+        "lon": 10.8159376
+      },
+      "nodes": [
+        12142481884,
+        12142481885,
+        12142481886,
+        12142481887,
+        12142481888,
+        12142481884
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1314356641,
+      "center": {
+        "lat": 59.9225592,
+        "lon": 10.7623479
+      },
+      "nodes": [
+        12165415510,
+        12165415511,
+        12165415512,
+        12165415513,
+        12165415510
+      ],
+      "tags": {
+        "fixme": "Resurvey",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1319954399,
+      "center": {
+        "lat": 59.9218463,
+        "lon": 10.6868384
+      },
+      "nodes": [
+        12214847864,
+        12214847865,
+        12214847866,
+        12214847867,
+        12214847864
+      ],
+      "tags": {
+        "fitness_station": "yes",
+        "leisure": "fitness_station",
+        "lit": "yes",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1373706311,
+      "center": {
+        "lat": 59.9243006,
+        "lon": 10.7766046
+      },
+      "nodes": [
+        12718652197,
+        12718652198,
+        12718652199,
+        12718652200,
+        12718652197
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1411244159,
+      "center": {
+        "lat": 59.9009068,
+        "lon": 10.8051273
+      },
+      "nodes": [
+        12967087608,
+        12967087609,
+        12967087610,
+        12967087611,
+        12967087612,
+        12967087608
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1413199312,
+      "center": {
+        "lat": 59.9299488,
+        "lon": 10.4816272
+      },
+      "nodes": [
+        12987171178,
+        12987171177,
+        12987171176,
+        12987171175,
+        12987171174,
+        12987171173,
+        12987802608,
+        12987171172,
+        12987802606,
+        12987802605,
+        12987802604,
+        12987802603,
+        12987802602,
+        12987802601,
+        12987798900,
+        12987798899,
+        12987798898,
+        12987798897,
+        12987171171,
+        12987798893,
+        12987171170,
+        12987171178
+      ],
+      "tags": {
+        "leisure": "fitness_station"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1417580893,
+      "center": {
+        "lat": 59.9160296,
+        "lon": 10.761321
+      },
+      "nodes": [
+        7295085241,
+        13026956827,
+        13026956828,
+        13026956829,
+        13026956830,
+        13026956831,
+        13026956832,
+        13026956833,
+        13026956834,
+        13026956835,
+        13026956836,
+        13026956837,
+        13026956838,
+        7295085241
+      ],
+      "tags": {
+        "check_date": "2024-07-03",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1422249137,
+      "center": {
+        "lat": 59.9294433,
+        "lon": 10.7475383
+      },
+      "nodes": [
+        13070355271,
+        13070355270,
+        13070355267,
+        13070355268,
+        13070355271
+      ],
+      "tags": {
+        "access": "yes",
+        "check_date": "2025-08-14",
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1449693704,
+      "center": {
+        "lat": 59.9178628,
+        "lon": 10.6890288
+      },
+      "nodes": [
+        9901811103,
+        13297039123,
+        13297039124,
+        13297039125,
+        13297039126,
+        13297039127,
+        9901811103
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1465306868,
+      "center": {
+        "lat": 59.9049712,
+        "lon": 10.5706678
+      },
+      "nodes": [
+        13439569589,
+        13439569590,
+        13439569591,
+        13439569592,
+        13439569593,
+        13439569594,
+        13439569595,
+        13439569596,
+        13439569597,
+        13439569598,
+        13439569599,
+        13439569600,
+        13439615201,
+        13439569589
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1525725569,
+      "center": {
+        "lat": 59.9371157,
+        "lon": 10.762363
+      },
+      "nodes": [
+        13906771425,
+        13906771426,
+        13906771427,
+        13906771428,
+        13906771429,
+        13906771430,
+        13906771431,
+        13906771432,
+        13906771425
+      ],
+      "tags": {
+        "leisure": "fitness_station",
+        "sport": "fitness"
+      }
+    }
+  ]
+}
