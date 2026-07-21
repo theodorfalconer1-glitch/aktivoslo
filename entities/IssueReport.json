@@ -10,25 +10,26 @@
     "issue_type": {
       "type": "string",
       "enum": [
-        "stengt",
-        "d\u00e5rlig vedlikehold",
-        "feil informasjon",
+        "feil_plassering",
+        "feil_nettside",
+        "feil_informasjon",
+        "finnes_ikke",
         "annet"
       ]
     },
     "description": {
       "type": "string"
     },
-    "reporter_name": {
+    "reported_at": {
       "type": "string"
     },
     "status": {
       "type": "string",
       "enum": [
-        "ny",
-        "under behandling",
-        "l\u00f8st"
-      ]
+        "new",
+        "resolved"
+      ],
+      "default": "new"
     }
   },
   "required": [],
