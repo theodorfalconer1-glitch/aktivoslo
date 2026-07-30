@@ -2397,7 +2397,10 @@ function getFiltered(q,c,filters){
   let r=PLACES.filter(p=>p.status!=='closed');
   const fc=c||mapCat;
   if(fc&&fc!=='all') r=r.filter(p=>(p.activity_types||[]).includes(fc));
-  if(expSubType) r=r.filter(p=>(p.sub_types||[]).includes(expSubType));
+  if(expSubType){
+    if(expSubType==='badeplass') r=r.filter(p=>!(p.sub_types||[]).some(st=>['stupetårn','klippehopp'].includes(st)));
+    else r=r.filter(p=>(p.sub_types||[]).includes(expSubType));
+  }
   if(q){const lq=q.toLowerCase();r=r.filter(p=>p.name.toLowerCase().includes(lq)||(p.neighborhood||'').toLowerCase().includes(lq)||(p.municipality||'').toLowerCase().includes(lq)||(p.address||'').toLowerCase().includes(lq)||trC((p.activity_types||[''])[0]).toLowerCase().includes(lq));}
   if(filters){
     if(filters.free) r=r.filter(p=>p.is_free);
@@ -2414,7 +2417,11 @@ function getFiltered(q,c,filters){
 function renderMarkers(){
   if(!apMap||!mLayer) return;
   mLayer.clearLayers();
-  getFiltered('',mapCat,null).filter(p=>!mapSubType||(p.sub_types||[]).includes(mapSubType)).forEach(p=>{
+  getFiltered('',mapCat,null).filter(p=>{
+    if(!mapSubType) return true;
+    if(mapSubType==='badeplass') return !(p.sub_types||[]).some(st=>['stupetårn','klippehopp'].includes(st));
+    return (p.sub_types||[]).includes(mapSubType);
+  }).forEach(p=>{
     if(!p.lat||!p.lng) return;
     const c0=(p.activity_types||['?'])[0];
     mLayer.addLayer(L.marker([p.lat,p.lng],{icon:makeIcon(c0,visited.includes(p.id))}).on('click',e=>{L.DomEvent.stopPropagation(e);openPlace(p.id);}));
@@ -2448,7 +2455,7 @@ function buildFbar(){
   const sr=$('mapSubRow');
   const MAP_SUBTYPES={
     'løperute':  [{key:'trappeintervall',label:'🪜 Trappeintervall'}],
-    'bading':    [{key:'stupetårn',      label:'🤿 Stupetårn (5m+)'}],
+    'bading':    [{key:'badeplass',      label:'🏖️ Badeplasser'},{key:'stupetårn',      label:'🤿 Stupetårn (5m+)'},{key:'klippehopp',     label:'🧗 Klippehopp'}],
     'skøytebane':[
       {key:'kunstis',          label:'🧊 Kunstis'},
       {key:'innendørs ishall', label:'🏟️ Innendørs ishall'},
@@ -2578,7 +2585,7 @@ function buildExpFilters(){
   // Sub-type rad (vises for kategorier med undertypes)
   const EXP_SUBTYPES={
     'løperute':  [{key:'trappeintervall',label:'🪜 Trappeintervall'}],
-    'bading':    [{key:'stupetårn',      label:'🤿 Stupetårn (5m+)'}],
+    'bading':    [{key:'badeplass',      label:'🏖️ Badeplasser'},{key:'stupetårn',      label:'🤿 Stupetårn (5m+)'},{key:'klippehopp',     label:'🧗 Klippehopp'}],
     'skøytebane':[
       {key:'kunstis',          label:'🧊 Kunstis'},
       {key:'innendørs ishall', label:'🏟️ Innendørs ishall'},
